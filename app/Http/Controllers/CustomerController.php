@@ -1,11 +1,12 @@
 <?php
-use App\User;
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Validator;
 use DB;
 use Illuminate\Support\Facades\Hash;
+use App\User;
+use App\Department;
 
 class CustomerController extends Controller
 {
@@ -27,7 +28,8 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        return view('customers.create');
+        $departments = Department::where('status', 1)->orderBy('deptname', 'ASC')->get();
+        return view('customers.create',compact('departments'));
 
     }
 
@@ -61,6 +63,8 @@ class CustomerController extends Controller
         $user->lname=$request->get('lname');
         $user->email=$request->get('email');
         $user->iscustomer=1;
+        $user->designation_id = 0;
+        $user->organization_id = $request->get('organization_id');
         $user->password=Hash::make($request->get('password'));
         $user->phonenumber=$request->get('phonenumber');
         $date=date_create($request->get('date'));
@@ -82,11 +86,7 @@ class CustomerController extends Controller
     public function show($id)
     {
         $user      =  \App\User::with('role')->where('id',$id)->first();
-        $loginlogs =  \App\User::find($id)->authentications;
-        //Email Phone address book
-		$addressbooks = \App\Addressbook::with('createdby')->where('user_id',$id)->where('type',1)->get();
-		$addressbooksphone = \App\Addressbook::with('createdby')->where('user_id',$id)->where('type',2)->get();
-        return view('customers.show',compact('user','loginlogs','addressbooks','addressbooksphone'));
+        return view('customers.show',compact('user'));
     }
 
     /**
@@ -99,8 +99,9 @@ class CustomerController extends Controller
     {
         $user  =  \App\User::where('id',$id)->where('iscustomer',1)->first();
         //dd($user);
+        $departments = Department::where('status', 1)->orderBy('deptname', 'ASC')->get();
 
-        return view('customers.edit',compact('user','id'));
+        return view('customers.edit',compact('user','id', 'departments'));
     }
 
     //For Reset Password
@@ -219,6 +220,7 @@ class CustomerController extends Controller
             $user->email=$request->get('email');
             $user->iscustomer=1;
             $user->phonenumber=$request->get('phonenumber');
+            $user->organization_id=$request->get('department_id');
             if(!$request->get('profile')){
             $user->status=$request->get('status');
             }

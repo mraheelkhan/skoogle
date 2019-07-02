@@ -53,13 +53,13 @@
                     <td>{{$user['email']}}</td>
                     <td>{{$user['phonenumber']}}</td>
                     <td>{{$user['designation']['name']}}</td>
-                    <td>{{$user['department']['deptname']}}</td>
+                    <td>{{$user['organization']['deptname']}}</td>
                     <td>{{$user['role']['role_title']}}</td>
                     <td>
                       @if ($user['status'] === 1)
-                      <span class="btn btn-success">Active</span>
+                      <span class="label label-success">Active</span>
                       @else
-                      <span class="btn btn-danger">Deactive</span>
+                      <span class="label label-danger">Deactive</span>
                       @endif
                     </td>
                     @can('delete-staff')

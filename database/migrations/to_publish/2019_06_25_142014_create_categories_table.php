@@ -18,8 +18,8 @@ class CreateCategoriesTable extends Migration
             $table->string('category_name');
             $table->integer('parent_category_id')->comment(' 0 = no parent');
             $table->string('type')->comment(' project, question, skill, course, video ');
-            $table->integer('status')->comment('0 = inactive , 1 = active');
-            $table->integer('is_deleted')->comment('0 = not deleted , 1 = deleted');
+            $table->integer('status')->default(1)->comment('0 = inactive , 1 = active');
+            $table->integer('is_deleted')->default(0)->comment('0 = not deleted , 1 = deleted');
             $table->timestamps();
         });
     }

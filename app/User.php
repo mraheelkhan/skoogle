@@ -50,6 +50,9 @@ class User extends Authenticatable
     public function designation(){
         return $this->hasOne(Designation::class, 'id', 'designation_id')->withDefault();
     }
+    public function organization(){
+        return $this->hasOne(Department::class, 'id', 'organization_id')->withDefault();
+    }
  
     public function hasAccess(array $permissions)
     {

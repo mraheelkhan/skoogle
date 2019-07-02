@@ -24,8 +24,5 @@ class Department extends Model
 		return $this->belongsTo('App\User','last_modified_by');
 	}
 
-	public function hrlead(){
-		return $this->belongsTo('App\Hrlead','department_id');
-	}
 	
 }

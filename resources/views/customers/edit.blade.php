@@ -39,7 +39,7 @@
             <!-- /.box-header -->
             <!-- form start -->
             <div id="kv-avatar-errors-1" class="center-block" style="width:800px;display:none"></div>
-            <form class="form-horizontal" action="{{action('UserController@update', $id)}}" method="post" enctype="multipart/form-data">
+            <form class="form-horizontal" action="{{action('CustomerController@update', $id)}}" method="post" enctype="multipart/form-data">
             @csrf
             <input name="_method" type="hidden" value="PATCH">
             <div class="box-body" >
@@ -116,6 +116,41 @@
                   </div>
                 </div>
 
+                {{-- <div class="form-group">
+                    <label for="cnic" class="col-sm-3 control-label">Gender</label>
+            
+                    <div class="col-sm-9">
+                        <select class="form-control" id="gender" name="gender">
+                            <option value="male" {{ ($user->gender == "male") ? 'selected' : '' }}  > Male</option>
+                            <option value="female" {{ ($user->gender == "female") ? 'selected' : '' }}  > Female</option>
+
+                        </select>
+                        @if ($errors->has('cnic'))
+                            <span class="text-red">
+                                <strong>{{ $errors->first('gender') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                </div> --}}
+
+                <div class="form-group">
+                    <label for="department_id" class="col-sm-3 control-label">Select Organization</label>
+  
+                    <div class="col-sm-9">
+                        <select class="select2 form-control" id="department_id" name="department_id" required>
+                            <option value="" selected>None</option>    
+                            <option value="0">No Organization</option>    
+                          @foreach ($departments as $department)
+                          <option value="{{ $department->id }}"  {{ ($department->id == $user->organization_id) ? 'selected' : '' }}    >{{$department->deptname}}</option>    
+                          @endforeach
+                        </select>
+                      @if ($errors->has('department_id'))
+                            <span class="text-red">
+                                <strong>{{ $errors->first('department_id') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                  </div>
 
               </div>
               </div>

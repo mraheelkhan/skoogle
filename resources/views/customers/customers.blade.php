@@ -37,6 +37,7 @@
                   <th>Name</th>
                   <th>Email</th>
                   <th>Phone Number</th>
+                  <th>Organization</th>
                   <th>Status</th>
                   <th>Action</th>
                 </tr>
@@ -47,11 +48,12 @@
                     <td>{{$user['fname']}} {{$user['lname']}}</td>
                     <td>{{$user['email']}}</td>
                     <td>{{$user['phonenumber']}}</td>
+                    <td>{{$user->organization->deptname}}</td>
                     <td>
                       @if ($user['status'] === 1)
-                      <span class="btn btn-success">Active</span>
+                      <span class="label label-success">Active</span>
                       @else
-                      <span class="btn btn-danger">Deactive</span>
+                      <span class="label label-danger">Deactive</span>
                       @endif
                     </td>
                     @can('delete-customer')
@@ -83,6 +85,7 @@
                   <th>Name</th>
                   <th>Email</th>
                   <th>Phone Number</th>
+                  <th>Organization</th>
                   <th>Status</th>
                   <th>Action</th>
                 </tr>

@@ -116,6 +116,42 @@
                   </div>
                 </div>
 
+                {{-- <div class="form-group">
+                    <label for="gender" class="col-sm-3 control-label">Gender</label>
+            
+                    <div class="col-sm-9">
+                        <select class="form-control" id="gender" name="gender">
+                            <option value="male"> Male</option>
+                            <option value="female"> Female</option>
+
+                        </select>
+                        @if ($errors->has('cnic'))
+                            <span class="text-red">
+                                <strong>{{ $errors->first('gender') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                </div> --}}
+
+                <div class="form-group">
+                    <label for="organization_id" class="col-sm-3 control-label">Select Organization</label>
+  
+                    <div class="col-sm-9">
+                        <select class="select2 form-control" id="organization_id" name="organization_id" required>
+                            <option value="" selected>None</option>   
+                            <option value="0">No Organization</option> 
+                          @foreach ($departments as $department)
+                          <option value="{{$department->id}}"  {{ ($department->id==old('organization_id')) ? 'selected' : '' }}    >{{$department->deptname}}</option>    
+                          @endforeach
+                        </select>
+                      @if ($errors->has('organization_id'))
+                            <span class="text-red">
+                                <strong>{{ $errors->first('organization_id') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                  </div>
+
               </div>
               </div>
               

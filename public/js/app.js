@@ -14008,7 +14008,7 @@ Vue.component('chat-messages', __webpack_require__(43));
 Vue.component('chat-form', __webpack_require__(46));
 
 window.addEventListener('load', function () {
-    var leadid = document.getElementById('lead_id').value ? document.getElementById('lead_id').value : 0;
+    //var leadid = document.getElementById('lead_id').value ? document.getElementById('lead_id').value : 0;
     var app = new Vue({
         el: '#app',
 
@@ -14019,32 +14019,33 @@ window.addEventListener('load', function () {
         created: function created() {
             var _this = this;
 
-            this.fetchMessages();
+            //this.fetchMessages();
             Echo.private('chat').listen('MessageSent', function (e) {
-                if (e.message.lead_id == leadid) {
-                    _this.messages.push({
-                        message: e.message.message,
-                        createdby: e.user
-                    });
-                }
+				//changed here
+                // if (e.message.lead_id == 0) {
+                //     _this.messages.push({
+                //         message: e.message.message,
+                //         createdby: e.user
+                //     });
+                // }
             });
         },
 
 
         methods: {
-            fetchMessages: function fetchMessages() {
-                var _this2 = this;
+            // fetchMessages: function fetchMessages() {
+            //     var _this2 = this;
 
-                axios.get('/messages/' + leadid).then(function (response) {
-                    _this2.messages = response.data;
-                });
-            },
-            addMessage: function addMessage(message) {
-                this.messages.push(message);
-                axios.post('/messages', message).then(function (response) {
-                    //console.log(response.data);
-                });
-            }
+            //     axios.get('/messages/' + leadid).then(function (response) {
+            //         _this2.messages = response.data;
+            //     });
+            // },
+            // addMessage: function addMessage(message) {
+            //     this.messages.push(message);
+            //     axios.post('/messages', message).then(function (response) {
+            //         //console.log(response.data);
+            //     });
+            // }
         }
     });
 });

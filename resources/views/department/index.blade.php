@@ -20,20 +20,46 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Manage Departments</h3>
+              <h3 class="box-title">Manage Organization</h3>
               @can('create-department')
               <span class="pull-right">
-                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-default"><span class="fa fa-plus"></span> Add New Department</button>
+                {{-- <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modaldefault"><span class="fa fa-plus"></span> Add New Organization</button> --}}
                 </span>
               @endcan
             </div>
             <!-- /.box-header -->
             <div class="box-body">
+                <div class="">
+                    <form role="form" action="{{url('/settings/departments')}}" method="POST" id="frmAddDepartment">
+                      @csrf
+                      <div class="box-body">
+                        <div class="form-group">
+                          <label for="deptname">Organization Name</label>
+                          <input type="text" class="form-control" id="deptname" name="deptname" placeholder="Enter Department Name" autocomplete="off">
+                        </div>
+                        <div class="form-group">
+                          <label for="status">Select Status</label>
+                          <select class="form-control" id="status" name="status">
+                            <option value="1" selected>Active</option>
+                            <option value="0">Deactive</option>
+                          </select>
+                        </div>
+                      </div>
+                      <!-- /.box-body -->
+        
+                      <div class="box-footer">
+                          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                        <span class="pull-right"><button type="submit" class="btn btn-primary">Submit</button></span>
+                      </div>
+                    </form>
+                  </div>
+            </div>
+            <div class="box-body">
               <table id="table_data" class="display responsive wrap" style="width:100%">
                 <thead>
                 <tr>
                   <th>Id</th>
-                  <th>Department Name</th>
+                  <th>Organization Name</th>
                   <th>Created By</th>
                   <th>Created At</th>
                   <th>Modified By</th>
@@ -48,7 +74,7 @@
                 <tfoot>
                 <tr>
                   <th>Id</th>
-                  <th>Department Name</th>
+                  <th>Organization Name</th>
                   <th>Created By</th>
                   <th>Created At</th>
                   <th>Modified By</th>
@@ -59,6 +85,7 @@
                 </tfoot>
               </table>
             </div>
+            
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
@@ -68,20 +95,20 @@
       <!-- /.row -->   
 
       <!-- Add Modal Begins -->   
-      <div class="modal fade" id="modal-default">
+      <div class="modal fade" id="modaldefaultHide">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title">Add Department</h4>
+              <h4 class="modal-title">Add Organization</h4>
             </div>
             <div class="modal-body">
               <form role="form" action="{{url('/settings/departments')}}" method="POST" id="frmAddDepartment">
                 @csrf
                 <div class="box-body">
                   <div class="form-group">
-                    <label for="deptname">Department Name</label>
+                    <label for="deptname">Organization Name</label>
                     <input type="text" class="form-control" id="deptname" name="deptname" placeholder="Enter Department Name" autocomplete="off">
                   </div>
                   <div class="form-group">
@@ -254,7 +281,7 @@ $(document).ready(function (e) {
                 }
                 else
                 {
-                  $('#modal-default').modal('toggle');
+                  $('#modaldefault').modal('toggle');
                   $("#frmAddDepartment")[0].reset(); 
                   swal("Success", "Department created successfully.", "success");
                   InitTable();
