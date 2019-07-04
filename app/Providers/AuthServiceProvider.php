@@ -33,17 +33,64 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerCustomersPolicies();
         $this->registerAdminmenuPolicies();
         $this->Departments();
+        $this->categories();
+        $this->forum_admin();
         $this->Designation();
         $this->Preferences();
         $this->Generalsettings();
-        $this->logs();
+        
         // Passport::routes();
 
     }
-    // Logs
-    public function logs(){
-        Gate::define('activitylogs', function($user){
-            return $user->hasAccess(['activitylogs']);
+
+    // forum admin
+    public function forum_admin(){
+        
+        Gate::define('forum-adminindex', function($user){
+            return $user->hasAccess(['forum-adminindex']);
+        });
+        Gate::define('forum-adminfetch', function($user){
+            return $user->hasAccess(['forum-adminfetch']);
+        });
+        Gate::define('forum-adminstore', function($user){
+            return $user->hasAccess(['forum-adminstore']);
+        });
+        Gate::define('forum-adminedit', function($user){
+            return $user->hasAccess(['forum-adminedit']);
+        });
+        Gate::define('forum-adminshow', function($user){
+            return $user->hasAccess(['forum-adminshow']);
+        });
+        Gate::define('forum-adminactive', function($user){
+            return $user->hasAccess(['forum-adminactive']);
+        });
+        Gate::define('forum-admindisable', function($user){
+            return $user->hasAccess(['forum-admindisable']);
+        });
+    }
+    //Categories
+    public function categories(){
+        
+        Gate::define('category-index', function($user){
+            return $user->hasAccess(['category-index']);
+        });
+        Gate::define('category-fetch', function($user){
+            return $user->hasAccess(['category-fetch']);
+        });
+        Gate::define('category-store', function($user){
+            return $user->hasAccess(['category-store']);
+        });
+        Gate::define('category-edit', function($user){
+            return $user->hasAccess(['category-edit']);
+        });
+        Gate::define('category-show', function($user){
+            return $user->hasAccess(['category-show']);
+        });
+        Gate::define('category-active', function($user){
+            return $user->hasAccess(['category-active']);
+        });
+        Gate::define('category-disable', function($user){
+            return $user->hasAccess(['category-disable']);
         });
     }
     //For chat

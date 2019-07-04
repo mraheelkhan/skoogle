@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-
+use Auth;
+use Session;
 class LoginController extends Controller
 {
     /*
@@ -25,7 +26,35 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    // protected $redirectTo = '/home';
+    public function redirectTo(){
+        
+        // User role
+        $role = Auth::user()->role_id; 
+        $status = Auth::user()->status;
+
+        
+        if($status == 0){
+            Auth::logout();
+            Session::flash('message', '<script>swal.fire("Your not Authorize","Your Account is not yet Activated, Please contact your Administrator","error");</script>'); 
+            return '/'; 
+        }
+        // Check user role
+        switch ($role) {
+            case 1:
+            case 3:
+                    return '/dashboard';
+                break;
+            case 2:
+                    return '/forum';
+                break; 
+            default:
+                    return '/forum';
+                    Session::flash('message', '<script>swal.fire("You are not Authorize","Your Account belongs to Mobile Application, Please login from Mobile","error");</script>'); 
+                    return Auth::logout(); 
+                break;
+        }
+    }
 
     /**
      * Create a new controller instance.

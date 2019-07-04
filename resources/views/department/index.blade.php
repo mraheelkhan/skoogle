@@ -33,16 +33,39 @@
                     <form role="form" action="{{url('/settings/departments')}}" method="POST" id="frmAddDepartment">
                       @csrf
                       <div class="box-body">
-                        <div class="form-group">
-                          <label for="deptname">Organization Name</label>
-                          <input type="text" class="form-control" id="deptname" name="deptname" placeholder="Enter Department Name" autocomplete="off">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="deptname">Organization Name</label>
+                            <input type="text" class="form-control" id="deptname" name="deptname" placeholder="Enter Department Name" autocomplete="off">
+                          </div>
+                          <div class="form-group">
+                              <label for="address">Address</label>
+                              <input type="text" class="form-control" id="address" name="address" placeholder="Enter Address Name" autocomplete="off">
+                          </div>
+                          <div class="form-group">
+                              <label for="phone_number">Phone Number</label>
+                              <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="Enter Phone Number" autocomplete="off">
+                          </div>
                         </div>
-                        <div class="form-group">
-                          <label for="status">Select Status</label>
-                          <select class="form-control" id="status" name="status">
-                            <option value="1" selected>Active</option>
-                            <option value="0">Deactive</option>
-                          </select>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="business_email">Business Email</label>
+                                <input type="text" class="form-control" id="business_email" name="business_email" placeholder="Enter Email" autocomplete="off">
+                            </div>
+                            <div class="form-group">
+                                <label for="allow_outside">Employee's Allowed Outside</label>
+                                <select class="form-control" id="allow_outside" name="allow_outside">
+                                  <option value="0" selected>Not Allowed</option>
+                                  <option value="1">Allowed</option>
+                                </select>
+                              </div>
+                          <div class="form-group">
+                            <label for="status">Select Status</label>
+                            <select class="form-control" id="status" name="status">
+                              <option value="1" selected>Active</option>
+                              <option value="0">Deactive</option>
+                            </select>
+                          </div>
                         </div>
                       </div>
                       <!-- /.box-body -->
@@ -54,16 +77,18 @@
                     </form>
                   </div>
             </div>
-            <div class="box-body">
-              <table id="table_data" class="display responsive wrap" style="width:100%">
+            <div class="box-body table-responsive">
+              <table id="table_data" class="display responsive nowrap" style="width:100%">
                 <thead>
                 <tr>
                   <th>Id</th>
                   <th>Organization Name</th>
+                  <th>Address</th>
+                  <th>Phone</th>
+                  <th>Email</th>
+                  <th>Outside</th>
                   <th>Created By</th>
-                  <th>Created At</th>
                   <th>Modified By</th>
-                  <th>Modified At</th>
                   <th>Status</th>
                   <th>Action</th>
                 </tr>
@@ -75,10 +100,12 @@
                 <tr>
                   <th>Id</th>
                   <th>Organization Name</th>
+                  <th>Address</th>
+                  <th>Phone</th>
+                  <th>Email</th>
+                  <th>Outside</th>
                   <th>Created By</th>
-                  <th>Created At</th>
                   <th>Modified By</th>
-                  <th>Modified At</th>
                   <th>Status</th>
                   <th>Action</th>
                 </tr>
@@ -155,6 +182,25 @@
                       <label for="deptname">Department Name</label>
                       <input type="text" class="form-control" id="editdeptname" name="deptname" placeholder="Enter Department Name" autocomplete="off">
                     </div>
+                    <div class="form-group">
+                        <label for="deptname">Address</label>
+                        <input type="text" class="form-control" id="editaddress" name="address" placeholder="Enter Department Name" autocomplete="off">
+                      </div>
+                      <div class="form-group">
+                          <label for="phone_number">Phone Number</label>
+                          <input type="text" class="form-control" id="editphone_number" name="phone_number" placeholder="Enter Phone Number" autocomplete="off">
+                      </div>
+                      <div class="form-group">
+                          <label for="business_email">Business Email</label>
+                          <input type="text" class="form-control" id="editemail" name="business_email" placeholder="Enter Email" autocomplete="off">
+                      </div>
+                      <div class="form-group">
+                          <label for="allow_outside">Employee's Allowed Outside</label>
+                          <select class="form-control" id="editallow_outside" name="allow_outside">
+                            <option value="0" selected>Not Allowed</option>
+                            <option value="1">Allowed</option>
+                          </select>
+                        </div>
                     <div class="form-group">
                       <label for="status">Select Status</label>
                       <select class="form-control" id="editstatus" name="status">
@@ -236,10 +282,12 @@
         "columns": [
             { "data": "id" },
             { "data": "deptname" },
+            { "data": "address" },
+            { "data": "phone_number" },
+            { "data": "business_email" },
+            { "data": "allow_outside" },
             { "data": "user_id" },
-            { "data": "created_at" },
             { "data": "last_modified_by" },
-            { "data": "updated_at" },
             { "data": "status" },
             { "data": "options" ,"orderable":false},
         ]  
@@ -323,6 +371,10 @@ $(document).ready(function (e) {
           $('#modal-default-edit').modal('toggle');
           $('#editid').val(data.id);
           $('#editdeptname').val(data.deptname);
+          $('#editaddress').val(data.address);
+          $('#editphone_number').val(data.phone_number);
+          $('#editemail').val(data.business_email);
+          $('#editallow_outside').val(data.allow_outside);
           $('#editstatus').val(data.status);
           //Populating Form Data to Edit Ends
         },

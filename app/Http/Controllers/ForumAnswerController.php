@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\ForumAnswer;
 use Illuminate\Http\Request;
-
+use Auth;
+use Session;
 class ForumAnswerController extends Controller
 {
     /**
@@ -35,7 +36,18 @@ class ForumAnswerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([   
+            "answer_body" => 'required|min:20|max:3000',
+            "question_id" => 'required',
+        ]);
+        $insert = ForumAnswer::create([
+            'question_id' => request('question_id'),
+            'answer_body' => request('answer_body'),
+            'user_id' => auth()->user()->id,
+        ]);
+
+        Session::flash('message', 'Your answer is posted successfully. <script>swal.firePP("success","Posted","Your answer is posted successfully");</script>'); 
+        return redirect()->back();
     }
 
     /**
@@ -81,5 +93,36 @@ class ForumAnswerController extends Controller
     public function destroy(ForumAnswer $forumAnswer)
     {
         //
+    }
+
+    public function markAsSolution(Request $request){
+        $id = $request->answer_id;
+        $question_id = $request->question_id;
+        $answer = ForumAnswer::findOrFail($id);
+        $answerQ = ForumAnswer::where('question_id', $question_id)->get();
+
+        
+        foreach($answerQ as $ans){
+            if($ans->isSolution == 1){
+                $success = 0;
+                $message = "Cannot mark multiple answer as solution";
+                $array = array( 
+                    'msg' => $message,
+                    'success' => $success
+                );
+                return response($array); 
+            }
+        }
+
+        $answer->isSolution = 1;
+        $answer->update();
+        $success = 1;
+        $message = "Answer marked as solution";
+        
+        $array = array( 
+                'msg' => $message,
+                'success' => $success
+            );
+        return response($array);
     }
 }

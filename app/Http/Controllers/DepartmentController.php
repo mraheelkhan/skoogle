@@ -29,10 +29,12 @@ class DepartmentController extends Controller
                             0 =>'id', 
                             1 =>'deptname',
                             2=> 'user_id',
-                            3=> 'created_at',
-                            4=> 'last_modified_by',
-                            5=> 'updated_at',
-                            6=> 'id',
+                            3=> 'address',
+                            4=> 'phone_number',
+                            5=> 'business_email',
+                            6=> 'allow_outside',
+                            7=> 'last_modified_by',
+                            8=> 'id',
                             
                         );
 
@@ -78,21 +80,24 @@ class DepartmentController extends Controller
                 $id = $row->id;               
                 $nestedData['id']  = $row->id;
                 $nestedData['user_id'] = $row->createdby->fname .' '.$row->createdby->lname;
+                $nestedData['last_modified_by'] = $row->createdby->fname .' '.$row->createdby->lname;
                 $nestedData['deptname'] = $row->deptname;
-                $nestedData['last_modified_by'] = $row->modifiedby->fname .' '.$row->modifiedby->lname;
-                $nestedData['updated_at'] = $row->updated_at->format('d-M-Y');
-                $nestedData['created_at'] = $row->created_at->format('d-M-Y');
+                $nestedData['address'] = $row->address;
+                $nestedData['phone_number'] = $row->phone_number;
+                $nestedData['business_email'] = $row->business_email;
+                $nestedData['allow_outside'] = $row->allow_outside;
+                
                 $statusaction="";
                 $editdept="";
                 $deletedept="";
                 $token=csrf_token();
                 if($row->status=='1') {
-                  $nestedData['status'] = '<span class="btn btn-success btn-sm">Active</span>';
+                  $nestedData['status'] = '<span class="label label-success btn-sm">Active</span>';
                   if(Auth::user()->can('status-department')){
                     $statusaction="<a class='btn btn-danger status' href='#' data-id='{$id}' data-action='0'><i class='fa fa-times'></i></a>";
                   }
                 }else if($row->status=='0'){
-                  $nestedData['status'] = '<span class="btn btn-danger btn-sm">Deactive</span>';
+                  $nestedData['status'] = '<span class="label label-danger btn-sm">Deactive</span>';
                   if(Auth::user()->can('status-department')){
                     $statusaction="<a class='btn btn-warning status' href='#' data-id='{$id}' data-action='1'><i class='fa fa-check'></i></a>";
                   }
@@ -148,6 +153,8 @@ class DepartmentController extends Controller
         $rules=[
             'deptname' => 'required|unique:departments',
         ];
+
+        
         $errormessage=['required'=>"Department name is required.", 'unique'=>"Department must be unquie."];
         $validator = Validator::make($request->all(), $rules,$errormessage);
         if ($validator->fails()) {
@@ -156,7 +163,12 @@ class DepartmentController extends Controller
         }
 
         $department= new \App\Department;
+        
         $department->deptname=$request->get('deptname');
+        $department->address=$request->get('address');
+        $department->business_email=$request->get('business_email');
+        $department->phone_number=$request->get('phone_number');
+        $department->allow_outside=$request->get('allow_outside');
         $department->status=$request->get('status');      
         $department->user_id=auth()->user()->id;
         $department->last_modified_by=auth()->user()->id;
@@ -216,6 +228,10 @@ class DepartmentController extends Controller
             return response()->json(['errors'=>$validator->errors()]);
         }
         $department->deptname=$request->get('deptname');
+        $department->address=$request->get('address');
+        $department->business_email=$request->get('business_email');
+        $department->phone_number=$request->get('phone_number');
+        $department->allow_outside=$request->get('allow_outside');
         $department->status=$request->get('status');      
         $department->last_modified_by=auth()->user()->id;
         $date=date_create($request->get('date'));
@@ -267,6 +283,8 @@ class DepartmentController extends Controller
             $id=$id;
             $department = \App\Department::findOrFail($id);
             $department->delete();
+            // $department->isDeleted = 1;
+            // $department->save();
             return response()->json(['success'=>'Department deleted successfully.']);
         } catch(\Illuminate\Database\QueryException $ex){ 
             return response()->json(['success'=>'Unable to delete, this department has linked record(s) in system.']);
