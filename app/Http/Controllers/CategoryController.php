@@ -118,7 +118,7 @@ class CategoryController extends Controller
                 $data->save(); 
                 $success = 'Category has been updated.';
                 return response()->json($success);
-                }else{
+            }else{
 
                 $data = New Category;
                 $data->category_name = $request->category_name;

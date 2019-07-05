@@ -114,11 +114,12 @@ Route::group(['prefix'=> 'settings'],function(){
     // Forum Monitoring 
     Route::get('/forum', 'ForumQuestionController@admin_all')->middleware('can:forum-adminindex')->name('forum.adminindex');
     Route::get('/forum/fetch', 'ForumQuestionController@adminfetch')->middleware('can:forum-adminfetch')->name('forum.adminfetch');
-    Route::post('/forum/store', 'ForumQuestionController@adminstore')->middleware('can:forum-adminstore')->name('forum.adminstore');
+    Route::post('/forum/store', 'ForumQuestionController@adminupdate')->middleware('can:forum-adminstore')->name('forum.adminstore');
     Route::get('/forum/show/{id}', 'ForumQuestionController@adminshow')->middleware('can:forum-adminshow')->name('forum.adminshow');
     Route::post('/forum/edit', 'ForumQuestionController@adminedit')->middleware('can:forum-adminedit')->name('forum.adminedit');
     Route::post('forum/active', 'ForumQuestionController@adminforumActive')->middleware('can:forum-adminactive')->name('forum.adminactive');
     Route::post('forum/disable', 'ForumQuestionController@adminforumDisable')->middleware('can:forum-admindisable')->name('forum.admindisable');
+    Route::post('forum/delete', 'ForumQuestionController@admindeleteanswer')->middleware('can:forum-adminedit')->name('forum.admindelete');
     
 });
 

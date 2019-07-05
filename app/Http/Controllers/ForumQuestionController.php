@@ -187,7 +187,7 @@ class ForumQuestionController extends Controller
         })
 
         ->addColumn('options',function($data){
-            if($data->status== 1){
+            if($data->status== 1 || $data->status== 2 || $data->status== 3){
             return "&emsp;<a class='btn btn-success edit_model'
                                      href='#' data-id='".$data->id."'><i class='fa fa-edit'></i></a>
                                      <a data-toggle='tooltip' data-placement='bottom' title='Disable' class='btn btn-danger disable' data-original-title='Disable' href='#' data-id='".$data->id."'><i class='fa fa-close'></i></a>
@@ -212,7 +212,33 @@ class ForumQuestionController extends Controller
 
     public function adminshow($id){
         $question = ForumQuestion::findOrFail($id);
-        $answers = ForumAnswer::where('question_id', $question->id)->where('isActive', 1)->where('is_deleted', 0)->get();
+        $answers = ForumAnswer::where('question_id', $question->id)->where('isActive', 1)->get();
         return view('forum.adminshow', compact('question', 'answers'));
+    }
+
+    public function adminupdate(Request $request){
+        $data = ForumQuestion::findOrFail($request->edit_id);
+        $data->question_title = $request->question_title;
+        $data->status     = $request->status;
+        $data->category_id     = $request->category_id;
+        $data->save(); 
+        $success = 'Question has been updated.';
+        return response()->json($success);
+           
+    }
+
+    public function admindeleteanswer(Request $request){
+        $id= $request->answer_id;
+        $answer = ForumAnswer::findOrFail($id);
+        $answer->is_deleted = 1;
+        $answer->update();
+        // return redirect()->back();
+        $success = 1;
+        $message = "Answer marked as deleted";
+        $array = array( 
+                'msg' => $message,
+                'success' => $success
+            );
+        return response($array);
     }
 }

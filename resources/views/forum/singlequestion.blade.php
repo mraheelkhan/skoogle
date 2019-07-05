@@ -99,7 +99,9 @@
                                     <button class="btn btn-success" onclick="markAsSolution({{$answer->id}})" title="Mark as Solution"><i class="icon-ok"></i></button>
                                 </div>
                                 @endif
-                                <button class="btn btn-info" onclick="markAsSolution({{$answer->id}})" title="Mark as Solution"><i class="far fa-support"></i></button>
+                                @if( auth()->check() && $answer->user_id == auth()->user()->id)
+                                <button class="label label-danger" onclick="markAsDeleted({{$answer->id}})" title="Delete your Answer">Delete</button>
+                                @endif
                                 {{-- <div class="comment-vote">
                                     <ul class="question-vote">
                                         <li><a href="#" class="question-vote-up" title="Like"></a></li>
@@ -167,6 +169,31 @@
                 console.log(data);
                 if(data.success == 1){
                     swal.fire('success', 'Mark Status Updated', "success");
+                    location.reload();
+                } else {
+                    swal.fire('Already Solved', 'You cannot mark 2 answer as solution', "error");
+                }
+                
+            },
+            error: function(error){
+                console.log(error);
+            }
+        });
+    }
+
+    function markAsDeleted(id){
+        routeURL = "{{ route('forum.admindelete') }}";
+        $.ajax({
+            url: routeURL,
+            method: 'POST',
+            data: {
+                "answer_id" : id,
+                "_token" : "{{csrf_token()}}"
+            },
+            success: function(data){
+                console.log(data);
+                if(data.success == 1){
+                    swal.fire('deleted', 'Marked as Deleted', "success");
                     location.reload();
                 } else {
                     swal.fire('Already Solved', 'You cannot mark 2 answer as solution', "error");

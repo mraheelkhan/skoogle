@@ -62,18 +62,25 @@
           
           @foreach($answers as $answer) 
             <li>
+                  
               <i class="fa fa-comments bg-yellow"></i>
-
+            
               <div class="timeline-item" style="background: {{($answer->isSolution == 1) ? '#b2ffb1;' : '#fff' }}">
                 <span class="time"><i class="fa fa-clock-o"></i> {{ $answer->created_at}}</span>
 
-                <h3 class="timeline-header"><a href="#">{{$answer->user->fname}} {{$answer->user->lname }}</a> answer on question</h3>
+                <h3 class="timeline-header" style="background: {{($answer->is_deleted == 1) ? '#fd9a9a;' : '#fff' }}"><a href="#">{{$answer->user->fname}} {{$answer->user->lname }}</a> answer on question</h3>
 
                 <div class="timeline-body">
                   {{ $answer->answer_body }}
                 </div>
+                @if($answer->is_deleted == 0)
+                <div class="timeline-footer">
+                    <button class="btn btn-danger btn-xs" onclick="markAsDeleted({{$answer->id}})">Delete</button>
+                </div>
+                @endif
                
               </div>
+          
             </li>
            @endforeach
           </ul>
@@ -81,5 +88,31 @@
         <!-- /.col -->
       </div>
 <!-- Table end -->
+<script>
+    function markAsDeleted(id){
+        routeURL = "{{ route('forum.admindelete') }}";
+        $.ajax({
+            url: routeURL,
+            method: 'POST',
+            data: {
+                "answer_id" : id,
+                "_token" : "{{csrf_token()}}"
+            },
+            success: function(data){
+                console.log(data);
+                if(data.success == 1){
+                    swal('deleted', 'Marked as Deleted', "success");
+                    location.reload();
+                } else {
+                    swal('Already Solved', 'You cannot mark 2 answer as solution', "error");
+                }
+                
+            },
+            error: function(error){
+                console.log(error);
+            }
+        });
+    }
+</script>
 
 @endsection
