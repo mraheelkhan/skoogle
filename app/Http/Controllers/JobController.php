@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Job;
 use App\Category;
+use App\AppliedJob;
 use DataTables;
 use Illuminate\Http\Request;
 use Session;
 use Auth;
+use Storage;
 
 class JobController extends Controller
 {
@@ -81,7 +83,8 @@ class JobController extends Controller
     public function show($id)
     {
         $job = Job::findOrFail($id);
-        return view('jobs.show')->with('job', $job);
+        $appliers = AppliedJob::where('job_id', $job->id)->where('status', 1)->where('isActive', 1)->where('is_deleted', 0)->get();
+        return view('jobs.show')->with('job', $job)->with('appliers', $appliers);
     }
 
     /**
@@ -222,6 +225,40 @@ class JobController extends Controller
       $data->update();
       $message = 'Successfully Deleted.';
       return response()->json($message);
+    }
+
+    public function apply(Request $request){
+
+        $validated = $request->validate([   
+            "cover_letter" => 'required|min:20|max:1000',
+            "salary_expected" => 'required|numeric',
+            "job_id" => 'required',
+            "cv_file_name" => 'required',
+        ]);
+        $userid = auth()->user()->id;
+        $job_id = $request->job_id;
+        $cover_letter = $request->cover_letter;
+        $salary_expected = $request->salary_expected;
+
+        if($request->hasfile('cv_file_name'))
+        {
+           $file = $request->file('cv_file_name');
+           $cv_name = time().$file->getClientOriginalName();
+           $file->move(public_path().'/cv', $cv_name);
+        }else{
+           return redirect()->back();
+        }
+        $insert = AppliedJob::create([
+            'cover_letter' => request('cover_letter'),
+            'salary_expected' => request('salary_expected'),
+            'job_id' => request('job_id'),
+            'cv_file_name' => $cv_name,
+            'user_id' => auth()->user()->id,
+        ]);
+
+        Session::flash('message', 'Your job is posted successfully. <script>swal.fire("success","Posted","Your job is posted successfully");</script>'); 
+        return redirect(route('JobAll'));
+       
     }
 
     

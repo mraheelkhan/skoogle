@@ -12,7 +12,8 @@
 */
 
 Route::get('/', function () {
-    return redirect(route('ForumAll'));
+    // return redirect(route('ForumAll'));
+    return view('index');
 });
 
 Route::get('/logout', function(){
@@ -156,5 +157,5 @@ Route::get('/job/post', 'JobController@create')->middleware('auth')->name('JobCr
 Route::post('/job/store', 'JobController@store')->middleware('auth')->name('JobStore');
 Route::get('/job/edit/{id}', 'JobController@edit')->middleware('auth')->name('JobEdit');
 Route::get('/job/{id}', 'JobController@show')->name('JobShow');
-Route::post('/job/apply/store', 'JobController@store')->middleware('auth')->name('JobApply');
+Route::post('/job/apply/store', 'JobController@apply')->middleware('auth')->name('JobApply');
 Route::post('/job/close/', 'JobController@markAsClosed')->middleware('auth')->name('JobMarkAsClosed');
