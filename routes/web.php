@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect(route('ForumAll'));
 });
 
 Route::get('/logout', function(){
@@ -121,6 +121,16 @@ Route::group(['prefix'=> 'settings'],function(){
     Route::post('forum/disable', 'ForumQuestionController@adminforumDisable')->middleware('can:forum-admindisable')->name('forum.admindisable');
     Route::post('forum/delete', 'ForumQuestionController@admindeleteanswer')->middleware('can:forum-adminedit')->name('forum.admindelete');
     
+    // Job Monitoring
+    Route::get('/job', 'JobController@admin_all')->middleware('can:job-adminindex')->name('job.adminindex');
+    Route::get('/job/fetch', 'JobController@adminfetch')->middleware('can:job-adminfetch')->name('job.adminfetch');
+    Route::post('/job/store', 'JobController@adminupdate')->middleware('can:job-adminstore')->name('job.adminstore');
+    Route::get('/job/show/{id}', 'JobController@adminshow')->middleware('can:job-adminshow')->name('job.adminshow');
+    Route::post('/job/edit', 'JobController@adminedit')->middleware('can:job-adminedit')->name('job.adminedit');
+    Route::post('job/active', 'JobController@adminActive')->middleware('can:job-adminactive')->name('job.adminactive');
+    Route::post('job/disable', 'JobController@adminDisable')->middleware('can:job-admindisable')->name('job.admindisable');
+    Route::post('job/delete', 'JobController@adminDelete')->middleware('can:job-adminedit')->name('job.admindelete');
+    
 });
 
 
@@ -128,6 +138,8 @@ Route::group(['prefix'=> 'settings'],function(){
 //=================================
 //========= FRONT ROUTES ==========
 //=================================
+
+// Job routes for users only
 Route::get('/forum', 'ForumQuestionController@index')->name('forum.index');
 Route::get('/forum', 'ForumQuestionController@index')->name('ForumAll');
 Route::get('/forum/ask', 'ForumQuestionController@create')->middleware('auth')->name('ForumCreate');
@@ -137,9 +149,12 @@ Route::post('/forum/answer/store', 'ForumAnswerController@store')->middleware('a
 Route::post('/forum/answer/solution', 'ForumAnswerController@markAsSolution')->middleware('auth')->name('AnswerMarkAsSolution');
 
 
-
-
-
-
-
-
+// job posting and applying routes for user, admin and employer
+Route::get('/jobs', 'JobController@index')->name('JobAll');
+Route::get('/jobs/myjobs', 'JobController@myPostedJobs')->name('MyPostedJobs');
+Route::get('/job/post', 'JobController@create')->middleware('auth')->name('JobCreate');
+Route::post('/job/store', 'JobController@store')->middleware('auth')->name('JobStore');
+Route::get('/job/edit/{id}', 'JobController@edit')->middleware('auth')->name('JobEdit');
+Route::get('/job/{id}', 'JobController@show')->name('JobShow');
+Route::post('/job/apply/store', 'JobController@store')->middleware('auth')->name('JobApply');
+Route::post('/job/close/', 'JobController@markAsClosed')->middleware('auth')->name('JobMarkAsClosed');

@@ -35,6 +35,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->Departments();
         $this->categories();
         $this->forum_admin();
+        $this->job_admin();
         $this->Designation();
         $this->Preferences();
         $this->Generalsettings();
@@ -43,6 +44,32 @@ class AuthServiceProvider extends ServiceProvider
 
     }
 
+    // job admin
+    public function job_admin(){
+        
+        Gate::define('job-adminindex', function($user){
+            return $user->hasAccess(['job-adminindex']);
+        });
+        Gate::define('job-adminfetch', function($user){
+            return $user->hasAccess(['job-adminfetch']);
+        });
+        Gate::define('job-adminstore', function($user){
+            return $user->hasAccess(['job-adminstore']);
+        });
+        Gate::define('job-adminedit', function($user){
+            return $user->hasAccess(['job-adminedit']);
+        });
+        Gate::define('job-adminshow', function($user){
+            return $user->hasAccess(['job-adminshow']);
+        });
+        Gate::define('job-adminactive', function($user){
+            return $user->hasAccess(['job-adminactive']);
+        });
+        Gate::define('job-admindisable', function($user){
+            return $user->hasAccess(['job-admindisable']);
+        });
+    }
+    
     // forum admin
     public function forum_admin(){
         

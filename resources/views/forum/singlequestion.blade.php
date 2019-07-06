@@ -65,7 +65,7 @@
                 <span class="single-question-vote-result">+22</span>
                 <ul class="single-question-vote">
                     {{-- <li><a href="#" class="single-question-vote-down" title="Dislike"><i class="icon-thumbs-down"></i></a></li> --}}
-                    <li><a href="#" class="single-question-vote-up" title="Like"><i class="icon-thumbs-up"></i></a></li>
+                    {{-- <li><a href="#" class="single-question-vote-up" title="Like"><i class="icon-thumbs-up"></i></a></li> --}}
                 </ul>
                 <div class="clearfix"></div>
             </div>
@@ -81,9 +81,9 @@
                 [[UPDATE IT]]Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed viverra auctor neque. Nullam lobortis, sapien vitae lobortis tristique.
             </div>
         </div><!-- End about-author -->
-        @if( auth()->check() && $question->user_id == auth()->user()->id )
+        {{-- @if( auth()->check() && $question->user_id == auth()->user()->id )
         <h1> thisISOWNEROFQUESTION </h1>
-        @endif
+        @endif --}}
         <div id="commentlist" class="page-content">
         <div class="boxedtitle page-title"><h2>Answers ( <span class="color">{{count($answers)}}</span> )</h2></div>
             <ol class="commentlist clearfix">

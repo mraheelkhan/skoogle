@@ -29,7 +29,7 @@
      Both of these plugins are recommended to enhance the
      user experience. -->
      <!-- page script -->
-@if (\Request::is('admins') or \Request::is('roles')  or \Request::is('category')  or \Request::is('settings/forum') or \Request::is('categories') or \Request::is('menu') or \Request::is('customers') or \Request::is('leads') or Route::currentRouteName()=='leads.show' or \Request::is('recordings') or Route::currentRouteName()=="appointments.index" or Route::currentRouteName()=="appointments" or Route::currentRouteName()=="recordings.index" or Route::currentRouteName()=="recordings"  or Route::currentRouteName()=="tasks" or \Request::is('dashboard')  or Route::currentRouteName()=="departments")  
+@if (\Request::is('admins') or \Request::is('roles')  or \Request::is('category')  or \Request::is('settings/forum') or \Request::is('settings/job') or \Request::is('categories') or \Request::is('menu') or \Request::is('customers') or \Request::is('leads') or Route::currentRouteName()=='leads.show' or \Request::is('recordings') or Route::currentRouteName()=="appointments.index" or Route::currentRouteName()=="appointments" or Route::currentRouteName()=="recordings.index" or Route::currentRouteName()=="recordings"  or Route::currentRouteName()=="tasks" or \Request::is('dashboard')  or Route::currentRouteName()=="departments")  
   <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
 
