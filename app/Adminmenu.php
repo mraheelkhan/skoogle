@@ -36,12 +36,13 @@ class Adminmenu extends Model
         return $this->hasMany( self::class, 'parentid', 'id' );
     }
 
-    public function childrenformenu(){
-        return $this->hasMany( self::class, 'parentid', 'id' )->where('showinnav', 1);
-    }
+    
       
-      public function parent(){
-        return $this->hasOne( self::class, 'id', 'parentid' );
-      }
+  public function parent(){
+    return $this->hasOne( self::class, 'id', 'parentid' );
+  }
+  public function childrenformenu(){
+    return $this->hasMany( self::class, 'parentid', 'id' )->where('showinnav', 1);
+    }
 
 }

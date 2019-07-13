@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Designation extends Model
 {
     protected $fillable =[
-		'name', 'status' ,'user_id','last_modified_by'
+		'name','user_id','last_modified_by',  'status' 
 	];
 	
 	protected $dates = [
