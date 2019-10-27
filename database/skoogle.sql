@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 21, 2019 at 08:17 PM
--- Server version: 10.1.26-MariaDB
--- PHP Version: 7.1.9
+-- Generation Time: Oct 27, 2019 at 09:43 PM
+-- Server version: 10.4.6-MariaDB
+-- PHP Version: 7.1.32
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `db_skoogle`
+-- Database: `skoogle`
 --
 
 -- --------------------------------------------------------
@@ -38,8 +38,8 @@ CREATE TABLE `adminmenus` (
   `iconclass` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `urllink` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `displayorder` int(11) DEFAULT NULL,
-  `mselect` text COLLATE utf8mb4_unicode_ci,
-  `status` tinyint(1) NOT NULL DEFAULT '1',
+  `mselect` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -120,9 +120,9 @@ CREATE TABLE `applied_jobs` (
   `cover_letter` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `cv_file_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `salary_expected` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `isActive` int(11) NOT NULL DEFAULT '1' COMMENT '0 = inactive , 1 = active',
-  `status` int(11) NOT NULL DEFAULT '1' COMMENT '0 = pending , 1 = display, 2 = moderate, 3 = marked as spam',
-  `is_deleted` int(11) NOT NULL DEFAULT '0' COMMENT '0 = not deleted , 1 = deleted',
+  `isActive` int(11) NOT NULL DEFAULT 1 COMMENT '0 = inactive , 1 = active',
+  `status` int(11) NOT NULL DEFAULT 1 COMMENT '0 = pending , 1 = display, 2 = moderate, 3 = marked as spam',
+  `is_deleted` int(11) NOT NULL DEFAULT 0 COMMENT '0 = not deleted , 1 = deleted',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -137,7 +137,9 @@ INSERT INTO `applied_jobs` (`id`, `user_id`, `job_id`, `cover_letter`, `cv_file_
 (3, 8, 9, 'here is the doc file test', '1562453629srs1.docx', '202', 1, 1, 0, '2019-07-06 17:53:49', '2019-07-06 17:53:49'),
 (4, 8, 9, 'sadfasdf asfasf s y for - Senior Android Developer\r\ny for - Senior Android Developer\r\ny for - Senior Android Developer\r\ny for - Senior Android Developer\r\ny for - Senior Android Developer', '1562454650gaminglaptops-lowres-9178-570x380.jpg', '2432423', 1, 1, 0, '2019-07-06 18:10:50', '2019-07-06 18:10:50'),
 (5, 1, 5, 'here is the cover letter for my job, find it', '1571328618Screensho3t_2.png', '20000', 1, 1, 0, '2019-10-17 11:10:18', '2019-10-17 11:10:18'),
-(6, 1, 5, 'lskjflsadjf asljfl sadlskjflsadjf asljfl sadlskjflsadjf asljfl sadlskjflsadjf asljfl sadlskjflsadjf asljfl sadlskjflsadjf asljfl sadlskjflsadjf asljfl sadlskjflsadjf asljfl sad', '1571328643Screenshot_21.png', '40000', 1, 1, 0, '2019-10-17 11:10:43', '2019-10-17 11:10:43');
+(6, 1, 5, 'lskjflsadjf asljfl sadlskjflsadjf asljfl sadlskjflsadjf asljfl sadlskjflsadjf asljfl sadlskjflsadjf asljfl sadlskjflsadjf asljfl sadlskjflsadjf asljfl sadlskjflsadjf asljfl sad', '1571328643Screenshot_21.png', '40000', 1, 1, 0, '2019-10-17 11:10:43', '2019-10-17 11:10:43'),
+(7, 1, 1, 'here is the cover later by me and do consider me for this job so I can get back to you as soon as I can. \r\n\r\nThakn youj asflasdklfasdf much', '1572035688Etaqo.png', '2432423', 1, 1, 0, '2019-10-25 15:34:48', '2019-10-25 15:34:48'),
+(8, 1, 1, 'here is the cover later for the job of pakistan and we are here against india and between themw we sare fgoing to kdo asolf for auf0', '1572035752Marker Clustering.png', '2432423', 1, 1, 0, '2019-10-25 15:35:52', '2019-10-25 15:35:52');
 
 -- --------------------------------------------------------
 
@@ -150,7 +152,7 @@ CREATE TABLE `authentication_log` (
   `authenticatable_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `authenticatable_id` bigint(20) UNSIGNED NOT NULL,
   `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `user_agent` text COLLATE utf8mb4_unicode_ci,
+  `user_agent` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `login_at` timestamp NULL DEFAULT NULL,
   `logout_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -164,11 +166,11 @@ CREATE TABLE `authentication_log` (
 CREATE TABLE `categories` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `category_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `parent_category_id` int(11) NOT NULL DEFAULT '0' COMMENT ' 0 = no parent',
+  `parent_category_id` int(11) NOT NULL DEFAULT 0 COMMENT ' 0 = no parent',
   `type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT ' project, question, skill, course, video ',
   `user_id` int(11) NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '1' COMMENT '0 = inactive , 1 = active',
-  `is_deleted` int(11) NOT NULL DEFAULT '0' COMMENT '0 = not deleted , 1 = deleted',
+  `status` int(11) NOT NULL DEFAULT 1 COMMENT '0 = inactive , 1 = active',
+  `is_deleted` int(11) NOT NULL DEFAULT 0 COMMENT '0 = not deleted , 1 = deleted',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -193,13 +195,13 @@ INSERT INTO `categories` (`id`, `category_name`, `parent_category_id`, `type`, `
 CREATE TABLE `departments` (
   `id` int(10) UNSIGNED NOT NULL,
   `deptname` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '1',
+  `status` tinyint(1) NOT NULL DEFAULT 1,
   `user_id` int(10) UNSIGNED NOT NULL,
   `address` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `phone_number` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `business_email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `allow_outside` int(11) NOT NULL DEFAULT '1',
-  `isDeleted` int(11) NOT NULL DEFAULT '0',
+  `allow_outside` int(11) NOT NULL DEFAULT 1,
+  `isDeleted` int(11) NOT NULL DEFAULT 0,
   `last_modified_by` int(10) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -225,7 +227,7 @@ CREATE TABLE `designations` (
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` int(10) UNSIGNED NOT NULL,
   `last_modified_by` int(10) UNSIGNED NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '1',
+  `status` tinyint(1) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -252,10 +254,10 @@ CREATE TABLE `forum_answers` (
   `user_id` int(11) NOT NULL,
   `answer_body` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `question_id` int(11) NOT NULL,
-  `isSolution` int(11) NOT NULL DEFAULT '0' COMMENT '0 = no, 1 = solution',
-  `isActive` int(11) NOT NULL DEFAULT '1' COMMENT '0 = inactive , 1 = active',
-  `status` int(11) NOT NULL DEFAULT '1' COMMENT '0 = pending , 1 = display, 2 = moderate, 3 = marked as spam',
-  `is_deleted` int(11) NOT NULL DEFAULT '0' COMMENT '0 = not deleted , 1 = deleted',
+  `isSolution` int(11) NOT NULL DEFAULT 0 COMMENT '0 = no, 1 = solution',
+  `isActive` int(11) NOT NULL DEFAULT 1 COMMENT '0 = inactive , 1 = active',
+  `status` int(11) NOT NULL DEFAULT 1 COMMENT '0 = pending , 1 = display, 2 = moderate, 3 = marked as spam',
+  `is_deleted` int(11) NOT NULL DEFAULT 0 COMMENT '0 = not deleted , 1 = deleted',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -288,9 +290,9 @@ CREATE TABLE `forum_questions` (
   `question_title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `question_body` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `category_id` int(11) NOT NULL,
-  `isActive` int(11) NOT NULL DEFAULT '1' COMMENT '0 = inactive , 1 = active',
-  `status` int(11) NOT NULL DEFAULT '1' COMMENT '0 = pending , 1 = display, 2 = moderate, 3 = marked as spam',
-  `is_deleted` int(11) NOT NULL DEFAULT '0' COMMENT '0 = not deleted , 1 = deleted',
+  `isActive` int(11) NOT NULL DEFAULT 1 COMMENT '0 = inactive , 1 = active',
+  `status` int(11) NOT NULL DEFAULT 1 COMMENT '0 = pending , 1 = display, 2 = moderate, 3 = marked as spam',
+  `is_deleted` int(11) NOT NULL DEFAULT 0 COMMENT '0 = not deleted , 1 = deleted',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -313,7 +315,7 @@ INSERT INTO `forum_questions` (`id`, `user_id`, `question_title`, `question_body
 CREATE TABLE `jobs` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `user_id` int(11) NOT NULL,
-  `organization_id` int(11) NOT NULL DEFAULT '0' COMMENT '0 = individual, no company',
+  `organization_id` int(11) NOT NULL DEFAULT 0 COMMENT '0 = individual, no company',
   `category_id` int(11) NOT NULL,
   `job_title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `job_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'fulltime, part time, freelance, depends',
@@ -321,9 +323,9 @@ CREATE TABLE `jobs` (
   `deadline` date DEFAULT NULL,
   `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `salary_range` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `isActive` int(11) NOT NULL DEFAULT '1' COMMENT '0 = inactive , 1 = active',
-  `status` int(11) NOT NULL DEFAULT '1' COMMENT '0 = pending , 1 = display, 2 = moderate, 3 = marked as spam',
-  `is_deleted` int(11) NOT NULL DEFAULT '0' COMMENT '0 = not deleted , 1 = deleted',
+  `isActive` int(11) NOT NULL DEFAULT 1 COMMENT '0 = inactive , 1 = active',
+  `status` int(11) NOT NULL DEFAULT 1 COMMENT '0 = pending , 1 = display, 2 = moderate, 3 = marked as spam',
+  `is_deleted` int(11) NOT NULL DEFAULT 0 COMMENT '0 = not deleted , 1 = deleted',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -365,7 +367,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (3, '2019_06_27_081014_create_forum_questions_table', 2),
 (4, '2019_06_27_081641_create_forum_answers_table', 3),
 (6, '2019_06_27_151621_create_jobs_table', 4),
-(7, '2019_06_27_153110_create_applied_jobs_table', 5);
+(7, '2019_06_27_153110_create_applied_jobs_table', 5),
+(8, '2019_06_27_151020_create_posts_table', 6),
+(9, '2019_06_27_151403_create_post_comments_table', 6);
 
 -- --------------------------------------------------------
 
@@ -402,7 +406,7 @@ CREATE TABLE `oauth_access_tokens` (
   `user_id` int(11) DEFAULT NULL,
   `client_id` int(11) NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `scopes` text COLLATE utf8mb4_unicode_ci,
+  `scopes` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `revoked` tinyint(1) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -419,7 +423,7 @@ CREATE TABLE `oauth_auth_codes` (
   `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` int(11) NOT NULL,
   `client_id` int(11) NOT NULL,
-  `scopes` text COLLATE utf8mb4_unicode_ci,
+  `scopes` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `revoked` tinyint(1) NOT NULL,
   `expires_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -491,19 +495,72 @@ INSERT INTO `password_resets` (`email`, `token`, `created_at`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `posts`
+--
+
+CREATE TABLE `posts` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL,
+  `post_date` date DEFAULT NULL,
+  `post_content` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `post_title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `post_status` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1' COMMENT '0 = not publish, 1 = publish',
+  `is_comment` int(11) NOT NULL DEFAULT 1 COMMENT '1= on, 0= off',
+  `post_url` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `post_type` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'post, article, job',
+  `isActive` int(11) NOT NULL DEFAULT 1 COMMENT '0 = inactive , 1 = active',
+  `status` int(11) NOT NULL DEFAULT 1 COMMENT '0 = pending , 1 = display, 2 = moderate, 3 = marked as spam',
+  `is_deleted` int(11) NOT NULL DEFAULT 0 COMMENT '0 = not deleted , 1 = deleted',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `posts`
+--
+
+INSERT INTO `posts` (`id`, `user_id`, `category_id`, `post_date`, `post_content`, `post_title`, `post_status`, `is_comment`, `post_url`, `post_type`, `isActive`, `status`, `is_deleted`, `created_at`, `updated_at`) VALUES
+(1, 8, 2, NULL, '<p>her eis <strong>the title </strong>of ht<strong>e apksiat</strong>n papasofjasdf lasdjkf</p>\r\n\r\n<p>asdfjklas<em>dj flasdjkf</em>lasd fjasd</p>\r\n\r\n<p>fasdfasdf</p>', 'here is the title', '1', 1, 'here-is-the-title-1235873', NULL, 1, 1, 0, '2019-10-27 09:13:51', '2019-10-27 09:13:51'),
+(3, 1, 3, NULL, '<p>OKAY OKAY asdfasdf asdf asdfasdf asdfasd fasdfasd fadsfa</p>\r\n\r\n<p>will not say love from Ind or Pak ,we should not divide our love for music in terms of national,the only thing I could say for him Love this tallent from bottom of my heart!!!!!!!!!!</p>\r\n\r\n<p>will not say love from Ind or Pak ,we should not divide our love for music in terms of national,the only thing I could say for him Love this tallent from bottom of my heart!!!!!!!!!!</p>\r\n\r\n<p>will not say love from Ind or Pak ,we should not divide our love for music in terms of national,the only thing I could say for him Love this tallent from bottom of my heart!!!!!!!!!!</p>\r\n\r\n<p>will not say love from Ind or Pak ,we should not divide our love for music in terms of national,the only thing I could say for him Love this tallent from bottom of my heart!!!!!!!!!!</p>\r\n\r\n<p>will not say love from Ind or Pak ,we should not divide our love for music in terms of national,the only thing I could say for him Love this tallent from bottom of my heart!!!!!!!!!!</p>\r\n\r\n<p>will not say love from Ind or Pak ,we should not divide our love for music in terms of national,the only thing I could say for him Love this tallent from bottom of my heart!!!!!!!!!!</p>\r\n\r\n<p>will not say love from Ind or Pak ,we should not divide our love for music in terms of national,the only thing I could say for him Love this tallent from bottom of my heart!!!!!!!!!!</p>\r\n\r\n<p>will not say love from Ind or Pak ,we should not divide our love for music in terms of national,the only thing I could say for him Love this tallent from bottom of my heart!!!!!!!!!!</p>\r\n\r\n<p>&nbsp;</p>', 'garzi ba eba zan ba na khafa k', '1', 1, 'garzi-ba-eba-zan-ba-na-khafa-k-1979423', NULL, 1, 1, 0, '2019-10-27 14:28:04', '2019-10-27 15:41:50'),
+(4, 1, 1, NULL, '<p>her is the coneenf othe&nbsp;myArticles.&nbsp;these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !</p>\r\n\r\n<p>these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !</p>\r\n\r\n<p>these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !</p>\r\n\r\n<p>these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !</p>\r\n\r\n<p>these OSTezz are the best ever made. incredible !</p>', 'Sishake Product Page of Pakistan', '1', 1, 'Sishake-Product-Page-of-Pakistan1735386', NULL, 1, 1, 0, '2019-10-27 14:46:06', '2019-10-27 15:42:12');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `post_comments`
+--
+
+CREATE TABLE `post_comments` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `post_id` int(11) NOT NULL,
+  `comment_body` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `comment_type` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `up_votes` int(11) NOT NULL DEFAULT 0,
+  `isActive` int(11) NOT NULL DEFAULT 1 COMMENT '0 = inactive , 1 = active',
+  `status` int(11) NOT NULL DEFAULT 1 COMMENT '0 = pending , 1 = display, 2 = moderate, 3 = marked as spam',
+  `is_deleted` int(11) NOT NULL DEFAULT 0 COMMENT '0 = not deleted , 1 = deleted',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `roles`
 --
 
 CREATE TABLE `roles` (
   `id` int(10) UNSIGNED NOT NULL,
   `role_title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `permissions` text COLLATE utf8mb4_unicode_ci,
+  `permissions` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `permission` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` int(10) UNSIGNED NOT NULL,
   `created_ip` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_modified_by` int(10) UNSIGNED NOT NULL,
   `modified_ip` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '1',
+  `status` tinyint(1) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -556,12 +613,13 @@ CREATE TABLE `users` (
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phonenumber` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `avatar` text COLLATE utf8mb4_unicode_ci,
-  `status` tinyint(1) NOT NULL DEFAULT '1',
+  `avatar` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 1,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `iscustomer` tinyint(1) NOT NULL DEFAULT '0',
+  `iscustomer` tinyint(1) NOT NULL DEFAULT 0,
+  `isPro` int(11) DEFAULT NULL,
   `role_id` int(10) UNSIGNED NOT NULL,
   `createdby` int(10) UNSIGNED DEFAULT NULL,
   `updatedby` int(10) UNSIGNED DEFAULT NULL,
@@ -574,10 +632,10 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `fname`, `lname`, `email`, `password`, `phonenumber`, `avatar`, `status`, `remember_token`, `created_at`, `updated_at`, `iscustomer`, `role_id`, `createdby`, `updatedby`, `username`, `organization_id`, `designation_id`) VALUES
-(1, 'Raheel', 'Khan', 'admin@admin.com', '$2y$10$MntbYTaK/9avYH/zOD4U5uAjtn4aFUtk4q36MNinnQ6bPdFDK0PwO', '03333639395', 'raheel.jpg', 1, 'k6gUbJEZNjFKBLY5bU5TtRLQicuDPgDoRn2ZTWRMdyHvVWT3gUCY2fTXiBRr', '2018-06-25 10:22:52', '2019-07-01 07:44:10', 0, 1, NULL, NULL, '', 14, 0),
-(7, 'Raheel', 'Khan', 'adminaaa@admin.com', '$2y$10$.ltGPfRid5qNIYrRz6Q/bOZ4dXNX./869VJm7Kfp1fxfTNAwKLQMi', '3333639395', 'default_avatar_male.jpg', 1, NULL, '2019-07-01 19:00:00', '2019-07-02 02:45:45', 1, 2, NULL, NULL, NULL, 15, 0),
-(8, 'Syed Abbas', 'Khan', 'abbas@gmail.com', '$2y$10$nw4LjC6K4XcUCSxkRSJAleUeylUzl4sRwGPnFUqi0Mf1MbfVwbCKa', '3333222211', 'default_avatar_male.jpg', 1, NULL, '2019-07-01 19:00:00', '2019-07-01 19:00:00', 1, 2, NULL, NULL, NULL, 8, 0);
+INSERT INTO `users` (`id`, `fname`, `lname`, `email`, `password`, `phonenumber`, `avatar`, `status`, `remember_token`, `created_at`, `updated_at`, `iscustomer`, `isPro`, `role_id`, `createdby`, `updatedby`, `username`, `organization_id`, `designation_id`) VALUES
+(1, 'Raheel', 'Khan', 'admin@admin.com', '$2y$10$MntbYTaK/9avYH/zOD4U5uAjtn4aFUtk4q36MNinnQ6bPdFDK0PwO', '03333639395', 'raheel.jpg', 1, 'aVqbSdAlSqNN7ue1Va9YMtP0fP9ta00aLwYRTQ2mOOL2WGVT7d2A3IB0AZar', '2018-06-25 10:22:52', '2019-07-01 07:44:10', 0, 1, 1, NULL, NULL, '', 14, 0),
+(7, 'Raheel', 'Khan', 'adminaaa@admin.com', '$2y$10$.ltGPfRid5qNIYrRz6Q/bOZ4dXNX./869VJm7Kfp1fxfTNAwKLQMi', '3333639395', 'default_avatar_male.jpg', 1, NULL, '2019-07-01 19:00:00', '2019-07-02 02:45:45', 1, NULL, 2, NULL, NULL, NULL, 15, 0),
+(8, 'Syed Abbas', 'Khan', 'abbas@gmail.com', '$2y$10$nw4LjC6K4XcUCSxkRSJAleUeylUzl4sRwGPnFUqi0Mf1MbfVwbCKa', '3333222211', 'default_avatar_male.jpg', 1, NULL, '2019-07-01 19:00:00', '2019-07-01 19:00:00', 1, NULL, 2, NULL, NULL, NULL, 8, 0);
 
 --
 -- Indexes for dumped tables
@@ -698,6 +756,19 @@ ALTER TABLE `password_resets`
   ADD KEY `password_resets_email_index` (`email`);
 
 --
+-- Indexes for table `posts`
+--
+ALTER TABLE `posts`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `posts_post_url_unique` (`post_url`);
+
+--
+-- Indexes for table `post_comments`
+--
+ALTER TABLE `post_comments`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `roles`
 --
 ALTER TABLE `roles`
@@ -738,7 +809,7 @@ ALTER TABLE `adminmenus`
 -- AUTO_INCREMENT for table `applied_jobs`
 --
 ALTER TABLE `applied_jobs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `authentication_log`
@@ -786,7 +857,7 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `oauth_clients`
@@ -799,6 +870,18 @@ ALTER TABLE `oauth_clients`
 --
 ALTER TABLE `oauth_personal_access_clients`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `posts`
+--
+ALTER TABLE `posts`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `post_comments`
+--
+ALTER TABLE `post_comments`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `roles`
