@@ -9,6 +9,7 @@ use DateTime;
 use DatePeriod;
 use DateInterval;
 use Calendar;
+use App\Post;
 use Carbon\Carbon;
 
 
@@ -21,7 +22,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except('newsfeed');
         //$this->middleware('customer');
     }
 
@@ -41,4 +42,11 @@ class HomeController extends Controller
         return view('dashboard');
         
     }
+
+    public function newsfeed(){
+        $posts = Post::all();
+        return view('home.home', compact('posts'));
+    }
+
+    
 }

@@ -10,18 +10,15 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    // return redirect(route('ForumAll'));
-    return view('index');
-});
+Route::get('/home', 'HomeController@newsfeed')->name('Home');
+Route::get('/', 'HomeController@newsfeed')->name('NewsFeed');
 
 Route::get('/logout', function(){
   Auth::logout();
   return redirect(route('ForumAll'));
 })->name('LogOutSystem');
 Auth::routes();
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
 //Dashboard
 Route::get('/dashboard', 'HomeController@dashboard')->middleware('auth')->name('dashboard');
 Route::get('/changepassword', ['as' => 'changepassword' , function () {
@@ -159,3 +156,15 @@ Route::get('/job/edit/{id}', 'JobController@edit')->middleware('auth')->name('Jo
 Route::get('/job/{id}', 'JobController@show')->name('JobShow');
 Route::post('/job/apply/store', 'JobController@apply')->middleware('auth')->name('JobApply');
 Route::post('/job/close/', 'JobController@markAsClosed')->middleware('auth')->name('JobMarkAsClosed');
+
+
+Route::get('posts', 'PostController@index');
+Route::get('posts/my', 'PostController@myArticles')->name('PostMy');
+Route::get('post/create', 'PostController@create')->name('PostCreate');
+Route::post('post/store', 'PostController@store')->name('PostStore');
+Route::get('post/{string}', 'PostController@show')->name('PostShow');
+Route::get('post/delete/{id}', 'PostController@delete')->name('PostDelete');
+Route::get('post/edit/{id}', 'PostController@edit')->name('PostEdit');
+Route::post('post/update', 'PostController@update')->name('PostUpdate');
+
+Route::post('comment/store', 'CommentController@store')->name('CommentStore');

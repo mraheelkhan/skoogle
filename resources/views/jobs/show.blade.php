@@ -52,13 +52,20 @@
               @if($job->status == 2  || auth()->user()->id == $job->user_id )
               
               @else
-              <a href="#"  data-toggle="modal" data-target="#exampleModal" class="btn btn-primary  py-2 px-4">Apply Job</a>
+                @if(count($ifApplied) < 1 )
+                  <a href="#"  data-toggle="modal" data-target="#exampleModal" class="btn btn-primary  py-2 px-4">Apply Job</a>
+                @else
+                  <span class="alert alert-secondary"> Already Applied!</span>
+                @endif
               @endif
           </p>
           @else
+            
+            
               <p class="mt-5">
               <a href="{{ route('login') }}" class="btn btn-danger py-2 px-4">Login to Apply Job</a>
               </p>
+            
           @endif
         </div>
       </div>
@@ -77,7 +84,11 @@
                   @if($job->status == 2 || auth()->user()->id == $job->user_id )
               
                   @else
-                  <a href="#" data-toggle="modal" data-target="#exampleModal" class="btn btn-primary  py-2 px-4">Apply Job</a>
+                  @if(count($ifApplied) < 1 )
+                  <a href="#"  data-toggle="modal" data-target="#exampleModal" class="btn btn-primary  py-2 px-4">Apply Job</a>
+                @else
+                  <span class="alert alert-secondary"> Already Applied!</span>
+                @endif
                   @endif
           </p>
           @else

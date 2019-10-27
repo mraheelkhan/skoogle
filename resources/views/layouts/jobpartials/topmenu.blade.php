@@ -17,7 +17,10 @@
                     <ul class="site-menu js-clone-nav d-none d-lg-block">
                         <li><a href="{{ route('JobAll') }}">All Jobs</a></li>
                         @if(auth()->check() && auth()->user()->organization_id != 0)
-                        <li><a href="{{ route('MyPostedJobs') }}">My Posted Jobs</a></li>
+                        
+                            @if(auth()->user()->isPro == 1 )
+                            <li><a href="{{ route('MyPostedJobs') }}">My Posted Jobs</a></li>
+                            @endif
 
                         @endif      
                     <li><a href="{{route('JobCreate')}}">

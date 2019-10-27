@@ -84,7 +84,8 @@ class JobController extends Controller
     {
         $job = Job::findOrFail($id);
         $appliers = AppliedJob::where('job_id', $job->id)->where('status', 1)->where('isActive', 1)->where('is_deleted', 0)->get();
-        return view('jobs.show')->with('job', $job)->with('appliers', $appliers);
+        $if_applied = AppliedJob::where('job_id', $job->id)->where('user_id', auth()->user()->id)->get();
+        return view('jobs.show')->with('job', $job)->with('appliers', $appliers)->with('ifApplied', $if_applied);
     }
 
     /**
