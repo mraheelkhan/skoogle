@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 27, 2019 at 09:43 PM
+-- Generation Time: Oct 28, 2019 at 07:40 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.1.32
 
@@ -117,7 +117,7 @@ CREATE TABLE `applied_jobs` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `user_id` int(11) NOT NULL,
   `job_id` int(11) NOT NULL,
-  `cover_letter` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cover_letter` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `cv_file_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `salary_expected` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `isActive` int(11) NOT NULL DEFAULT 1 COMMENT '0 = inactive , 1 = active',
@@ -139,7 +139,8 @@ INSERT INTO `applied_jobs` (`id`, `user_id`, `job_id`, `cover_letter`, `cv_file_
 (5, 1, 5, 'here is the cover letter for my job, find it', '1571328618Screensho3t_2.png', '20000', 1, 1, 0, '2019-10-17 11:10:18', '2019-10-17 11:10:18'),
 (6, 1, 5, 'lskjflsadjf asljfl sadlskjflsadjf asljfl sadlskjflsadjf asljfl sadlskjflsadjf asljfl sadlskjflsadjf asljfl sadlskjflsadjf asljfl sadlskjflsadjf asljfl sadlskjflsadjf asljfl sad', '1571328643Screenshot_21.png', '40000', 1, 1, 0, '2019-10-17 11:10:43', '2019-10-17 11:10:43'),
 (7, 1, 1, 'here is the cover later by me and do consider me for this job so I can get back to you as soon as I can. \r\n\r\nThakn youj asflasdklfasdf much', '1572035688Etaqo.png', '2432423', 1, 1, 0, '2019-10-25 15:34:48', '2019-10-25 15:34:48'),
-(8, 1, 1, 'here is the cover later for the job of pakistan and we are here against india and between themw we sare fgoing to kdo asolf for auf0', '1572035752Marker Clustering.png', '2432423', 1, 1, 0, '2019-10-25 15:35:52', '2019-10-25 15:35:52');
+(8, 1, 1, 'here is the cover later for the job of pakistan and we are here against india and between themw we sare fgoing to kdo asolf for auf0', '1572035752Marker Clustering.png', '2432423', 1, 1, 0, '2019-10-25 15:35:52', '2019-10-25 15:35:52'),
+(9, 1, 2, 'I tried and it works only if something else is clicked first eg. a link has been right clicked. Then if I click the browser close button it prompts before closing as expected. Otherwise if I go directly to the page for example and click close button straightaway it doesn\'t work and page closes. The code inside onbeforeunload function hits each but in the last case clearly has no effect.', '1572285431Etaqo.png', '2432423', 1, 1, 0, '2019-10-28 12:57:11', '2019-10-28 12:57:11');
 
 -- --------------------------------------------------------
 
@@ -522,8 +523,8 @@ CREATE TABLE `posts` (
 
 INSERT INTO `posts` (`id`, `user_id`, `category_id`, `post_date`, `post_content`, `post_title`, `post_status`, `is_comment`, `post_url`, `post_type`, `isActive`, `status`, `is_deleted`, `created_at`, `updated_at`) VALUES
 (1, 8, 2, NULL, '<p>her eis <strong>the title </strong>of ht<strong>e apksiat</strong>n papasofjasdf lasdjkf</p>\r\n\r\n<p>asdfjklas<em>dj flasdjkf</em>lasd fjasd</p>\r\n\r\n<p>fasdfasdf</p>', 'here is the title', '1', 1, 'here-is-the-title-1235873', NULL, 1, 1, 0, '2019-10-27 09:13:51', '2019-10-27 09:13:51'),
-(3, 1, 3, NULL, '<p>OKAY OKAY asdfasdf asdf asdfasdf asdfasd fasdfasd fadsfa</p>\r\n\r\n<p>will not say love from Ind or Pak ,we should not divide our love for music in terms of national,the only thing I could say for him Love this tallent from bottom of my heart!!!!!!!!!!</p>\r\n\r\n<p>will not say love from Ind or Pak ,we should not divide our love for music in terms of national,the only thing I could say for him Love this tallent from bottom of my heart!!!!!!!!!!</p>\r\n\r\n<p>will not say love from Ind or Pak ,we should not divide our love for music in terms of national,the only thing I could say for him Love this tallent from bottom of my heart!!!!!!!!!!</p>\r\n\r\n<p>will not say love from Ind or Pak ,we should not divide our love for music in terms of national,the only thing I could say for him Love this tallent from bottom of my heart!!!!!!!!!!</p>\r\n\r\n<p>will not say love from Ind or Pak ,we should not divide our love for music in terms of national,the only thing I could say for him Love this tallent from bottom of my heart!!!!!!!!!!</p>\r\n\r\n<p>will not say love from Ind or Pak ,we should not divide our love for music in terms of national,the only thing I could say for him Love this tallent from bottom of my heart!!!!!!!!!!</p>\r\n\r\n<p>will not say love from Ind or Pak ,we should not divide our love for music in terms of national,the only thing I could say for him Love this tallent from bottom of my heart!!!!!!!!!!</p>\r\n\r\n<p>will not say love from Ind or Pak ,we should not divide our love for music in terms of national,the only thing I could say for him Love this tallent from bottom of my heart!!!!!!!!!!</p>\r\n\r\n<p>&nbsp;</p>', 'garzi ba eba zan ba na khafa k', '1', 1, 'garzi-ba-eba-zan-ba-na-khafa-k-1979423', NULL, 1, 1, 0, '2019-10-27 14:28:04', '2019-10-27 15:41:50'),
-(4, 1, 1, NULL, '<p>her is the coneenf othe&nbsp;myArticles.&nbsp;these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !</p>\r\n\r\n<p>these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !</p>\r\n\r\n<p>these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !</p>\r\n\r\n<p>these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !these OSTezz are the best ever made. incredible !</p>\r\n\r\n<p>these OSTezz are the best ever made. incredible !</p>', 'Sishake Product Page of Pakistan', '1', 1, 'Sishake-Product-Page-of-Pakistan1735386', NULL, 1, 1, 0, '2019-10-27 14:46:06', '2019-10-27 15:42:12');
+(8, 1, 2, NULL, '<p>I tried and it works only if something else is clicked first eg. a link has been right clicked. Then if I click the browser close button it prompts before closing as expected. Otherwise if I go directly to the page for example and click close button straightaway it doesn&#39;t work and page closes. The code inside onbeforeunload function hits each but in the last case clearly has no effect.</p>', 'Ayaz is very PTM person', '1', 1, 'Ayaz-is-very-PTM-person1478464', NULL, 1, 1, 0, '2019-10-28 12:58:27', '2019-10-28 12:58:27'),
+(9, 1, 3, NULL, '<p>I read comments on answer set as&nbsp;<strong>Okay</strong>. Most of the user are asking that the button and some links click should be allowed. Here one more line is added to the existing code that will work.</p>\r\n\r\n<pre>\r\n<code>&lt;script type=&quot;text/javascript&quot;&gt;\r\n  var hook = true;\r\n  window.onbeforeunload = function() {\r\n    if (hook) {\r\n\r\n      return &quot;Did you save your stuff?&quot;\r\n    }\r\n  }\r\n  function unhook() {\r\n    hook=false;\r\n  }</code></pre>\r\n\r\n<p>Call unhook() onClick for button and links which you want to allow. E.g.</p>\r\n\r\n<pre>\r\n<code>&lt;a href=&quot;#&quot; onClick=&quot;unhook()&quot;&gt;This link will allow navigation&lt;/a&gt;</code></pre>', 'i\'ll create responsive WordPress website', '1', 1, 'i-ll-create-responsive-WordPress-website1950801', NULL, 1, 1, 0, '2019-10-28 12:59:03', '2019-10-28 12:59:03');
 
 -- --------------------------------------------------------
 
@@ -544,6 +545,16 @@ CREATE TABLE `post_comments` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `post_comments`
+--
+
+INSERT INTO `post_comments` (`id`, `user_id`, `post_id`, `comment_body`, `comment_type`, `up_votes`, `isActive`, `status`, `is_deleted`, `created_at`, `updated_at`) VALUES
+(1, 1, 9, 'my name is khan', NULL, 0, 1, 1, 0, '2019-10-28 13:07:44', '2019-10-28 13:07:44'),
+(2, 2, 9, 'my name is khan', NULL, 0, 1, 1, 0, '2019-10-28 13:07:53', '2019-10-28 13:07:53'),
+(4, 1, 9, 'this is very good pakistan', NULL, 0, 1, 1, 0, '2019-10-28 13:08:33', '2019-10-28 13:08:33'),
+(5, 1, 8, 'this is the dummy comment on the post of raheel khan from raheel kahn', NULL, 0, 1, 1, 0, '2019-10-28 13:21:54', '2019-10-28 13:21:54');
 
 -- --------------------------------------------------------
 
@@ -633,7 +644,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `fname`, `lname`, `email`, `password`, `phonenumber`, `avatar`, `status`, `remember_token`, `created_at`, `updated_at`, `iscustomer`, `isPro`, `role_id`, `createdby`, `updatedby`, `username`, `organization_id`, `designation_id`) VALUES
-(1, 'Raheel', 'Khan', 'admin@admin.com', '$2y$10$MntbYTaK/9avYH/zOD4U5uAjtn4aFUtk4q36MNinnQ6bPdFDK0PwO', '03333639395', 'raheel.jpg', 1, 'aVqbSdAlSqNN7ue1Va9YMtP0fP9ta00aLwYRTQ2mOOL2WGVT7d2A3IB0AZar', '2018-06-25 10:22:52', '2019-07-01 07:44:10', 0, 1, 1, NULL, NULL, '', 14, 0),
+(1, 'Raheel', 'Khan', 'admin@admin.com', '$2y$10$MntbYTaK/9avYH/zOD4U5uAjtn4aFUtk4q36MNinnQ6bPdFDK0PwO', '03333639395', 'raheel.jpg', 1, '6SsePLLbxjlmVcXznQpRMt4oxbrfcQC2pEdMKYZp32DNpjKKM31cb7mxPOlr', '2018-06-25 10:22:52', '2019-07-01 07:44:10', 0, 1, 1, NULL, NULL, '', 14, 0),
 (7, 'Raheel', 'Khan', 'adminaaa@admin.com', '$2y$10$.ltGPfRid5qNIYrRz6Q/bOZ4dXNX./869VJm7Kfp1fxfTNAwKLQMi', '3333639395', 'default_avatar_male.jpg', 1, NULL, '2019-07-01 19:00:00', '2019-07-02 02:45:45', 1, NULL, 2, NULL, NULL, NULL, 15, 0),
 (8, 'Syed Abbas', 'Khan', 'abbas@gmail.com', '$2y$10$nw4LjC6K4XcUCSxkRSJAleUeylUzl4sRwGPnFUqi0Mf1MbfVwbCKa', '3333222211', 'default_avatar_male.jpg', 1, NULL, '2019-07-01 19:00:00', '2019-07-01 19:00:00', 1, NULL, 2, NULL, NULL, NULL, 8, 0);
 
@@ -809,7 +820,7 @@ ALTER TABLE `adminmenus`
 -- AUTO_INCREMENT for table `applied_jobs`
 --
 ALTER TABLE `applied_jobs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `authentication_log`
@@ -875,13 +886,13 @@ ALTER TABLE `oauth_personal_access_clients`
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `post_comments`
 --
 ALTER TABLE `post_comments`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `roles`
