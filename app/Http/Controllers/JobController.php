@@ -236,6 +236,7 @@ class JobController extends Controller
             "job_id" => 'required',
             "cv_file_name" => 'required',
         ]);
+
         $userid = auth()->user()->id;
         $job_id = $request->job_id;
         $cover_letter = $request->cover_letter;
@@ -246,7 +247,7 @@ class JobController extends Controller
            $file = $request->file('cv_file_name');
            $cv_name = time().$file->getClientOriginalName();
            $file->move(public_path().'/cv', $cv_name);
-        }else{
+        } else {
            return redirect()->back();
         }
         $insert = AppliedJob::create([

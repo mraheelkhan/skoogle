@@ -167,4 +167,5 @@ Route::get('post/delete/{id}', 'PostController@delete')->name('PostDelete');
 Route::get('post/edit/{id}', 'PostController@edit')->name('PostEdit');
 Route::post('post/update', 'PostController@update')->name('PostUpdate');
 
-Route::post('comment/store', 'CommentController@store')->name('CommentStore');
+Route::post('comment/store', 'PostCommentController@store')->name('CommentStore');
+Route::get('comment/delete/{id}', 'PostCommentController@destroy')->name('CommentDelete');

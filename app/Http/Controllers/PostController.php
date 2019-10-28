@@ -6,6 +6,7 @@ use App\Post;
 use App\Category;
 use Illuminate\Http\Request;
 use Session;
+use App\PostComment;
 class PostController extends Controller
 {
     public function __construct(){
@@ -78,8 +79,8 @@ class PostController extends Controller
     public function show($url)
     {
         $post = Post::where('post_url', $url)->first();
-      
-        return view('posts.show', compact('post'));
+        $comments = PostComment::where('post_id', $post->id)->orderBy('id', 'desc')->get();
+        return view('posts.show', compact('post', 'comments'));
     }
 
     /**

@@ -22,9 +22,23 @@
                         </p>
                     </div>
                     <!-----------------------------------COMMENT AREA START---------------------------------->
-                    
+                    @if($post->is_comment == 1)
                     <!---------------------------------Comment AREA--------------------------------->
                     <div class="post_comment">
+                            @if(Session::has('message'))
+                            <p class="alert alert-success">{!! Session::get('message') !!}</p>    
+                        @elseif(Session::has('error'))
+                            <p class="alert alert-danger">{!! Session::get('error') !!}</p>
+                        @endif
+                        @if(session('failed'))
+                            <script>
+                              $( document ).ready(function() {
+                                swal.fire("Failed", "{!! Session::get('error') !!}", "error");
+                              });
+                              
+                            </script>
+                        @endif
+                        
                         <h3>Post A Comment</h3>
                         @if(auth()->check())
                     <form class="comment_box" action="{{route('CommentStore')}}" method="post">
@@ -48,6 +62,35 @@
                             <h3> Login to post a comment </h3>
                             @endif
                     </div>  
+                    @endif
+                    <div class="col-md-8">
+                        @foreach($comments as $comment)
+                        <div class="card card-white post">
+                                <div class="post-heading">
+                                    <div class="float-left meta">
+                                        <div class="title h5">
+                                            <a href="#"><b>{{$comment->user->fname . " " . $comment->user->lname }}</b></a>
+                                            made a comment. <span class="text-muted time">{{$comment->created_at->diffForHumans()}}</span>
+                                            @if(auth()->check() && $comment->user_id == auth()->user()->id)
+                                            <span class="text-right">
+                                                    <a href="{{route('CommentDelete', $comment->id)}}" class="btn btn-danger">
+                                                        <i class="fa fa-trash"></i>
+                                                    </a>
+                                                    
+                                                </span>
+                                                @endif
+                                        </div>
+                                        
+                                    </div>
+                                </div> 
+                                <div class="post-description"> 
+                                    <p>{{$comment->comment_body}}</p>
+                
+                                </div>
+                                <hr>
+                            </div>
+                            @endforeach
+                        </div>
                 </div>
                 {{-- <div class="col-sm-4 widget_area">
                     <div class="resent">

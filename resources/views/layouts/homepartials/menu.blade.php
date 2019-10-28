@@ -92,6 +92,11 @@
                     </li>
                 <li><a href="{{route('JobAll')}}">Career</a></li>
                     <li><a href="{{route('ForumAll')}}">Forum</a></li>
+                    @if(!auth()->check())
+                    <li><a href="{{url('/login')}}">Login</a></li>
+                    @else
+                    <li><a href="{{url('/logout')}}">Logout</a></li>
+                    @endif
                     <li><a href="#">Contact</a></li>
                     <li><a href="#" class="nav_searchFrom"><i class="fa fa-search"></i></a></li>
                 </ul>
