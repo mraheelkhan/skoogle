@@ -130,6 +130,7 @@
                               <option value="category">Category</option>
                               <option value="job">Job Posting</option>
                               <option value="skill">Skill</option>
+                              <option value="course">Course</option>
                             </select>
                             <span class="text-red">
                               <strong class="type"></strong>

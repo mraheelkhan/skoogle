@@ -25,7 +25,7 @@
                         @endforeach
                     </ul>
                     @endif
-            <form action="{{route('PostStore')}}" method="post">
+            <form action="{{route('PostStore')}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
                     <label for="title"> Enter title of the post</label>
@@ -33,8 +33,13 @@
                 </div>
                 <div class="form-group">
                     <label for="title"> Url (none-editable)</label>
-                <input type="text" class="form-control input_box" name="post_url" id="post_url" value="{{ old('post_url')}}" placeholder="URL of the Post" readonly/>
+                    <input type="text" class="form-control input_box" name="post_url" id="post_url" value="{{ old('post_url')}}" placeholder="URL of the Post" readonly/>
                 </div>
+                <div class="form-group">
+                    <label for="image"> Upload Image</label>
+                <input type="file" class="form-control input_box" name="image" id="image" onchange="readURL(this);" />
+                <img id="imagePreview" src="http://placehold.it/180" alt="your image" style="display:none; width:100%; height: 100%" />    
+            </div>
                 <div class="form-group">
                     <label for="title"> Select Category</label>
                     <select  name="category_id" id="category_id" class="form-control">
@@ -79,6 +84,20 @@
         //title = title.replace(/[^a-zA-Z ]/g, "-");
         var newUrl = $('#post_url').val(title + random);
         console.log(title + random);
+    }
+
+    function readURL(input) {
+        $('#imagePreview').show();
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#imagePreview')
+                    .attr('src', e.target.result);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
     }
 </script>
 @endsection

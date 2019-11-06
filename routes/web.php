@@ -129,6 +129,17 @@ Route::group(['prefix'=> 'settings'],function(){
     Route::post('job/disable', 'JobController@adminDisable')->middleware('can:job-admindisable')->name('job.admindisable');
     Route::post('job/delete', 'JobController@adminDelete')->middleware('can:job-adminedit')->name('job.admindelete');
     
+    // Blog/ Article Monitoring
+    Route::get('/post', 'PostController@admin_all')->middleware('can:post-adminindex')->name('post.adminindex');
+    Route::get('/post/fetch', 'PostController@adminfetch')->middleware('can:post-adminfetch')->name('post.adminfetch');
+    Route::post('/post/store', 'PostController@adminupdate')->middleware('can:post-adminstore')->name('post.adminstore');
+    Route::get('/post/show/{id}', 'PostController@adminshow')->middleware('can:post-adminshow')->name('post.adminshow');
+    Route::post('/post/edit', 'PostController@adminedit')->middleware('can:post-adminedit')->name('post.adminedit');
+    Route::post('post/active', 'PostController@adminActive')->middleware('can:post-adminactive')->name('post.adminactive');
+    Route::post('post/disable', 'PostController@adminDisable')->middleware('can:post-admindisable')->name('post.admindisable');
+    Route::post('post/delete', 'PostController@adminDelete')->middleware('can:post-adminedit')->name('post.admindelete');
+    Route::post('post/deleteComment', 'PostController@adminCommentDelete')->middleware('can:post-adminedit')->name('post.admincommentdelete');
+    
 });
 
 
@@ -158,6 +169,7 @@ Route::post('/job/apply/store', 'JobController@apply')->middleware('auth')->name
 Route::post('/job/close/', 'JobController@markAsClosed')->middleware('auth')->name('JobMarkAsClosed');
 
 
+// Posts, Articles and Comments 
 Route::get('posts', 'PostController@index');
 Route::get('posts/my', 'PostController@myArticles')->name('PostMy');
 Route::get('post/create', 'PostController@create')->name('PostCreate');
@@ -169,3 +181,26 @@ Route::post('post/update', 'PostController@update')->name('PostUpdate');
 
 Route::post('comment/store', 'PostCommentController@store')->name('CommentStore');
 Route::get('comment/delete/{id}', 'PostCommentController@destroy')->name('CommentDelete');
+
+// Courses and videos Routes
+Route::get('courses/my', 'CourseController@myCourses')->middleware('auth')->name('CourseMy');
+Route::get('course/{string}/{id}', 'CourseController@show')->name('CourseShow');
+Route::get('course/{id}', 'CourseController@show_category_courses')->name('CourseCategoryShow');
+Route::get('courses/edit/{id}', 'CourseController@edit')->middleware('auth')->name('CourseEdit');
+Route::get('courses/delete/{id}', 'CourseController@destroy')->middleware('auth')->name('CourseDelete');
+Route::get('coursecreate/new', 'CourseController@create')->middleware('auth')->name('CourseCreate');
+Route::post('coursecreate/store', 'CourseController@store')->middleware('auth')->name('CourseStore');
+Route::get('courseuser/enroll/{id}', 'CourseController@courseEnroll')->middleware('auth')->name('CourseEnroll');
+Route::get('courseuser/enroll/{id}/{course_id}', 'CourseController@courseEnrollStore')->middleware('auth')->name('CourseUserEnroll');
+Route::get('courseuser/delete/{id}', 'CourseController@courseEnrollDelete')->middleware('auth')->name('CourseUserEnrollDelete');
+
+
+Route::get('video/course/{name}/{id}', 'CourseVideoController@show')->name('CourseVideoShow');
+Route::get('video/create/{id}', 'CourseVideoController@create')->name('CourseVideoCreate');
+Route::post('video/course/store', 'CourseVideoController@store')->name('CourseVideoStore');
+Route::get('video/course/edit/{id}', 'CourseVideoController@myCourses')->name('CourseVideoEdit');
+Route::get('video/courses/delete/{id}', 'CourseVideoController@destroy')->name('CourseVideoDelete');
+
+//Profile of User
+
+Route::get('user/profile', 'ProfileController@profile')->name('ProfileAccount');

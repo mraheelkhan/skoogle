@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\CourseVideo;
+use App\Course;
+use App\Category;
+use App\EnrolledCourse;
 use Illuminate\Http\Request;
-
+use Session;
+use Auth;
 class CourseVideoController extends Controller
 {
     /**
@@ -14,7 +18,7 @@ class CourseVideoController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**
@@ -22,9 +26,14 @@ class CourseVideoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        //
+        $course_id = $id;
+        if(auth()->user()->isPro != 1){
+            return "You are not authorize";
+        }
+        $categories = Category::where('type', 'course')->get();
+        return view('courses.createVideo', compact('categories', 'course_id'));
     }
 
     /**
@@ -35,7 +44,31 @@ class CourseVideoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([   
+            "file" => 'required',
+            "course_id" => 'required|numeric',
+            "title" => 'required|max:200',
+            "description" => 'required|max:500',
+        ]);
+
+        if($request->hasFile('file')){
+
+            $file = $request->file('file');
+            $filename = time() . "-" . $file->getClientOriginalName();
+            $path = public_path().'/uploads/videos/';
+            $file->move($path, $filename);
+        }
+        
+        $video = new CourseVideo;
+        $video->user_id = auth()->user()->id;
+        $video->course_id = $request->course_id;
+        $video->file_name = $filename;
+        $video->title = $request->title;
+        $video->description = $request->description;
+
+        $video->save();
+        Session::flash('message', 'Your video is posted successfully. <script>swal.fire("success","Posted","Your video is posted successfully");</script>'); 
+        return redirect()->back();
     }
 
     /**
@@ -44,9 +77,22 @@ class CourseVideoController extends Controller
      * @param  \App\CourseVideo  $courseVideo
      * @return \Illuminate\Http\Response
      */
-    public function show(CourseVideo $courseVideo)
+    public function show($name, $id)
     {
-        //
+        $video = CourseVideo::findOrFail($id);
+        if(!auth()->check()){
+            return redirect()->route('login');
+        }
+        $auth = EnrolledCourse::where('user_id', auth()->user()->id)->where('course_id', $video->course_id)->first();
+        if(! empty($auth)){
+            return view('courses.videoShow', compact('video'));
+        } else {
+            Session::flash('message', 'You are not enrolled. <script>swal.fire("error","Not Enrolled","You are not enrolled.");</script>'); 
+            return redirect()->back();
+        }
+        
+        //dd($video);
+        
     }
 
     /**
@@ -78,8 +124,19 @@ class CourseVideoController extends Controller
      * @param  \App\CourseVideo  $courseVideo
      * @return \Illuminate\Http\Response
      */
-    public function destroy(CourseVideo $courseVideo)
+    public function destroy($id)
     {
-        //
+        $coursevideo = CourseVideo::findOrFail($id);
+        // dd($coursevideo);
+        if(auth()->user()->id != $coursevideo->user_id){
+            Session::flash('message', 'This course video does not belongs to you. <script>swal.fire("error","Not Deleted","This course video does not belongs to you");</script>'); 
+            return redirect()->back();
+        } else {
+            $coursevideo->is_deleted = 1;
+            $coursevideo->update();
+
+            Session::flash('message', 'Your course video is deleted successfully. <script>swal.fire("success","Posted","Your course video is deleted successfully");</script>'); 
+            return redirect()->back();
+        }
     }
 }

@@ -4,7 +4,7 @@
         <div class="container">
             <div class="row m0 blog_row">
                 <div class="col-sm-8 main_blog">
-                    <img src="images/articles/artificial-intelligence.jpg" alt="">
+                    <img src="{{ asset('public/uploads/postImages/' . $post->image) }}" alt="">
                     <div class="col-xs-1 p0">
                        <div class="blog_date">
                           <a> {{ date("d-M", strtotime($post->created_at)) }}</a>

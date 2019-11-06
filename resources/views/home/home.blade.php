@@ -20,12 +20,12 @@
                @foreach($posts as $post)
                 <div class="col-md-4 col-sm-6">
                     <div class="renovation">
-                        <img src="images/blog/renovation/r-1.jpg" alt="">
+                        <img src="{{ asset('public/uploads/postImages/' . $post->image) }}"  style="border: 1px solid black;"  alt="">
                         <div class="renovation_content">
                             <a class="clipboard" href="#"><i class="fa fa-clipboard" aria-hidden="true"></i></a>
                         <a class="tittle" href="{{route('PostShow', $post->post_url)}}">{{$post->post_title}}</a>
                             <div class="date_comment">
-                                <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i>{{$post->created_at}}</a>
+                                <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i>{{ date("d-M", strtotime($post->created_at)) }}</a>
                                 <a href="#"><i class="fa fa-commenting-o" aria-hidden="true"></i>3</a>
                             </div>
                             <p>{!! substr($post->post_content,0,100)!!}</p>

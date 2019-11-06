@@ -82,12 +82,12 @@
                     <li class="dropdown submenu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Skills & Services</a>
                         <ul class="dropdown-menu other_dropdwn">
-                            <li><a href="#">Internet of Things</a></li>
-                            <li><a href="#">Artificial Intelligence</a></li>
-                            <li><a href="#">Cyber Security</a></li>
-                            <li><a href="#">Crawling & Scraping</a></li>
-                            <li><a href="#">Programming Languages</a></li>
-                            <li><a href="#">Others</a></li>                                
+                            @if(auth()->check() && auth()->user()->isPro == 1)
+                            <li><a href="{{ route('CourseMy') }}">My Courses </a></li>
+                            @endif
+                            @foreach($courses as $course)
+                            <li><a href="{{ route('CourseCategoryShow',$course->id) }}">{{ $course->category_name }} </a></li>
+                            @endforeach                           
                         </ul>
                     </li>
                 <li><a href="{{route('JobAll')}}">Career</a></li>

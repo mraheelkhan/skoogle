@@ -22,10 +22,11 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
         View::composer('*', function($view)
         {
+            $menu_course = \App\Category::where('type', 'course')->get();
             $adminmenus=\App\Adminmenu::wherenull('parentid')->where('showinnav',1)->with('childrenformenu')->get();
             $bduser=auth()->user();
             //dd($adminmenus->toArray());
-            $view->with('navs',$adminmenus)->with('bduser',$bduser);
+            $view->with('navs',$adminmenus)->with('bduser',$bduser)->with('courses', $menu_course);
         });
     }
 

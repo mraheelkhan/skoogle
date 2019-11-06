@@ -96,7 +96,8 @@ class PostCommentController extends Controller
             Session::flash('message', 'This comment does not belongs to you. <script>swal.fire("error","Not Deleted","This comment does not belongs to you");</script>'); 
             return redirect()->back();
         } else {
-            $comment->delete();
+            $comment->is_deleted = 1;
+            $comment->update();
 
             Session::flash('message', 'Your comment is deleted successfully. <script>swal.fire("success","Posted","Your comment is deleted successfully");</script>'); 
             return redirect()->back();

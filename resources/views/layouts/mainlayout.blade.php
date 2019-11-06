@@ -6,7 +6,7 @@
   <!-- CSRF Token -->
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <meta name="user-id" content="{{ Auth::check() ? Auth::user()->id : ''}}">
-  <title>{{ config('app.name', 'NSOL ERP') }}</title>
+  <title>{{ config('app.name', 'Skoogle') }}</title>
   <link rel="icon" href="{{ asset('img/favicon.png')}}" type="image/png">
 
   @include('layouts.partials.headerscripts')

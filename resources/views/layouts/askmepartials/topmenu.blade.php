@@ -15,7 +15,7 @@
     height: auto;
 }
 	</style>
-	@if(!Auth::check())
+	@if(!Auth::check() && 1 == 2)
 	<div class="login-panel">
 			<section class="container">
 				<div class="row">
@@ -139,13 +139,19 @@
 @endif
 <header id="header">
 	<section class="container clearfix">
-		<div class="logo"><a href="{{ route('ForumAll')}}"><img alt="" src="{{ asset('public/askme/images/logo.png')}}"></a></div>
+		<div class="logo">
+			<a href="{{ route('ForumAll')}}">
+				<img alt="" src="{{ asset('public/askme/images/logo.png')}}"  style="width: 70%"/>
+			</a>
+		</div>
 		<nav class="navigation">
 			<ul>
 				
+			<li class="ask_question"><a href="{{ route('Home')}}">News Feed</a></li>
+			<li class="ask_question"><a href="{{ route('ForumAll')}}">Forum</a></li>
 			<li class="ask_question"><a href="{{ route('ForumCreate')}}">Ask Question</a></li>
 			@if(Auth::user())
-			<li><a href="shortcodes.html">Profile</a></li>
+			<li><a href="{{ route('ProfileAccount')}}">Profile</a></li>
 			<li><a href="{{ route('LogOutSystem')}}">Logout</a></li>
 			@endif
 				{{-- <li><a href="contact_us.html">Contact Us</a></li> --}}

@@ -44,7 +44,7 @@ class HomeController extends Controller
     }
 
     public function newsfeed(){
-        $posts = Post::all();
+        $posts = Post::where('is_deleted', 0)->get();
         return view('home.home', compact('posts'));
     }
 

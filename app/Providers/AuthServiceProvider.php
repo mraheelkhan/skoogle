@@ -36,14 +36,45 @@ class AuthServiceProvider extends ServiceProvider
         $this->categories();
         $this->forum_admin();
         $this->job_admin();
+        $this->post_admin();
         $this->Designation();
         $this->Preferences();
         $this->Generalsettings();
-        
+        Gate::define('enrolledcourse', function($user, $enrolledcourse, $course){
+            return $user->id == $enrolledcourse->user_id && $course->id == $enrolledcourse->course_id;
+        });
         // Passport::routes();
 
     }
 
+    public function courseAccess(){
+        
+    }
+    // Articles admin
+    public function post_admin(){
+        
+        Gate::define('post-adminindex', function($user){
+            return $user->hasAccess(['post-adminindex']);
+        });
+        Gate::define('post-adminfetch', function($user){
+            return $user->hasAccess(['post-adminfetch']);
+        });
+        Gate::define('post-adminstore', function($user){
+            return $user->hasAccess(['post-adminstore']);
+        });
+        Gate::define('post-adminedit', function($user){
+            return $user->hasAccess(['post-adminedit']);
+        });
+        Gate::define('post-adminshow', function($user){
+            return $user->hasAccess(['post-adminshow']);
+        });
+        Gate::define('post-adminactive', function($user){
+            return $user->hasAccess(['post-adminactive']);
+        });
+        Gate::define('post-admindisable', function($user){
+            return $user->hasAccess(['post-admindisable']);
+        });
+    }
     // job admin
     public function job_admin(){
         
