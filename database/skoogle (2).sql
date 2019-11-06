@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 28, 2019 at 07:40 PM
+-- Generation Time: Nov 06, 2019 at 12:21 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.1.32
 
@@ -105,7 +105,14 @@ INSERT INTO `adminmenus` (`id`, `menutitle`, `slug`, `parentid`, `showinnav`, `s
 (141, 'Job Store', 'job-adminstore', 139, NULL, NULL, NULL, 'job.adminstore', 0, 'job.adminstore', 1, '2019-03-21 09:00:00', '2019-03-27 09:00:00'),
 (142, 'Job Edit', 'job-adminedit', 139, NULL, NULL, NULL, 'job.adminedit', 0, 'job.adminedit, setting', 1, '2019-03-21 09:00:00', '2019-07-02 14:00:00'),
 (143, 'Job Active', 'job-adminactive', 139, NULL, NULL, NULL, 'job.adminactive', 0, 'job.adminactive', 1, '2019-03-21 09:00:00', '2019-03-27 09:00:00'),
-(144, 'Job Disable', 'job-admindisable', 139, NULL, NULL, NULL, 'job.admindisable', 0, 'job.admindisable', 1, '2019-03-21 09:00:00', '2019-03-27 09:00:00');
+(144, 'Job Disable', 'job-admindisable', 139, NULL, NULL, NULL, 'job.admindisable', 0, 'job.admindisable', 1, '2019-03-21 09:00:00', '2019-03-27 09:00:00'),
+(145, 'Manage Articles', 'post-adminindex', NULL, 1, NULL, 'fa fa-tasks', 'settings/post', 0, 'post.index, setting,', 1, '2019-03-21 04:00:00', '2019-07-06 01:12:47'),
+(146, 'Post Fetch', 'post-adminfetch', 145, NULL, NULL, NULL, 'post.adminfetch', 0, 'post.adminfetch', 1, '2019-03-21 04:00:00', '2019-03-27 04:00:00'),
+(147, 'Post Store', 'post-adminstore', 145, NULL, NULL, NULL, 'post.adminstore', 0, 'post.adminstore', 1, '2019-03-21 04:00:00', '2019-03-27 04:00:00'),
+(148, 'Post Edit', 'post-adminedit', 145, NULL, NULL, NULL, 'post.adminedit', 0, 'post.adminedit, setting', 1, '2019-03-21 04:00:00', '2019-07-02 09:00:00'),
+(149, 'Post Active', 'post-adminactive', 145, NULL, NULL, NULL, 'post.adminactive', 0, 'post.adminactive', 1, '2019-03-21 04:00:00', '2019-03-27 04:00:00'),
+(150, 'Post Disable', 'post-admindisable', 145, NULL, NULL, NULL, 'post.admindisable', 0, 'post.admindisable', 1, '2019-03-21 04:00:00', '2019-03-27 04:00:00'),
+(151, 'Article Admin Show', 'post-adminshow', 145, NULL, NULL, NULL, 'post.adminshow', 0, 'post.adminshow, setting,', 1, '2019-03-21 04:00:00', '2019-07-02 19:53:45');
 
 -- --------------------------------------------------------
 
@@ -185,7 +192,79 @@ INSERT INTO `categories` (`id`, `category_name`, `parent_category_id`, `type`, `
 (2, 'iOS Development', 3, 'skill', 1, 1, 0, '2019-07-03 06:37:28', '2019-07-03 06:42:56'),
 (3, 'Software Development', 0, 'category', 1, 1, 0, '2019-07-03 06:42:14', '2019-07-03 06:42:14'),
 (5, 'Laravel Development', 0, 'job', 1, 1, 0, '2019-07-05 16:31:14', '2019-07-05 16:31:14'),
-(6, 'Business Development Analyst', 0, 'job', 1, 1, 0, '2019-07-05 16:32:01', '2019-07-05 16:32:01');
+(6, 'Business Development Analyst', 0, 'job', 1, 1, 0, '2019-07-05 16:32:01', '2019-07-05 16:32:01'),
+(7, 'Internet of Things', 0, 'course', 1, 1, 0, '2019-11-02 12:11:45', '2019-11-02 12:11:45'),
+(8, 'Artificial Intelligence', 0, 'course', 1, 1, 0, '2019-11-02 12:14:42', '2019-11-02 12:14:42'),
+(9, 'Cyber Security', 0, 'course', 1, 1, 0, '2019-11-02 12:15:03', '2019-11-02 12:15:03'),
+(10, 'Programming Languages', 0, 'course', 1, 1, 0, '2019-11-02 12:15:22', '2019-11-02 12:15:22');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `courses`
+--
+
+CREATE TABLE `courses` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `subtitle` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `price` int(11) NOT NULL DEFAULT 0,
+  `sale_price` int(11) DEFAULT NULL,
+  `category_id` int(11) NOT NULL,
+  `isActive` int(11) NOT NULL DEFAULT 1 COMMENT '0 = inactive , 1 = active',
+  `status` int(11) NOT NULL DEFAULT 1 COMMENT '0 = pending , 1 = display, 2 = moderate, 3 = marked as spam',
+  `is_deleted` int(11) NOT NULL DEFAULT 0 COMMENT '0 = not deleted , 1 = deleted',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `courses`
+--
+
+INSERT INTO `courses` (`id`, `user_id`, `title`, `description`, `subtitle`, `price`, `sale_price`, `category_id`, `isActive`, `status`, `is_deleted`, `created_at`, `updated_at`) VALUES
+(1, 1, 'How to visualize data in python', '4. INTELLECTUAL PROPERTY RIGHTS AND LICENSE:\r\n4.1. PRODUCT: All materials, including, but not limited to, software, programs, source code and object\r\ncode, comments to the source or object code, specifications, documents, abstracts and summaries thereof\r\n(collectively, the “Products”) developed by Isotope 11 in connection with the provision of the Services to\r\nClient, or jointly by Client and Isotope 11, or by Isotope 11 pursuant to specifications or instructions\r\nprovided by Client, shall belong exclusively to Client. Isotope 11 acknowledges that the Products shall be\r\ndeemed “works made for hire” by Isotope 11 for Client, and, therefore, shall be the exclusive property of\r\nClient. To the extent the Products are not deemed “works made for hire” under applicable law, Isotope 11\r\nhereby irrevocably assigns and transfers to Client all right, title and interest in and to the Products,\r\nincluding, without limitation, all patent and copyright interests, and agrees to execute all documents\r\nreasonably requested by Client for the purpose of applying for and obtaining domestic and foreign patent\r\nand copyright registrations.\r\n4.2. PRE-EXISTING INTELLECTUAL PROPERTY:. Notwithstanding any provision of this Agreement\r\nto the contrary, any routines, methodologies, processes, libraries, tools or technologies created, adapted or\r\nused by Isotope 11 in its business generally, including all associated intellectual property rights\r\n(collectively, the Development Tools), shall be and remain the sole property of Isotope 11, and\r\nCustomer shall have no interest in or claim to the Development Tools, except as necessary to exercise its\r\nrights in the Products. In addition, notwithstanding any provision of this Agreement to the contrary,\r\nIsotope 11 shall be free to use any ideas, concepts, or know-how developed or acquired by Isotope 11\r\nduring the performance of this Agreement to the extent obtained and retained by Isotope 11’s personnel as\r\nimpression and general learning. Subject to and limited by Client’s intellectual property rights described in\r\nSection 4.1 above, nothing in this Agreement shall be construed to preclude Isotope 11 from using the\r\nDevelopment Tools for use with third parties for the benefit of Isotope 11. ', NULL, 15000, 12000, 9, 1, 1, 0, '2019-11-01 19:00:00', '2019-11-06 03:20:04'),
+(2, 2, 'How to visualize data in python', '4. INTELLECTUAL PROPERTY RIGHTS AND LICENSE:\r\n4.1. PRODUCT: All materials, including, but not limited to, software, programs, source code and object\r\ncode, comments to the source or object code, specifications, documents, abstracts and summaries thereof\r\n(collectively, the “Products”) developed by Isotope 11 in connection with the provision of the Services to\r\nClient, or jointly by Client and Isotope 11, or by Isotope 11 pursuant to specifications or instructions\r\nprovided by Client, shall belong exclusively to Client. Isotope 11 acknowledges that the Products shall be\r\ndeemed “works made for hire” by Isotope 11 for Client, and, therefore, shall be the exclusive property of\r\nClient. To the extent the Products are not deemed “works made for hire” under applicable law, Isotope 11\r\nhereby irrevocably assigns and transfers to Client all right, title and interest in and to the Products,\r\nincluding, without limitation, all patent and copyright interests, and agrees to execute all documents\r\nreasonably requested by Client for the purpose of applying for and obtaining domestic and foreign patent\r\nand copyright registrations.\r\n4.2. PRE-EXISTING INTELLECTUAL PROPERTY:. Notwithstanding any provision of this Agreement\r\nto the contrary, any routines, methodologies, processes, libraries, tools or technologies created, adapted or\r\nused by Isotope 11 in its business generally, including all associated intellectual property rights\r\n(collectively, the Development Tools), shall be and remain the sole property of Isotope 11, and\r\nCustomer shall have no interest in or claim to the Development Tools, except as necessary to exercise its\r\nrights in the Products. In addition, notwithstanding any provision of this Agreement to the contrary,\r\nIsotope 11 shall be free to use any ideas, concepts, or know-how developed or acquired by Isotope 11\r\nduring the performance of this Agreement to the extent obtained and retained by Isotope 11’s personnel as\r\nimpression and general learning. Subject to and limited by Client’s intellectual property rights described in\r\nSection 4.1 above, nothing in this Agreement shall be construed to preclude Isotope 11 from using the\r\nDevelopment Tools for use with third parties for the benefit of Isotope 11. ', NULL, 15000, 12000, 9, 1, 1, 0, '2019-11-01 19:00:00', '2019-11-01 19:00:00'),
+(3, 2, 'Ayaz is very PTM person', '<p>asdfasdfasdkl;fj asd;lfjkasd ;lfjasd;kl fjasd;klfj</p>\r\n\r\n<p>asdfjasdklfj;lasd fjasd;klfj lasdkfj;lasd</p>', NULL, 0, NULL, 8, 1, 1, 1, '2019-11-04 03:04:42', '2019-11-04 03:10:37'),
+(4, 1, 'Sishake Product Page', '<p>asdf asfasf asdfasd fasd fasdf</p>', NULL, 0, NULL, 8, 1, 1, 1, '2019-11-04 03:06:16', '2019-11-04 03:08:55'),
+(5, 1, 'Sishake Product Page', '<p>asdf asfasf asdfasd fasd fasdf</p>', NULL, 0, NULL, 8, 1, 1, 1, '2019-11-04 03:06:29', '2019-11-04 04:33:07'),
+(6, 1, 'Introduction to Java SE', '<p>To&nbsp;<em>clear</em>&nbsp;route&nbsp;<em>cache</em>&nbsp;of your&nbsp;<em>Laravel</em>&nbsp;application execute the following command from the shell. You can use config:<em>clear</em>&nbsp;to&nbsp;<em>clear</em>&nbsp;the config&nbsp;<em>cache</em>&nbsp;of the&nbsp;<em>Laravel</em>&nbsp;application. Also, you may need to&nbsp;<em>clear</em>&nbsp;compiled view files of your&nbsp;<em>Laravel</em>&nbsp;application.</p>', NULL, 0, NULL, 10, 1, 1, 0, '2019-11-04 04:33:00', '2019-11-04 04:33:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `course_videos`
+--
+
+CREATE TABLE `course_videos` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `course_id` int(11) NOT NULL,
+  `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `file_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `isActive` int(11) NOT NULL DEFAULT 1 COMMENT '0 = inactive , 1 = active',
+  `status` int(11) NOT NULL DEFAULT 1 COMMENT '0 = pending , 1 = display, 2 = moderate, 3 = marked as spam',
+  `is_deleted` int(11) NOT NULL DEFAULT 0 COMMENT '0 = not deleted , 1 = deleted',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `course_videos`
+--
+
+INSERT INTO `course_videos` (`id`, `user_id`, `course_id`, `title`, `file_name`, `description`, `isActive`, `status`, `is_deleted`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 'Introduction to Python', 'abc.mp4', 'here is the dummy description of the videos and pakistan', 1, 1, 0, '2019-11-01 19:00:00', '2019-11-01 19:00:00'),
+(2, 1, 1, 'Introduction to data visualization', 'abc1.mp4', 'here is the dummy description of the videos and pakistan', 1, 1, 0, '2019-11-01 19:00:00', '2019-11-01 19:00:00'),
+(3, 1, 6, 'Sishake Product Page', '3 seconds of LOL.webm', '<p>enctype=&quot;multipart/form-data&quot;</p>', 1, 1, 1, '2019-11-04 04:52:16', '2019-11-06 06:05:02'),
+(4, 1, 6, 'Sishake Product Page', '3 seconds of LOL.webm', '<p>enctype=&quot;multipart/form-data&quot;</p>', 1, 1, 1, '2019-11-04 04:52:25', '2019-11-06 06:04:57'),
+(5, 1, 6, 'Connects PK - Your Problem, Our Concern', '3 seconds of LOL.webm', '<p>CourseShow</p>', 1, 1, 0, '2019-11-04 04:53:55', '2019-11-04 04:53:55'),
+(6, 1, 6, 'Highcharts Demo', '3 seconds of LOL.webm', '<p>asdfg</p>', 1, 1, 1, '2019-11-04 04:54:30', '2019-11-06 06:05:28'),
+(7, 1, 5, 'Ayaz is very PTM person', '1572863772-Go ! Bwaaah !   [3 SECOND VIDEO].mkv', '<p>$file-&gt;getClientOriginalName()&nbsp;.&nbsp;&quot;&quot;&nbsp;.&nbsp;time();</p>', 1, 1, 0, '2019-11-04 05:36:12', '2019-11-04 05:36:12'),
+(8, 1, 6, '500 initial pyament', '1572864071-3 seconds of LOL.webm', '<p>{{ asset(&#39;images/&#39;.$data-&gt;featured_image) }}</p>', 1, 1, 0, '2019-11-04 05:41:11', '2019-11-04 05:41:11');
 
 -- --------------------------------------------------------
 
@@ -247,6 +326,32 @@ INSERT INTO `designations` (`id`, `name`, `user_id`, `last_modified_by`, `status
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `enrolled_courses`
+--
+
+CREATE TABLE `enrolled_courses` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `course_id` int(11) NOT NULL,
+  `isActive` int(11) NOT NULL DEFAULT 1 COMMENT '0 = inactive , 1 = active',
+  `status` int(11) NOT NULL DEFAULT 1 COMMENT '0 = pending , 1 = display, 2 = moderate, 3 = marked as spam',
+  `is_deleted` int(11) NOT NULL DEFAULT 0 COMMENT '0 = not deleted , 1 = deleted',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `enrolled_courses`
+--
+
+INSERT INTO `enrolled_courses` (`id`, `user_id`, `course_id`, `isActive`, `status`, `is_deleted`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 1, 1, 0, '2019-11-03 19:00:00', '2019-11-03 19:00:00'),
+(2, 1, 6, 1, 1, 0, '2019-11-03 19:00:00', '2019-11-03 19:00:00'),
+(3, 8, 6, 1, 1, 0, '2019-11-06 04:54:27', '2019-11-06 04:54:27');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `forum_answers`
 --
 
@@ -272,7 +377,7 @@ INSERT INTO `forum_answers` (`id`, `user_id`, `answer_body`, `question_id`, `isS
 (2, 1, 'Yeah we also dont know why is this happening, new zealand lost last three matches to pakistan, australia and england.', 4, 0, 1, 1, 1, '2019-07-04 07:47:29', '2019-07-05 04:36:12'),
 (3, 8, 'for futher information kindly contact me on my email rk@mraheelkhan.com', 4, 0, 1, 1, 0, '2019-07-04 08:07:09', '2019-07-05 04:29:32'),
 (4, 1, 'okay sure, thank you for your reply. i will get in touch with you shorty.', 4, 0, 1, 1, 1, '2019-07-04 08:07:42', '2019-07-05 04:36:32'),
-(5, 8, 'kay sure, thank you for your reply. i will get in touch with you skay sure, thank you for your reply. i will get in touch with you skay sure, thank you for your reply. i will get in touch with you skay sure, thank you for your reply. i will get in touch with you skay sure, thank you for your reply. i will get in touch with you skay sure, thank you for your reply. i will get in touch with you s', 4, 0, 1, 1, 0, '2019-07-04 08:12:29', '2019-07-04 13:29:27'),
+(5, 8, 'kay sure, thank you for your reply. i will get in touch with you skay sure, thank you for your reply. i will get in touch with you skay sure, thank you for your reply. i will get in touch with you skay sure, thank you for your reply. i will get in touch with you skay sure, thank you for your reply. i will get in touch with you skay sure, thank you for your reply. i will get in touch with you s', 4, 0, 1, 1, 1, '2019-07-04 08:12:29', '2019-10-31 03:47:26'),
 (6, 8, 'kay sure, thank you for your reply. i will get in touch with you skay sure, thank you for your reply. i will get in touch with you skay sure, thank you for your reply. i will get in touch with you skay sure, thank you for your reply. i will get in touch with you skay sure, thank you for your reply. i will get in touch with you skay sure, thank you for your reply. i will get in touch with you skay sure, thank you for your reply. i will get in touch with you s', 4, 0, 1, 1, 0, '2019-07-04 08:12:35', '2019-07-05 04:28:47'),
 (7, 8, 'this is answer body of the anser which is for the testing purpose of hte system', 3, 1, 1, 1, 0, '2019-07-04 15:06:31', '2019-07-04 18:20:13'),
 (8, 1, 'thank you so much for your answer', 3, 0, 1, 1, 0, '2019-07-04 16:10:32', '2019-07-04 16:10:32'),
@@ -370,7 +475,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (6, '2019_06_27_151621_create_jobs_table', 4),
 (7, '2019_06_27_153110_create_applied_jobs_table', 5),
 (8, '2019_06_27_151020_create_posts_table', 6),
-(9, '2019_06_27_151403_create_post_comments_table', 6);
+(9, '2019_06_27_151403_create_post_comments_table', 6),
+(10, '2019_06_27_142902_create_courses_table', 7),
+(11, '2019_06_27_150133_create_course_videos_table', 7),
+(12, '2019_06_27_150359_create_enrolled_courses_table', 7);
 
 -- --------------------------------------------------------
 
@@ -506,6 +614,7 @@ CREATE TABLE `posts` (
   `post_date` date DEFAULT NULL,
   `post_content` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `post_title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `post_status` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1' COMMENT '0 = not publish, 1 = publish',
   `is_comment` int(11) NOT NULL DEFAULT 1 COMMENT '1= on, 0= off',
   `post_url` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -521,10 +630,12 @@ CREATE TABLE `posts` (
 -- Dumping data for table `posts`
 --
 
-INSERT INTO `posts` (`id`, `user_id`, `category_id`, `post_date`, `post_content`, `post_title`, `post_status`, `is_comment`, `post_url`, `post_type`, `isActive`, `status`, `is_deleted`, `created_at`, `updated_at`) VALUES
-(1, 8, 2, NULL, '<p>her eis <strong>the title </strong>of ht<strong>e apksiat</strong>n papasofjasdf lasdjkf</p>\r\n\r\n<p>asdfjklas<em>dj flasdjkf</em>lasd fjasd</p>\r\n\r\n<p>fasdfasdf</p>', 'here is the title', '1', 1, 'here-is-the-title-1235873', NULL, 1, 1, 0, '2019-10-27 09:13:51', '2019-10-27 09:13:51'),
-(8, 1, 2, NULL, '<p>I tried and it works only if something else is clicked first eg. a link has been right clicked. Then if I click the browser close button it prompts before closing as expected. Otherwise if I go directly to the page for example and click close button straightaway it doesn&#39;t work and page closes. The code inside onbeforeunload function hits each but in the last case clearly has no effect.</p>', 'Ayaz is very PTM person', '1', 1, 'Ayaz-is-very-PTM-person1478464', NULL, 1, 1, 0, '2019-10-28 12:58:27', '2019-10-28 12:58:27'),
-(9, 1, 3, NULL, '<p>I read comments on answer set as&nbsp;<strong>Okay</strong>. Most of the user are asking that the button and some links click should be allowed. Here one more line is added to the existing code that will work.</p>\r\n\r\n<pre>\r\n<code>&lt;script type=&quot;text/javascript&quot;&gt;\r\n  var hook = true;\r\n  window.onbeforeunload = function() {\r\n    if (hook) {\r\n\r\n      return &quot;Did you save your stuff?&quot;\r\n    }\r\n  }\r\n  function unhook() {\r\n    hook=false;\r\n  }</code></pre>\r\n\r\n<p>Call unhook() onClick for button and links which you want to allow. E.g.</p>\r\n\r\n<pre>\r\n<code>&lt;a href=&quot;#&quot; onClick=&quot;unhook()&quot;&gt;This link will allow navigation&lt;/a&gt;</code></pre>', 'i\'ll create responsive WordPress website', '1', 1, 'i-ll-create-responsive-WordPress-website1950801', NULL, 1, 1, 0, '2019-10-28 12:59:03', '2019-10-28 12:59:03');
+INSERT INTO `posts` (`id`, `user_id`, `category_id`, `post_date`, `post_content`, `post_title`, `image`, `post_status`, `is_comment`, `post_url`, `post_type`, `isActive`, `status`, `is_deleted`, `created_at`, `updated_at`) VALUES
+(1, 8, 2, NULL, '<p>her eis <strong>the title </strong>of ht<strong>e apksiat</strong>n papasofjasdf lasdjkf</p>\r\n\r\n<p>asdfjklas<em>dj flasdjkf</em>lasd fjasd</p>\r\n\r\n<p>fasdfasdf</p>', 'here is the title', '1573025987-Capture.PNG', '1', 1, 'here-is-the-title-1235873', NULL, 1, 1, 0, '2019-10-27 09:13:51', '2019-10-27 09:13:51'),
+(8, 1, 2, NULL, '<p>I tried and it works only if something else is clicked first eg. a link has been right clicked. Then if I click the browser close button it prompts before closing as expected. Otherwise if I go directly to the page for example and click close button straightaway it doesn&#39;t work and page closes. The code inside onbeforeunload function hits each but in the last case clearly has no effect.</p>', 'Ayaz is very PTM person', '1573025987-Capture.PNG', '1', 1, 'Ayaz-is-very-PTM-person1478464', NULL, 1, 1, 0, '2019-10-28 12:58:27', '2019-10-31 04:03:14'),
+(9, 1, 3, NULL, '<p>I read comments on answer set as&nbsp;<strong>Okay</strong>. Most of the user are asking that the button and some links click should be allowed. Here one more line is added to the existing code that will work.</p>\r\n\r\n<pre>\r\n<code>&lt;script type=&quot;text/javascript&quot;&gt;\r\n  var hook = true;\r\n  window.onbeforeunload = function() {\r\n    if (hook) {\r\n\r\n      return &quot;Did you save your stuff?&quot;\r\n    }\r\n  }\r\n  function unhook() {\r\n    hook=false;\r\n  }</code></pre>\r\n\r\n<p>Call unhook() onClick for button and links which you want to allow. E.g.</p>\r\n\r\n<pre>\r\n<code>&lt;a href=&quot;#&quot; onClick=&quot;unhook()&quot;&gt;This link will allow navigation&lt;/a&gt;</code></pre>', 'i\'ll create responsive WordPress website', '1573025987-Capture.PNG', '1', 1, 'i-ll-create-responsive-WordPress-website1950801', NULL, 1, 1, 0, '2019-10-28 12:59:03', '2019-10-31 04:01:15'),
+(10, 1, 3, NULL, '<p>ou can try like this: Controller : use Illuminate\\Support\\Facades\\Request; class UploadController extends Controller { public function&nbsp;<em>upload</em>(Request $request)&nbsp;...ou can try like this: Controller : use Illuminate\\Support\\Facades\\Request; class UploadController extends Controller { public function&nbsp;<em>upload</em>(Request $request)&nbsp;...&nbsp;ou can try like this: Controller : use Illuminate\\Support\\Facades\\Request; class UploadController extends Controller { public function&nbsp;<em>upload</em>(Request $request)&nbsp;...ou can try like this: Controller : use Illuminate\\Support\\Facades\\Request; class UploadController extends Controller { public function&nbsp;<em>upload</em>(Request $request)&nbsp;...ou can try like this: Controller : use Illuminate\\Support\\Facades\\Request; class UploadController extends Controller { public function&nbsp;<em>upload</em>(Request $request)&nbsp;...</p>', 'Connects PK - Your Problem, Our Concern', '1573025987-Capture.PNG', '1', 1, 'Connects-PK---Your-Problem--Our-Concern1962907', NULL, 1, 1, 0, '2019-11-04 02:49:32', '2019-11-04 02:49:32'),
+(11, 1, 3, NULL, '<p>&nbsp;enctype=&quot;multipart/form-data&quot;&nbsp;&nbsp;enctype=&quot;multipart/form-data&quot;&nbsp;&nbsp;enctype=&quot;multipart/form-data&quot;&nbsp;&nbsp;enctype=&quot;multipart/form-data&quot;&nbsp;&nbsp;enctype=&quot;multipart/form-data&quot;&nbsp;&nbsp;enctype=&quot;multipart/form-data&quot;&nbsp;&nbsp;enctype=&quot;multipart/form-data&quot; v&nbsp;enctype=&quot;multipart/form-data&quot;&nbsp;enctype=&quot;multipart/form-data&quot;&nbsp;enctype=&quot;multipart/form-data&quot;&nbsp;enctype=&quot;multipart/form-data&quot;&nbsp;enctype=&quot;multipart/form-data&quot;</p>', 'i\'ll create responsive WordPress website', '1573025987-Capture.PNG', '1', 1, 'i-ll-create-responsive-WordPress-website1835232', NULL, 1, 1, 0, '2019-11-06 02:39:47', '2019-11-06 02:39:47');
 
 -- --------------------------------------------------------
 
@@ -554,7 +665,9 @@ INSERT INTO `post_comments` (`id`, `user_id`, `post_id`, `comment_body`, `commen
 (1, 1, 9, 'my name is khan', NULL, 0, 1, 1, 0, '2019-10-28 13:07:44', '2019-10-28 13:07:44'),
 (2, 2, 9, 'my name is khan', NULL, 0, 1, 1, 0, '2019-10-28 13:07:53', '2019-10-28 13:07:53'),
 (4, 1, 9, 'this is very good pakistan', NULL, 0, 1, 1, 0, '2019-10-28 13:08:33', '2019-10-28 13:08:33'),
-(5, 1, 8, 'this is the dummy comment on the post of raheel khan from raheel kahn', NULL, 0, 1, 1, 0, '2019-10-28 13:21:54', '2019-10-28 13:21:54');
+(5, 1, 8, 'this is the dummy comment on the post of raheel khan from raheel kahn', NULL, 0, 1, 1, 1, '2019-10-28 13:21:54', '2019-10-31 03:56:41'),
+(6, 1, 8, 'this is very good ocmment on the post of raheel khan', NULL, 0, 1, 1, 1, '2019-10-31 04:04:14', '2019-10-31 04:04:23'),
+(7, 1, 8, 'this is another comment and check if it appear on the backoffice of admin', NULL, 0, 1, 1, 0, '2019-10-31 04:04:46', '2019-10-31 04:04:46');
 
 -- --------------------------------------------------------
 
@@ -581,7 +694,7 @@ CREATE TABLE `roles` (
 --
 
 INSERT INTO `roles` (`id`, `role_title`, `permissions`, `permission`, `user_id`, `created_ip`, `last_modified_by`, `modified_ip`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Super Admin', '{\"dashboard\":true,\"main-admins\":true,\"roles-index\":true,\"admins-index\":true,\"settings\":true,\"menu-index\":true,\"customers\":true,\"customers-index\":true,\"create-staff\":true,\"show-staff\":true,\"edit-staff\":true,\"status-staff\":true,\"delete-staff\":true,\"staff-reset-password\":true,\"create-customer\":true,\"show-customer\":true,\"edit-customer\":true,\"status-customer\":true,\"delete-customer\":true,\"reset-customer-password\":true,\"show-dashboard-calendar\":true,\"departments-index\":true,\"create-department\":true,\"edit-department\":true,\"delete-department\":true,\"status-department\":true,\"designations-index\":true,\"create-designation\":true,\"edit-designation\":true,\"status-designation\":true,\"delete-designation\":true,\"category-index\":true,\"category-fetch\":true,\"category-store\":true,\"category-edit\":true,\"category-active\":true,\"category-disable\":true,\"forum-adminindex\":true,\"forum-adminfetch\":true,\"forum-adminstore\":true,\"forum-adminedit\":true,\"forum-adminactive\":true,\"forum-admindisable\":true,\"forum-adminshow\":true,\"job-adminindex\":true,\"job-adminfetch\":true,\"job-adminstore\":true,\"job-adminedit\":true,\"job-adminactive\":true,\"job-admindisable\":true}', '1,53,2,4,28,29,30,31,32,33,5,3,6,91,92,93,94,95,117,118,119,120,121,126,127,128,129,130,131,7,8,34,35,36,37,38,39,132,133,134,135,136,137,138,139,140,141,142,143,144', 1, '::1', 1, '::1', 1, '2018-08-10 14:00:00', '2019-07-06 06:32:56'),
+(1, 'Super Admin', '{\"dashboard\":true,\"main-admins\":true,\"roles-index\":true,\"admins-index\":true,\"settings\":true,\"menu-index\":true,\"customers\":true,\"customers-index\":true,\"create-staff\":true,\"show-staff\":true,\"edit-staff\":true,\"status-staff\":true,\"delete-staff\":true,\"staff-reset-password\":true,\"create-customer\":true,\"show-customer\":true,\"edit-customer\":true,\"status-customer\":true,\"delete-customer\":true,\"reset-customer-password\":true,\"show-dashboard-calendar\":true,\"departments-index\":true,\"create-department\":true,\"edit-department\":true,\"delete-department\":true,\"status-department\":true,\"designations-index\":true,\"create-designation\":true,\"edit-designation\":true,\"status-designation\":true,\"delete-designation\":true,\"category-index\":true,\"category-fetch\":true,\"category-store\":true,\"category-edit\":true,\"category-active\":true,\"category-disable\":true,\"forum-adminindex\":true,\"forum-adminfetch\":true,\"forum-adminstore\":true,\"forum-adminedit\":true,\"forum-adminactive\":true,\"forum-admindisable\":true,\"forum-adminshow\":true,\"job-adminindex\":true,\"job-adminfetch\":true,\"job-adminstore\":true,\"job-adminedit\":true,\"job-adminactive\":true,\"job-admindisable\":true,\"post-adminindex\":true,\"post-adminfetch\":true,\"post-adminstore\":true,\"post-adminedit\":true,\"post-adminactive\":true,\"post-admindisable\":true,\"post-adminshow\":true}', '1,53,2,4,28,29,30,31,32,33,5,3,6,91,92,93,94,95,117,118,119,120,121,126,127,128,129,130,131,7,8,34,35,36,37,38,39,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151', 1, '::1', 1, '::1', 1, '2018-08-10 14:00:00', '2019-10-31 03:45:06'),
 (2, 'User', '{\"dashboard\":true,\"main-customers\":true,\"customer-index\":true,\"leads-index\":true}', '1,7,8,9', 1, '::1', 1, '127.0.0.1', 1, '2018-08-10 14:00:00', '2018-09-18 22:40:48'),
 (3, 'Customer', '{\\\"customer\\\\/projects\\\":true,\\\"customer-projects-index\\\":true,\\\"customer-fetch-projects\\\":true,\\\"customer-show-projects\\\":true}', '56,57,58', 22, '1', 1, '::1', 1, '2018-11-25 14:00:00', '2018-11-26 14:00:00'),
 (4, 'Admin', '{\"dashboard\":true,\"main-admins\":true,\"admins-index\":true,\"settings\":true,\"menu-index\":true,\"customers\":true,\"customers-index\":true,\"create-staff\":true,\"show-staff\":true,\"edit-staff\":true,\"status-staff\":true,\"delete-staff\":true,\"staff-reset-password\":true,\"create-customer\":true,\"show-customer\":true,\"edit-customer\":true,\"status-customer\":true,\"delete-customer\":true,\"reset-customer-password\":true,\"departments-index\":true,\"create-department\":true,\"edit-department\":true,\"delete-department\":true,\"status-department\":true,\"designations-index\":true,\"create-designation\":true,\"edit-designation\":true,\"status-designation\":true,\"delete-designation\":true}', '1,2,4,28,29,30,31,32,33,5,6,91,92,93,94,95,117,118,119,120,121,7,8,34,35,36,37,38,39', 1, '::1', 1, '::1', 1, '2019-07-01 19:00:00', '2019-07-01 19:00:00');
@@ -644,9 +757,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `fname`, `lname`, `email`, `password`, `phonenumber`, `avatar`, `status`, `remember_token`, `created_at`, `updated_at`, `iscustomer`, `isPro`, `role_id`, `createdby`, `updatedby`, `username`, `organization_id`, `designation_id`) VALUES
-(1, 'Raheel', 'Khan', 'admin@admin.com', '$2y$10$MntbYTaK/9avYH/zOD4U5uAjtn4aFUtk4q36MNinnQ6bPdFDK0PwO', '03333639395', 'raheel.jpg', 1, '6SsePLLbxjlmVcXznQpRMt4oxbrfcQC2pEdMKYZp32DNpjKKM31cb7mxPOlr', '2018-06-25 10:22:52', '2019-07-01 07:44:10', 0, 1, 1, NULL, NULL, '', 14, 0),
+(1, 'Raheel', 'Khan', 'admin@admin.com', '$2y$10$MntbYTaK/9avYH/zOD4U5uAjtn4aFUtk4q36MNinnQ6bPdFDK0PwO', '03333639395', 'raheel.jpg', 1, 'slMfIbCOZAaNzQcOwOnHusSbuknziEaUNDkJgPNAt5L0eL8l69kWMAXHGyOk', '2018-06-25 10:22:52', '2019-07-01 07:44:10', 0, 1, 1, NULL, NULL, '', 14, 0),
 (7, 'Raheel', 'Khan', 'adminaaa@admin.com', '$2y$10$.ltGPfRid5qNIYrRz6Q/bOZ4dXNX./869VJm7Kfp1fxfTNAwKLQMi', '3333639395', 'default_avatar_male.jpg', 1, NULL, '2019-07-01 19:00:00', '2019-07-02 02:45:45', 1, NULL, 2, NULL, NULL, NULL, 15, 0),
-(8, 'Syed Abbas', 'Khan', 'abbas@gmail.com', '$2y$10$nw4LjC6K4XcUCSxkRSJAleUeylUzl4sRwGPnFUqi0Mf1MbfVwbCKa', '3333222211', 'default_avatar_male.jpg', 1, NULL, '2019-07-01 19:00:00', '2019-07-01 19:00:00', 1, NULL, 2, NULL, NULL, NULL, 8, 0);
+(8, 'Syed Abbas', 'Khan', 'abbas@gmail.com', '$2y$10$MntbYTaK/9avYH/zOD4U5uAjtn4aFUtk4q36MNinnQ6bPdFDK0PwO', '3333222211', 'default_avatar_male.jpg', 1, NULL, '2019-07-01 19:00:00', '2019-07-01 19:00:00', 1, NULL, 2, NULL, NULL, NULL, 8, 0);
 
 --
 -- Indexes for dumped tables
@@ -680,6 +793,18 @@ ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `courses`
+--
+ALTER TABLE `courses`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `course_videos`
+--
+ALTER TABLE `course_videos`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `departments`
 --
 ALTER TABLE `departments`
@@ -694,6 +819,12 @@ ALTER TABLE `designations`
   ADD PRIMARY KEY (`id`),
   ADD KEY `designations_user_id_foreign` (`user_id`),
   ADD KEY `designations_last_modified_by_foreign` (`last_modified_by`);
+
+--
+-- Indexes for table `enrolled_courses`
+--
+ALTER TABLE `enrolled_courses`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `forum_answers`
@@ -814,7 +945,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `adminmenus`
 --
 ALTER TABLE `adminmenus`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=145;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=152;
 
 --
 -- AUTO_INCREMENT for table `applied_jobs`
@@ -832,7 +963,19 @@ ALTER TABLE `authentication_log`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `courses`
+--
+ALTER TABLE `courses`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `course_videos`
+--
+ALTER TABLE `course_videos`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `departments`
@@ -845,6 +988,12 @@ ALTER TABLE `departments`
 --
 ALTER TABLE `designations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+
+--
+-- AUTO_INCREMENT for table `enrolled_courses`
+--
+ALTER TABLE `enrolled_courses`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `forum_answers`
@@ -868,7 +1017,7 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `oauth_clients`
@@ -886,13 +1035,13 @@ ALTER TABLE `oauth_personal_access_clients`
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `post_comments`
 --
 ALTER TABLE `post_comments`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `roles`
