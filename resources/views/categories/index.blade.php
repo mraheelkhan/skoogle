@@ -95,7 +95,7 @@
                        
                   <div class="form-group">
                     <label>Category Name</label>
-                      <input type="text" class="form-control" id="edit_category_name" name="category_name" placeholder="City Name" autocomplete="off" value="{{ old('category_name') }}" require >
+                      <input type="text" class="form-control" id="edit_category_name" name="category_name" placeholder="Category Name" autocomplete="off" value="{{ old('category_name') }}" require >
                       <span class="text-red">
                                 <strong class="category_name"></strong>
                       </span>
@@ -131,6 +131,7 @@
                               <option value="job">Job Posting</option>
                               <option value="skill">Skill</option>
                               <option value="course">Course</option>
+                              <option value="service">Service</option>
                             </select>
                             <span class="text-red">
                               <strong class="type"></strong>

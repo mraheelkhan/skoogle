@@ -12,24 +12,33 @@
                         @endforeach
                     </ul>
                     @endif
-            <form action="{{route('CourseStore')}}" method="post">
+                    @if(Session::has('message'))
+            <p class="alert alert-success">{!! Session::get('message') !!}</p>    
+        @elseif(Session::has('error'))
+            <p class="alert alert-danger">{!! Session::get('error') !!}</p>
+        @endif
+        @if(session('failed'))
+            <script>
+              $( document ).ready(function() {
+                swal.fire("Failed", "{!! Session::get('error') !!}", "error");
+              });
+              
+            </script>
+        @endif
+            <form action="{{route('CourseVideoStore')}}" method="post" enctype="multipart/form-data">
                 @csrf
+                <input type="hidden" name="course_id" value="{{ $course_id }}"/>
                 <div class="form-group">
-                    <label for="title"> Enter title of the course</label>
+                    <label for="title"> Enter title of the course video</label>
                 <input type="text" class="form-control input_box" name="title" id="title" placeholder="Enter Title of the Post" value="{{ old('title')}}" onchange="urlGenerator()" focused/>
                 </div>
                 <div class="form-group">
-                    <label for="title"> Select Category</label>
-                    <select  name="category_id" id="category_id" class="form-control">
-                        <option value="" disabled selected>Select Category</option>
-                        @foreach($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->category_name }}</option>
-                            @endforeach
-                    </select>
+                    <label for="file"> Upload Video File</label>
+                <input type="file" class="form-control input_box" name="file" id="file"/>
                 </div>
 
                 <div class="form-group">
-                    <label for="title"> Your Course Content</label>
+                    <label for="title"> Your video Content</label>
                     <textarea rows="10"  cols="10"  value="{{ old('description')}}" class="" name="description" id="description"></textarea>
                     <script>
                             CKEDITOR.replace( 'description' );
@@ -47,18 +56,5 @@
     </div>
 </section>
 
-<script>
-    function urlGenerator(){
-        var title = $('#title').val();
-        var random = Math.floor(Math.random() * 1000000) + 1000000;
-        title = title.replace(/[^a-zA-Z0-9]/g, '-');
-        //title = title.replace(/[^a-zA-Z ]/g, "-");
-        var newUrl = $('#post_url').val(title + random);
-        console.log(title + random);
-    }
 
-    $(document).ready(function() {
-        $('#category_id').select2();
-    });
-</script>
 @endsection

@@ -49,50 +49,7 @@
     })
   </script>
 @endif
-@if (Route::currentRouteName()=='leads.show')
-  <script>
-      $(function () {
-        $('#nofeatures').DataTable({
-          'paging'      : false,
-          'lengthChange': false,
-          'searching'   : false,
-          'ordering'    : false,
-          'info'        : false,
-          'autoWidth'   : false
-        })
-      });
-      $(function () {
-        $('#nofeaturesapp').DataTable({
-          'paging'      : false,
-          'lengthChange': false,
-          'searching'   : false,
-          'ordering'    : false,
-          'info'        : false,
-          'autoWidth'   : false
-        })
-      });
-      $(function () {
-        $('#nofeaturesdocs').DataTable({
-          'paging'      : false,
-          'lengthChange': false,
-          'searching'   : false,
-          'ordering'    : false,
-          'info'        : false,
-          'autoWidth'   : false
-        })
-      });
-      $(function () {
-        $('#nofeaturesproposal').DataTable({
-          'paging'      : false,
-          'lengthChange': false,
-          'searching'   : false,
-          'ordering'    : false,
-          'info'        : false,
-          'autoWidth'   : false
-        })
-      }); 
-    </script> 
-@endif
+
 @if (Route::currentRouteName()=='admins.show' or Route::currentRouteName()=='customers.show')
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>

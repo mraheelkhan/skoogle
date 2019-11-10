@@ -46,10 +46,10 @@ class LoginController extends Controller
                     return '/dashboard';
                 break;
             case 2:
-                    return '/forum';
+                    return '/home';
                 break; 
             default:
-                    return '/forum';
+                    return '/home';
                     Session::flash('message', '<script>swal.fire("You are not Authorize","Your Account belongs to Mobile Application, Please login from Mobile","error");</script>'); 
                     return Auth::logout(); 
                 break;

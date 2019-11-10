@@ -367,7 +367,7 @@ class UserController extends Controller
             return redirect()->back()->with('success', "Your Password has been changed.");
 
 
-        }elseif($request->get('resetpassword')){
+        } elseif($request->get('resetpassword')){
             //$this->authorize('edit-staff');
             //Reset Password
             $user=\App\User::find($id); 
@@ -509,51 +509,54 @@ class UserController extends Controller
         }
     }
 
-    public function readnofication(Request $request)
-    {
-        $id=$request->get('id');
-        $data['id']=$id;
-        Auth::user()->unreadNotifications->where('id', $id)->markAsRead();
-        die(json_encode($data));
-        exit;
+
+    public function register(){
+        return view('home.register');
     }
-    public function getatt(Request $request)
-    {
-        $attlog=json_decode($request->get('attlog'),true);
-        //dd($attlog);
-        
-        foreach($attlog['Row'] as $att){
-           // dd($att);
-           
-            $userinfo= \App\Staffdetail::where('attendanceid',$att['PIN'])->first();
-            //dd($userinfo['user_id']);
-            if(!empty($userinfo)){
-               // dd($userinfo->toArray());
-                $newattlog= new \App\Attendance;
-                $newattlog->user_id=$userinfo['user_id'];
-                $attdate=date_create($att['DateTime']);
-                $attendancedate = date_format($attdate,"Y-m-d H:i:s");
-                $attendancetime = date_format($attdate,"H:i:s");
-                $newattlog->attendancedate=$attendancedate;
-                $newattlog->attendancetime=$attendancetime;
-                $newattlog->machineuserid=$att['PIN'];
-                $newattlog->state=$att['Status'];
-                $newattlog->status=0;
-                $date=date_create($request->get('date'));
-                $format = date_format($date,"Y-m-d H:i:s");
-                $newattlog->created_at = strtotime($format);
-                $newattlog->updated_at = strtotime($format);
-                $newattlog->save();
-            }
+
+    public function registerStore(Request $request){
+
+        $validated = $request->validate([   
+            "fname" => 'required|max:50',
+            "lname" => 'required|max:50',
+            "password" => 'required|max:50',
+            "email" => 'required|unique:users|email',
+            "phone" => 'required|numeric',
+            "image" => 'required',
+        ]);
+
+        if($request->hasFile('image')){
+
+            $file = $request->file('image');
+            $filename = time() . "-" . $file->getClientOriginalName();
+            $path = public_path().'/uploads/profiles/';
+            $file->move($path, $filename);
         }
-        return "OK";
+
+        $user = new User;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->get('password'));
+       
+        $user->avatar = $filename;
+        $user->fname = $request->fname;
+        $user->lname = $request->lname;
+        $user->phonenumber = $request->phone;
+        $user->organization_id = 0;
+        $user->designation_id = 0;
+        $user->role_id = 2; //this is user
+        $user->save();
+
+        $profile = new StaffDetail;
+        $profile->user_id = $user->id;
+        // $profile->phone = $request->phone;
+        $profile->gender = $request->gender;
+        $profile->save();
+        if ($user && $profile){
+            return url('/login');
+        }
+        //return "Failed";
 
     }
-   
-
-
-    
-
 
 
 

@@ -15,6 +15,11 @@
                             <span class="icon-menu h3"></span></a></div>
 
                     <ul class="site-menu js-clone-nav d-none d-lg-block">
+                        <li><a href="{{route('Home')}}">
+                            <span class="">
+                                <span class="icon-plus mr-3"></span> News Feed</span>
+                            </a>
+                        </li>
                         <li><a href="{{ route('JobAll') }}">All Jobs</a></li>
                         @if(auth()->check() && auth()->user()->organization_id != 0)
                         
@@ -22,7 +27,7 @@
                             <li><a href="{{ route('MyPostedJobs') }}">My Posted Jobs</a></li>
                             @endif
 
-                        @endif      
+                            @endif      
                     <li><a href="{{route('JobCreate')}}">
                         <span class="bg-primary text-white py-3 px-4 rounded">
                             <span class="icon-plus mr-3"></span>Post New Job</span>

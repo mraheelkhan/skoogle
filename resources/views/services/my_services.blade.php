@@ -16,34 +16,31 @@
             </script>
         @endif
         @if(auth()->check() && auth()->user()->isPro == 1)
-        <h1 class="text-center">My Courses: {{ count($showcourses) }}</h1>
+        <h1 class="text-center">My Services: {{ count($services) }}</h1>
         <div class="row blog_tow_row mb-5 text-center">
-            <a href="{{ route('CourseCreate') }}" class="btn btn-primary">Create New Course</a>
+            <a href="{{ route('ServiceCreate') }}" class="btn btn-primary">Create New Service</a>
         </div>
         @endif
        <div class="row blog_tow_row">
-            @foreach($showcourses as $course)
+            @foreach($services as $service)
             <div class="col-md-4 col-sm-6">
                 <div class="renovation">
                     {{-- <img src="images/blog/renovation/r-1.jpg" alt=""> --}}
                     <div class="renovation_content">
-                            @if(auth()->check() && auth()->user()->isPro == 1 && auth()->user()->id == $course->user_id)
+                            @if(auth()->check() && auth()->user()->isPro == 1 && auth()->user()->id == $service->user_id)
                             <div class="text-right">
-                                    <a href="{{route('CourseDelete', $course->id)}}" class="btn btn-danger">
+                                    <a href="{{route('ServiceDelete', $service->id)}}" class="btn btn-danger">
                                         <i class="fa fa-trash"></i>
-                                    </a>
-                                    <a  href="{{route('CourseEnroll',  $course->id )}}" class="btn btn-primary">
-                                        <i class="fa fa-plus"></i>
                                     </a>
                                 </div>
                             @endif
                         {{-- <a class="clipboard" href="#"><i class="fa fa-clipboard" aria-hidden="true"></i></a> --}}
-                    <a class="tittle" href="{{ route('CourseShow', [str_replace(" ", "-", $course->category->category_name), $course->id]) }}">{{ $course->title }}</a>
+                    <a class="tittle" href="{{ route('ServiceShow', $service->url) }}">{{ $service->title }}</a>
                         <div class="date_comment">
-                            <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i>{{ $course->created_at }}</a>
-                            <a href="#"><i class="fa fa-commenting-o" aria-hidden="true"></i>3</a>
+                            <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i>{{ $service->created_at }}</a>
+                            {{-- <a href="#"><i class="fa fa-commenting-o" aria-hidden="true"></i>3</a> --}}
                         </div>
-                        <p>{!! substr($course->description,0,100)!!}</p> 
+                        <p>{!! substr($service->description,0,100)!!}</p> 
                     </div>
                     
                 </div>

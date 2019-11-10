@@ -19,9 +19,6 @@
     <div class="row">
     
       <div class="col-md-12 col-lg-8 mb-5">
-      
-        
-      
         <div class="p-5 bg-white">
 
           <div class="mb-4 mb-md-5 mr-5">

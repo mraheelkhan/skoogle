@@ -1,5 +1,10 @@
 <?php
-
+/* 
+Using on-purpose Model and Classes
+*/
+// Use Session;
+// Use DB;
+// Use Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,10 +17,16 @@
 */
 Route::get('/home', 'HomeController@newsfeed')->name('Home');
 Route::get('/', 'HomeController@newsfeed')->name('NewsFeed');
+Route::get('/signup', 'UserController@register')->name('Register');
+Route::get('/register', function(){
+  return redirect()->url('/signup');
+})->name('Register');
+Route::post('/register/store', 'UserController@registerStore')->name('RegisterStore');
 
 Route::get('/logout', function(){
   Auth::logout();
-  return redirect(route('ForumAll'));
+  Session::flash('message', 'You are logout Successfully.<script>swal.fire("Logout","You are Logout Successfully","error");</script>'); 
+  return redirect(route('Home'));
 })->name('LogOutSystem');
 Auth::routes();
 //Route::get('/home', 'HomeController@index')->name('home');
@@ -203,4 +214,27 @@ Route::get('video/courses/delete/{id}', 'CourseVideoController@destroy')->name('
 
 //Profile of User
 
-Route::get('user/profile', 'ProfileController@profile')->name('ProfileAccount');
+Route::get('/profile/user', 'ProfileController@index')->name('ProfileAccount');
+
+// Services Routes
+Route::get('/services/', 'ServiceController@index')->name('ServicesAll');
+Route::get('/services/my', 'ServiceController@myServices')->name('ServiceMy');
+Route::get('/services/offered', 'ServiceController@index')->name('ServicesOffered');
+Route::get('/service/create', 'ServiceController@create')->name('ServiceCreate');
+Route::post('/service/store', 'ServiceController@store')->name('ServiceStore');
+Route::get('service/{string}/', 'ServiceController@show')->name('ServiceShow');
+Route::get('service/delete/{id}', 'ServiceController@delete')->name('ServiceDelete');
+
+// Projects Routes
+Route::get('/projects/', 'ProjectController@index')->name('ProjectsAll');
+Route::get('/projects/my', 'ProjectController@myprojects')->name('ProjectMy');
+Route::get('/projects/offered', 'ProjectController@index')->name('ProjectsOffered');
+Route::get('/project/create', 'ProjectController@create')->name('ProjectCreate');
+Route::post('/project/store', 'ProjectController@store')->name('ProjectStore');
+Route::post('/project/apply', 'ProjectController@apply')->name('ProjectApply');
+Route::get('project/{string}/', 'ProjectController@show')->name('ProjectShow');
+Route::get('project/delete/{id}', 'ProjectController@delete')->name('ProjectDelete');
+Route::post('/project/close/', 'ProjectController@markAsClosed')->middleware('auth')->name('ProjectMarkAsClosed');
+Route::post('/project/open/', 'ProjectController@markAsOpened')->middleware('auth')->name('ProjectMarkAsOpen');
+
+// Test Routes

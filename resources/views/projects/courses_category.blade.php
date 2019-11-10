@@ -16,7 +16,6 @@
             </script>
         @endif
         @if(auth()->check() && auth()->user()->isPro == 1)
-        <h1 class="text-center">My Courses: {{ count($showcourses) }}</h1>
         <div class="row blog_tow_row mb-5 text-center">
             <a href="{{ route('CourseCreate') }}" class="btn btn-primary">Create New Course</a>
         </div>
@@ -32,8 +31,8 @@
                                     <a href="{{route('CourseDelete', $course->id)}}" class="btn btn-danger">
                                         <i class="fa fa-trash"></i>
                                     </a>
-                                    <a  href="{{route('CourseEnroll',  $course->id )}}" class="btn btn-primary">
-                                        <i class="fa fa-plus"></i>
+                                    <a  href="{{route('CourseEdit', $course->id)}}" class="btn btn-primary">
+                                        <i class="fa fa-edit"></i>
                                     </a>
                                 </div>
                             @endif
@@ -43,7 +42,8 @@
                             <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i>{{ $course->created_at }}</a>
                             <a href="#"><i class="fa fa-commenting-o" aria-hidden="true"></i>3</a>
                         </div>
-                        <p>{!! substr($course->description,0,100)!!}</p> 
+                        <p>{!! substr($course->description,0,100)!!}</p>
+                        
                     </div>
                     
                 </div>

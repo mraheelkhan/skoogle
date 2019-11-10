@@ -105,7 +105,9 @@
                       </div>
                       <div class="job-category align-self-center">
                         <div class="p-3">
+                          
                         <span class="text-@if($job->job_type == 'fulltime')info @elseif($job->job_type == 'freelance')warning @elseif($job->job_type == 'parttime')danger @endif p-2 rounded border border-@if($job->job_type == 'fulltime')info @elseif($job->job_type == 'freelance')warning @elseif($job->job_type == 'parttime')danger @endif">{{ ucfirst($job->job_type) }}</span>
+                        
                         </div>
                         @if(auth()->check() && $job->user_id == auth()->user()->id && $job->status != 2 && auth()->user()->organization_id != 0)
                         <div class="p-3">

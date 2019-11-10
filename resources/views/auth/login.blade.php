@@ -49,13 +49,16 @@
           <button type="submit" class="btn btn-primary btn-block btn-flat">
             {{ __('Login') }}
           </button>
+          <a href="{{ url('/signup') }}" class="btn btn-secondary btn-block btn-flat">
+            Register
+          </a>
         </div>
         <!-- /.col -->
       </div>
     </form>
-    <a class="btn btn-link" href="{{ route('password.request') }}">
+    {{-- <a class="btn btn-link" href="{{ route('password.request') }}">
         {{ __('Forgot Your Password?') }}
-    </a>
+    </a> --}}
   </div>
   <!-- /.login-box-body -->
 </div>

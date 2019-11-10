@@ -11,17 +11,22 @@
                 <li>
             <!-- user profile -->
                     <div class="profile">
-                    <img src="{{ asset('public/askme/images/profile.jpg')}}" />
-                    <a href="#" class="name">Abbas Kizilbash</a>
-                
+                    {{-- <img src="{{ asset('public/askme/images/profile.jpg')}}" /> --}}
+                    @if(auth()->check())
+                    <a href="#" class="name">Welcome {{ auth()->user()->fname }}!</a>
+                    @else
+                    <a href="{{ url('login') }}" class="name">Welcome Guest!</a>
+                    @endif
                 <!-- more menu --> 
                 <ul class="menu">
-                    <li><a href="#">My Account</a></li>
-                    <li><a href="#">Post a Request</a></li>
-                    <li><a href="#">Offer a Service</a></li>
-                    <li><a href="#">Help</a></li>
-                    <li><a href="#">Settings</a></li>
-                    <li><a href="#">Logout</a></li>
+                <li><a href="{{ route('ProfileAccount')}}">My Account</a></li>
+                    {{-- <li><a href="#">Post a Request</a></li>
+                    <li><a href="#">Offer a Service</a></li> --}}
+                    @if(auth()->check())
+                    <li><a href="{{ route('logout') }}">Logout</a></li>
+                    @else
+                    <li><a href="{{ url('login') }}">Login</a></li>
+                    @endif
                 </ul>
             </div>
             </li>
@@ -78,9 +83,10 @@
                     @if(auth()->check() && auth()->user()->isPro == 1)
                     <li><a href="{{route('PostMy')}}">My Articles</a></li>
                     @endif
-                    
+                    <li><a href="{{route('ServicesAll')}}">Services</a></li>
+                    <li><a href="{{route('ProjectsAll')}}">Projects</a></li>
                     <li class="dropdown submenu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Skills & Services</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Courses</a>
                         <ul class="dropdown-menu other_dropdwn">
                             @if(auth()->check() && auth()->user()->isPro == 1)
                             <li><a href="{{ route('CourseMy') }}">My Courses </a></li>
@@ -89,16 +95,17 @@
                             <li><a href="{{ route('CourseCategoryShow',$course->id) }}">{{ $course->category_name }} </a></li>
                             @endforeach                           
                         </ul>
+                        
                     </li>
                 <li><a href="{{route('JobAll')}}">Career</a></li>
                     <li><a href="{{route('ForumAll')}}">Forum</a></li>
                     @if(!auth()->check())
                     <li><a href="{{url('/login')}}">Login</a></li>
+                    <li><a href="{{ url('/signup')}}">Sign Up</a></li>
                     @else
                     <li><a href="{{url('/logout')}}">Logout</a></li>
                     @endif
-                    <li><a href="#">Contact</a></li>
-                    <li><a href="#" class="nav_searchFrom"><i class="fa fa-search"></i></a></li>
+                    {{-- <li><a href="#" class="nav_searchFrom"><i class="fa fa-search"></i></a></li> --}}
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div>

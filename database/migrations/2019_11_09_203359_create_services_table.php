@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProjectsTable extends Migration
+class CreateServicesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,19 @@ class CreateProjectsTable extends Migration
      */
     public function up()
     {
-        Schema::create('projects', function (Blueprint $table) {
+        Schema::create('services', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('user_id');
-            $table->string('title');
-            $table->text('description')->nullable();
-            $table->integer('project_type')->nullable();
+            $table->string('url')->unique();
             $table->integer('category_id');
-            $table->date('start_date')->nullable();
-            $table->date('end_date')->nullabe();
+            $table->string('title');
+            $table->text('description');
+            $table->string('type')->comment('fulltime, part time, freelance, depends');
+            $table->string('price')->nullable();
             $table->integer('isActive')->default(1)->comment('0 = inactive , 1 = active');
             $table->integer('status')->default(1)->comment('0 = pending , 1 = display, 2 = moderate, 3 = marked as spam');
             $table->integer('is_deleted')->default(0)->comment('0 = not deleted , 1 = deleted');
+       
             $table->timestamps();
         });
     }
@@ -36,6 +37,6 @@ class CreateProjectsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('projects');
+        Schema::dropIfExists('services');
     }
 }

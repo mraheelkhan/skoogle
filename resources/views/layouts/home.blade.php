@@ -22,8 +22,13 @@
 
     <!--Theme Styles CSS-->
 	<link rel="stylesheet" type="text/css" href="{{ asset('/public/home/css/style.css')}}" media="all" />
+    <script src="{{ asset('/public/askme/js/jquery.min.js')}}"></script>
     <script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
-
+    <!-- select2 js code cdn     -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
+    <script src="{{ asset('public/askme/js/sweetalert2.js') }}"></script>
+     
     <style>
         .blog_tow_area .blog_tow_row .renovation .renovation_content {
             height: 300px;
@@ -49,7 +54,7 @@
     <!-- End Footer Area -->
 
     <!-- jQuery JS -->
-    <script src="{{ asset('/public/askme/js/jquery.min.js')}}"></script>
+   
     
     <!-- Bootstrap JS -->
     <script src="{{ asset('/public/home/js/bootstrap.min.js')}}"></script>

@@ -12,11 +12,19 @@
                         @endforeach
                     </ul>
                     @endif
-            <form action="{{route('CourseStore')}}" method="post">
+            <form action="{{route('ServiceStore')}}" method="post">
                 @csrf
                 <div class="form-group">
-                    <label for="title"> Enter title of the course</label>
+                    <label for="title"> Enter title of the services</label>
                 <input type="text" class="form-control input_box" name="title" id="title" placeholder="Enter Title of the Post" value="{{ old('title')}}" onchange="urlGenerator()" focused/>
+                </div>
+                <div class="form-group">
+                    <label for="title"> Url (none-editable)</label>
+                    <input type="text" class="form-control input_box" name="url" id="url" value="{{ old('url')}}" placeholder="URL of the Post" readonly/>
+                </div>
+                <div class="form-group">
+                    <label for="price"> Enter Price of the services</label>
+                <input type="text" class="form-control input_box" name="price" id="price" placeholder="Enter Title of the Post" value="{{ old('price')}}" onchange="urlGenerator()" focused/>
                 </div>
                 <div class="form-group">
                     <label for="title"> Select Category</label>
@@ -29,8 +37,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="title"> Your Course Content</label>
-                    <textarea rows="10"  cols="10"  value="{{ old('description')}}" class="" name="description" id="description"></textarea>
+                    <label for="title"> Your service Content</label>
+                    <textarea rows="10"  cols="50"  value="{{ old('description')}}" class="" name="description" id="description"></textarea>
                     <script>
                             CKEDITOR.replace( 'description' );
                         </script>
@@ -38,7 +46,7 @@
                 </div>  
 
                     <div class="form-group">
-                        <input type="submit" name="submit" value="Publish Post" class="btn btn-primary"/>
+                        <input type="submit" name="submit" value="Publish Service" class="btn btn-primary"/>
                     </div>
             </form>
 
@@ -48,17 +56,31 @@
 </section>
 
 <script>
+    $(document).ready(function() {
+        $('#category_id').select2();
+    });
+
     function urlGenerator(){
         var title = $('#title').val();
         var random = Math.floor(Math.random() * 1000000) + 1000000;
         title = title.replace(/[^a-zA-Z0-9]/g, '-');
         //title = title.replace(/[^a-zA-Z ]/g, "-");
-        var newUrl = $('#post_url').val(title + random);
+        var newUrl = $('#url').val(title + random);
         console.log(title + random);
     }
 
-    $(document).ready(function() {
-        $('#category_id').select2();
-    });
+    function readURL(input) {
+        $('#imagePreview').show();
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#imagePreview')
+                    .attr('src', e.target.result);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
 </script>
 @endsection

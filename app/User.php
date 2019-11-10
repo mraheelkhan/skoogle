@@ -46,6 +46,9 @@ class User extends Authenticatable
     public function staffdetails(){
         return $this->hasOne(Staffdetail::class, 'user_id', 'id' )->withDefault();
     }
+    public function profile(){
+        return $this->hasOne(Staffdetail::class, 'user_id', 'id' )->withDefault();
+    }
    
     public function designation(){
         return $this->hasOne(Designation::class, 'id', 'designation_id')->withDefault();
