@@ -22,14 +22,14 @@ class PostController extends Controller
      */
     public function index()
     {
+        $posts = Post::where('isActive', 1)->orderBy('id', 'desc')->where('is_deleted', 0)->get();
+        return view('posts.myposts', compact('posts'));
         
-        return redirect()->route('Home');
     }
 
     public function myArticles(){
         
         $posts = Post::where('user_id', auth()->user()->id)->orderBy('id', 'desc')->where('is_deleted', 0)->get();
-        // dd($posts);
         return view('posts.myposts', compact('posts'));
     }
     /**

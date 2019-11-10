@@ -80,9 +80,10 @@
             <div class="collapse navbar-collapse" id="min_navbar">
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="{{route('Home')}}">Newsfeed</a></li>
-                    @if(auth()->check() && auth()->user()->isPro == 1)
+                    {{-- @if(auth()->check() && auth()->user()->isPro == 1)
                     <li><a href="{{route('PostMy')}}">My Articles</a></li>
-                    @endif
+                    @endif --}}
+                    <li><a href="{{route('PostAll')}}">Articles</a></li>
                     <li><a href="{{route('ServicesAll')}}">Services</a></li>
                     <li><a href="{{route('ProjectsAll')}}">Projects</a></li>
                     <li class="dropdown submenu">

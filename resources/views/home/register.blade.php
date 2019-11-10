@@ -17,31 +17,30 @@
         <form action="{{ route('RegisterStore') }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
-                <input type="text" name="fname" class="input-box" placeholder="First Name" value="{{old('fname')}}" required>
+                <input type="text" name="fname" class="form-control" placeholder="First Name" value="{{old('fname')}}" required>
             </div>
             <div class="form-group">
-                <input type="text" name="lname" value="{{old('lname')}}" class="input-box" placeholder="Last Name" required>
+                <input type="text" name="lname" value="{{old('lname')}}" class="form-control" placeholder="Last Name" required>
             </div>
             
             <div class="form-group">
-                <input type="phone" name="phone" value="{{old('phone')}}" class="input-box" placeholder="Your Phone" required>
+                <input type="phone" name="phone" value="{{old('phone')}}" class="form-control" placeholder="Your Phone" required>
             </div>
             <div class="form-group">
-                <input type="file" name="image" value="{{old('image')}}" class="input-box" required>
+                <input type="file" name="image" value="{{old('image')}}" class="form-control" required>
             </div>
             <div class="form-group">
-                <label for="gender"> Gender</label>
-                <select name="gender" id="gender">
+                <select name="gender" id="gender" class="form-control">
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                     <option value="other">other</option>
                 </select>
             </div>
             <div class="form-group">
-                <input type="email" name="email" value="{{old('email')}}" class="input-box" placeholder="Your Email" required>
+                <input type="email" name="email" value="{{old('email')}}" class="form-control" placeholder="Your Email" required>
             </div>
             <div class="form-group">
-                <input type="password" name="password" class="input-box" placeholder="Your Password" required>
+                <input type="password" name="password" class="form-control" placeholder="Your Password" required>
             </div>
                         
             <button type="submit" name='submit' class="btn btn-primary">Sign Up</button>

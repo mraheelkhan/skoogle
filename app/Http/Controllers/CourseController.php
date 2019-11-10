@@ -84,7 +84,8 @@ class CourseController extends Controller
 
         //checking if user is enrolled in the course
         $auth = EnrolledCourse::where('user_id', auth()->user()->id)->where('course_id', $id)->first();
-        if(! empty($auth)){
+        
+        if(! empty($auth) || $courses->user_id == auth()->user()->id){
             return view('courses.show', compact('showcoursevideos'))->with('course_id', $course_id);
         } else {
             Session::flash('message', 'You are not enrolled. <script>swal.fire("error","Not Enrolled","You are not enrolled.");</script>'); 

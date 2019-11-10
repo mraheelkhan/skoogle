@@ -181,7 +181,7 @@ Route::post('/job/close/', 'JobController@markAsClosed')->middleware('auth')->na
 
 
 // Posts, Articles and Comments 
-Route::get('posts', 'PostController@index');
+Route::get('posts', 'PostController@index')->name('PostAll');
 Route::get('posts/my', 'PostController@myArticles')->name('PostMy');
 Route::get('post/create', 'PostController@create')->name('PostCreate');
 Route::post('post/store', 'PostController@store')->name('PostStore');
@@ -215,16 +215,19 @@ Route::get('video/courses/delete/{id}', 'CourseVideoController@destroy')->name('
 //Profile of User
 
 Route::get('/profile/user', 'ProfileController@index')->name('ProfileAccount');
+Route::get('/profile/user/{id}', 'ProfileController@profile')->name('ProfileUserAccount');
 
 // Services Routes
 Route::get('/services/', 'ServiceController@index')->name('ServicesAll');
 Route::get('/services/my', 'ServiceController@myServices')->name('ServiceMy');
-Route::get('/services/offered', 'ServiceController@index')->name('ServicesOffered');
+// Route::get('/services/offered', 'ServiceController@index')->name('ServicesOffered');
 Route::get('/service/create', 'ServiceController@create')->name('ServiceCreate');
 Route::post('/service/store', 'ServiceController@store')->name('ServiceStore');
 Route::get('service/{string}/', 'ServiceController@show')->name('ServiceShow');
 Route::get('service/delete/{id}', 'ServiceController@delete')->name('ServiceDelete');
-
+Route::get('/services/offer', 'ServiceController@serviceOffer')->name('ServiceOffer');
+Route::get('/services/offer/category', 'ServiceController@serviceOfferCategory')->name('ServiceOfferCategory');
+Route::post('/service/apply', 'ServiceController@apply')->name('ServiceApply');
 // Projects Routes
 Route::get('/projects/', 'ProjectController@index')->name('ProjectsAll');
 Route::get('/projects/my', 'ProjectController@myprojects')->name('ProjectMy');

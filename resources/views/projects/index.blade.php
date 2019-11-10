@@ -18,10 +18,11 @@
     <section class="blog_tow_area">
         <div class="container">
 
-                @if(auth()->check() && auth()->user()->isPro == 1)
+                {{-- @if(auth()->check() && auth()->user()->isPro == 1) --}}
+                @if(auth()->check())
                 <h3 class="text-center">My Projects: <a href="{{ route('ProjectMy') }}">{{ count($projects) }} - Show </a></h3>
                 <div class="row blog_tow_row mb-5 text-center" style="margin: 20px 1px;">
-                    <a href="{{ route('ServiceCreate') }}" class="btn btn-primary">Create New Project</a>
+                    <a href="{{ route('ProjectCreate') }}" class="btn btn-primary">Create New Project</a>
                 </div>
                 @endif
 

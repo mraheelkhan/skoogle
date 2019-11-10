@@ -31,7 +31,7 @@
      
     <style>
         .blog_tow_area .blog_tow_row .renovation .renovation_content {
-            height: 300px;
+            height: 350px;
         }
     </style>
     

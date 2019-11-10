@@ -29,7 +29,7 @@
                         <img class="" style="border: 1px solid black;" src="{{ asset('public/uploads/postImages/' . $post->image) }}" class="img-responsive" style="width: 100%;" alt="">
                         <div class="renovation_content">
                                 <a class="clipboard" href="#"><i class="fa fa-clipboard" aria-hidden="true"></i></a>
-                                
+                                @if(auth()->user()->id == $post->user_id)
                                 <div class="text-right">
                                         <a href="{{route('PostDelete', $post->id)}}" class="btn btn-danger">
                                             <i class="fa fa-trash"></i>
@@ -38,7 +38,7 @@
                                             <i class="fa fa-edit"></i>
                                         </a>
                                     </div>
-                                
+                                @endif
                         <a class="tittle" href="{{ route('PostShow', $post->post_url) }}">{{ $post->post_title }}</a>
                             <div class="date_comment">
                                 <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i>{{ date("d-M", strtotime($post->created_at)) }}</a>

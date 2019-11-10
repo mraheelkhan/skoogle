@@ -15,7 +15,8 @@
               
             </script>
         @endif
-        @if(auth()->check() && auth()->user()->isPro == 1)
+        {{-- @if(auth()->check() && auth()->user()->isPro == 1) --}}
+        @if(auth()->check())
         <h1 class="text-center">My Projects: {{ count($projects) }}</h1>
         <div class="row blog_tow_row mb-5 text-center">
             <a href="{{ route('ProjectCreate') }}" class="btn btn-primary">Create New Project</a>
@@ -27,7 +28,8 @@
                 <div class="renovation">
                     {{-- <img src="images/blog/renovation/r-1.jpg" alt=""> --}}
                     <div class="renovation_content @if($project->status == 2) bg-info @endif">
-                            @if(auth()->check() && auth()->user()->isPro == 1 && auth()->user()->id == $project->user_id)
+                            {{-- @if(auth()->check() && auth()->user()->isPro == 1 && auth()->user()->id == $project->user_id) --}}
+                            @if(auth()->check() && auth()->user()->id == $project->user_id)
                             <div class="text-right">
                                     <a href="{{route('ProjectDelete', $project->id)}}" class="btn btn-danger" title="Delete Project">
                                         <i class="fa fa-trash"></i>

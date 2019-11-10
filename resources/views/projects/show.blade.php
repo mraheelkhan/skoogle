@@ -104,7 +104,8 @@
                                       @foreach($appliers as $apply)
                                         <tr>
                                         <td>{{ $index++ }}</td>
-                                        <td>{{ $apply->user->fname }} {{ $apply->user->lname}} </td>
+                                        <td> <a href="{{route('ProfileUserAccount', $apply->user->id) }}">
+                                            {{ $apply->user->fname }} {{ $apply->user->lname}} </a></td>
                                         <td> {{ $apply->user->email }}</td>
                                           <td>{{ date('d-M-Y', strtotime($apply->created_at)) }}</td>
                                         </tr>

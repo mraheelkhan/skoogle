@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Service;
 use App\Category;
+use App\ServiceApplied;
 use App\User;
 use Session;
 use Auth;
@@ -82,7 +83,10 @@ class ServiceController extends Controller
     public function show($url)
     {
         $service = Service::where('url', $url)->first();
-        return view('services.show', compact('service'));
+        $appliers = ServiceApplied::where('service_id', $service->id)->where('status', 1)->where('isActive', 1)->where('is_deleted', 0)->get();
+        $ifApplied = ServiceApplied::where('service_id', $service->id)->where('user_id', auth()->user()->id)->get();
+        
+        return view('services.show', compact('service', 'appliers', 'ifApplied'));
     }
 
     /**
@@ -127,5 +131,37 @@ class ServiceController extends Controller
             Session::flash('message', 'Your service is deleted successfully. <script>swal.fire("success","Posted","Your service is deleted successfully");</script>'); 
             return redirect()->back();
         }
+    }
+
+    public function serviceOffer(){
+
+        return view('services.offer');
+    }
+
+    public function serviceOfferCategory(){
+
+        $categories = Category::where('type', 'test')->get();
+
+        return view('services.offerCategory', compact('categories'));
+    }
+
+    public function apply(Request $request){
+
+        $validated = $request->validate([   
+            "service_id" => 'required',
+        ]);
+
+        $userid = auth()->user()->id;
+        $service_id = $request->service_id;
+        
+
+        $insert = ServiceApplied::create([
+            'service_id' => request('service_id'),
+            'user_id' => auth()->user()->id,
+        ]);
+
+        Session::flash('message', 'You have applied successfully. <script>swal.fire("Applied","You have applied successfully", "success");</script>'); 
+        return redirect()->back();
+       
     }
 }

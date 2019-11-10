@@ -14,7 +14,26 @@
     </script>
 @endif
     <!--------------------ARTICLES START------------------------->
-    
+    @if(auth()->check() && auth()->user()->isPro != 1)
+    <section class="serviceoffer">
+            <div class="container">
+                <div class="row service_skill">
+                    <div class="service_test"> 
+                
+                    <p>READY TO OFFER YOUR SKILLS?</p>
+                    <p>Earn 10 skoogle coins &amp; unlock the Matching Game by posting your first service. Not sure what to offer? <a href="#">Take our skill test</a></p> 
+                    </div>
+                    <div class="service_offer">
+                        <li><a href="{{route('ServiceOffer') }}">Offer a Service</a></li>
+                    </div>
+                    </div>
+                </div>
+            
+        </section>
+
+        @endif
+
+
     <section class="blog_tow_area">
         <div class="container">
 

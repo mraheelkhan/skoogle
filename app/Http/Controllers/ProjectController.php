@@ -41,9 +41,9 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        if(auth()->user()->isPro != 1){
-            return "You are not authorize";
-        }
+        // if(auth()->user()->isPro != 1){
+        //     return "You are not authorize";
+        // }
         $categories = Category::where('type', 'service')->get();
         return view('projects.create', compact('categories'));
     }

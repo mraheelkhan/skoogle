@@ -2,7 +2,7 @@
 @section('content')
 
 <section class="serviceoffer">
-    <div class="container">
+    {{-- <div class="container">
         <div class="row service_skill">
             <div class="service_test"> 
         
@@ -14,15 +14,15 @@
             </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 </section>
 <section class="mainaccount">
     <div class="container">
         <div class="row">
             <div class="col-sm-4">
                 <div class="mainprofile">
-                    <img src="images/profile.jpg" alt="Avatar">
-                     <h3>{{ auth()->user()->fname . " " . auth()->user()->lname }}  </h3>
+                    {{-- <img src="{{ asset('images/profile.jpg" alt="Avatar"> --}}
+                     <h3>{{ $profile->fname . " " . $profile->lname }}  </h3>
                     <li>
                          <a href="#"><span>{{ $profile->profile->address }}</span></a>
                     </li>
@@ -93,17 +93,17 @@
             </div>
             <hr>
             <div class="introduction">
-                <h3>Hey, I'm {{ auth()->user()->fname . " " . auth()->user()->lname }}!</h3>
+                <h3>Hey, I'm {{ $profile->fname . " " . $profile->lname }}!</h3>
                 <h5>{{ $profile->profile->address }} | Member {{ $profile->created_at->diffForHumans() }}</h5>
                 <p> {{ $profile->profile->description }}</p>
-                <a href="#">View Profile |</a><a href="#"> Edit Profile</a>
+                {{-- <a href="#">View Profile |</a><a href="#"> Edit Profile</a> --}}
             
             </div>
-            <hr>
-            <div class="interest">
+            {{-- <hr> --}}
+            {{-- <div class="interest">
                 <h4>Looking for:</h4>
                 <a href="#">Add Interests</a>
-            </div>
+            </div> --}}
             <hr>
             <div class="provide-service">
                 <h4>Offered Services</h4>
@@ -115,12 +115,14 @@
                     </div>
                     @endforeach
                 </div>
+                @if(auth()->check() && $profile->id == auth()->user()->id)
                 <div class="service-box">
                     <ul><i class="fa fa-plus-circle" style="font-size: 24px"></i>
                     <a href="{{ route('ServiceCreate')}}">Add Service</a>
                   </ul>
                     
                 </div>
+                @endif
             </div>
             <hr>
 

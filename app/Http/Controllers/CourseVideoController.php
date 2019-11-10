@@ -84,7 +84,7 @@ class CourseVideoController extends Controller
             return redirect()->route('login');
         }
         $auth = EnrolledCourse::where('user_id', auth()->user()->id)->where('course_id', $video->course_id)->first();
-        if(! empty($auth)){
+        if(! empty($auth) || $video->course->user_id == auth()->user()->id){
             return view('courses.videoShow', compact('video'));
         } else {
             Session::flash('message', 'You are not enrolled. <script>swal.fire("error","Not Enrolled","You are not enrolled.");</script>'); 

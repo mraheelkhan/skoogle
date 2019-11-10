@@ -24,6 +24,11 @@ class ProfileController extends Controller
        return view('profile.profile', compact('profile', 'services'));
     }
 
+    public function profile($id){
+        $profile = User::findOrFail($id);
+        $services = Service::where('user_id', $profile->id)->get();
+        return view('profile.profile', compact('profile', 'services'));
+    }
     /**
      * Show the form for creating a new resource.
      *

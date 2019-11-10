@@ -14,7 +14,10 @@
                         <a class="blog_heading" href="#">{{$post->post_title}} </a>
                         <a class="blog_admin" href="#"><i class="fa fa-user" aria-hidden="true"></i>{{$post->user->fname . " " . $post->user->lname}}</a>
                         <ul class="like_share">
-                            <li><a href="#"><i class="fa fa-comment" aria-hidden="true"></i>3</a></li>
+                            <li>
+                                <a href="#"><i class="fa fa-comment" aria-hidden="true"></i>
+                                    {{ count($comments)}}
+                            </a></li>
                             
                         </ul>
                         <p>

@@ -132,6 +132,7 @@
                               <option value="skill">Skill</option>
                               <option value="course">Course</option>
                               <option value="service">Service</option>
+                              <option value="test">Test</option>
                             </select>
                             <span class="text-red">
                               <strong class="type"></strong>
