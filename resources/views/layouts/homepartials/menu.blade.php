@@ -50,6 +50,15 @@
 <!-- End Top Header_Area -->
 
 <!-- Header_Area -->
+@php 
+if(Route::currentRouteName() == 'Chatroom' || Route::currentRouteName() == 'ChatUserShow')
+{
+    $show = 0;
+} else {
+    $show = 1;
+}
+@endphp
+@if ($show != 0)
 <nav class="navbar navbar-default header_aera" id="main_navbar">
     <div class="container">
         <!-- searchForm -->
@@ -71,7 +80,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html"><img src="{{ asset('public/askme/images/logo.png') }}" alt=""></a>
+                <a class="navbar-brand" href="{{route('Home')}}"><img src="{{ asset('public/askme/images/logo.png') }}" alt=""></a>
             </div>
         </div>
 
@@ -100,6 +109,7 @@
                     </li>
                 <li><a href="{{route('JobAll')}}">Career</a></li>
                     <li><a href="{{route('ForumAll')}}">Forum</a></li>
+                    <li><a href="{{route('Chatroom')}}">Chat</a></li>
                     @if(!auth()->check())
                     <li><a href="{{url('/login')}}">Login</a></li>
                     <li><a href="{{ url('/signup')}}">Sign Up</a></li>
@@ -112,4 +122,5 @@
         </div>
     </div><!-- /.container -->
 </nav>
+@endif
 <!-- End Header_Area -->

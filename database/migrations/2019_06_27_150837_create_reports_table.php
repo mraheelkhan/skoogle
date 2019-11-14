@@ -15,9 +15,9 @@ class CreateReportsTable extends Migration
     {
         Schema::create('reports', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('user_id');
-            $table->integer('reporter_id');
-            $table->integer('reported_id')->comment('against id');
+            $table->integer('user_id')->comment('initiator of report');
+            $table->integer('reporter_id')->comment('comment, post, course or review etc ID');
+            $table->integer('reported_user_id')->comment('against id - fk of usertable');
             $table->string('report_type');
             $table->string('message_body')->nullable();
             $table->integer('isActive')->default(1)->comment('0 = inactive , 1 = active');

@@ -7,6 +7,7 @@ use App\Category;
 use Illuminate\Http\Request;
 use Session;
 use App\PostComment;
+use App\Report;
 use DataTables;
 use Auth;
 use Storage;
@@ -93,7 +94,13 @@ class PostController extends Controller
     {
         $post = Post::where('post_url', $url)->first();
         $comments = PostComment::where('post_id', $post->id)->where('is_deleted', 0)->orderBy('id', 'desc')->get();
-        return view('posts.show', compact('post', 'comments'));
+        //$reports = [];
+        foreach($comments as $comment){
+            $reports = Report::where('reporter_id', 2)->get();
+
+        }
+        // dd($reports);
+        return view('posts.show', compact('post', 'comments', 'reports'));
     }
 
     /**

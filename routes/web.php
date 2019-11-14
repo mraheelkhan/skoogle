@@ -192,7 +192,7 @@ Route::post('post/update', 'PostController@update')->name('PostUpdate');
 
 Route::post('comment/store', 'PostCommentController@store')->name('CommentStore');
 Route::get('comment/delete/{id}', 'PostCommentController@destroy')->name('CommentDelete');
-
+Route::post('comment/report/', 'PostCommentController@report')->middleware('auth')->name('CommentReportStore');
 // Courses and videos Routes
 Route::get('courses/my', 'CourseController@myCourses')->middleware('auth')->name('CourseMy');
 Route::get('course/{string}/{id}', 'CourseController@show')->name('CourseShow');
@@ -223,7 +223,7 @@ Route::get('/services/my', 'ServiceController@myServices')->name('ServiceMy');
 // Route::get('/services/offered', 'ServiceController@index')->name('ServicesOffered');
 Route::get('/service/create', 'ServiceController@create')->name('ServiceCreate');
 Route::post('/service/store', 'ServiceController@store')->name('ServiceStore');
-Route::get('service/{string}/', 'ServiceController@show')->name('ServiceShow');
+Route::get('service/{string}/', 'ServiceController@show')->middleware('auth')->name('ServiceShow');
 Route::get('service/delete/{id}', 'ServiceController@delete')->name('ServiceDelete');
 Route::get('/services/offer', 'ServiceController@serviceOffer')->name('ServiceOffer');
 Route::get('/services/offer/category', 'ServiceController@serviceOfferCategory')->name('ServiceOfferCategory');
@@ -236,8 +236,12 @@ Route::get('/project/create', 'ProjectController@create')->name('ProjectCreate')
 Route::post('/project/store', 'ProjectController@store')->name('ProjectStore');
 Route::post('/project/apply', 'ProjectController@apply')->name('ProjectApply');
 Route::get('project/{string}/', 'ProjectController@show')->name('ProjectShow');
-Route::get('project/delete/{id}', 'ProjectController@delete')->name('ProjectDelete');
+Route::get('project/delete/{id}', 'ProjectController@destroy')->name('ProjectDelete');
 Route::post('/project/close/', 'ProjectController@markAsClosed')->middleware('auth')->name('ProjectMarkAsClosed');
 Route::post('/project/open/', 'ProjectController@markAsOpened')->middleware('auth')->name('ProjectMarkAsOpen');
 
-// Test Routes
+// Chat Routes
+
+Route::get('/chat', 'ChatroomController@index')->name('Chatroom');
+Route::get('/chat/user/{id}', 'ChatroomController@show')->name('ChatUserShow');
+Route::post('/chat/message', 'ChatroomController@store')->name('ChatUserStore');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\PostComment;
 use Illuminate\Http\Request;
 use App\Post;
+use App\Report;
 use Session;
 class PostCommentController extends Controller
 {
@@ -91,7 +92,16 @@ class PostCommentController extends Controller
      */
     public function destroy($id)
     {
+
         $comment = PostComment::findOrFail($id);
+        $post = Post::findOrFail($comment->post_id);
+        if(auth()->user()->id == $post->user_id){
+            $comment->is_deleted = 1;
+            $comment->update();
+
+            Session::flash('message', 'Your comment is deleted successfully. <script>swal.fire("success","Posted","Your comment is deleted successfully");</script>'); 
+            return redirect()->back();
+        }
         if(auth()->user()->id != $comment->user_id){
             Session::flash('message', 'This comment does not belongs to you. <script>swal.fire("error","Not Deleted","This comment does not belongs to you");</script>'); 
             return redirect()->back();
@@ -102,5 +112,23 @@ class PostCommentController extends Controller
             Session::flash('message', 'Your comment is deleted successfully. <script>swal.fire("success","Posted","Your comment is deleted successfully");</script>'); 
             return redirect()->back();
         } 
+    }
+
+    public function report(Request $request){
+
+        $comment_id = $request->comment_id;
+        $reason = $request->report_reason;
+        $commenter = PostComment::findOrFail($comment_id);
+        $report = new Report;
+        $report->user_id = auth()->user()->id;
+        $report->reported_user_id = $commenter->id;
+        $report->reporter_id = $comment_id;
+        $report->report_type = $reason;
+
+        $report->save();
+        
+        return redirect()->back();
+
+
     }
 }

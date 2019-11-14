@@ -120,9 +120,19 @@ class ProjectController extends Controller
      * @param  \App\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Project $project)
+    public function destroy($project_id)
     {
-        //
+        $post = Project::findOrFail($project_id);
+        if(auth()->user()->id != $post->user_id){
+            Session::flash('message', 'This project does not belongs to you. <script>swal.fire("error","Not Deleted","This project does not belongs to you");</script>'); 
+            return redirect()->back();
+        } else {
+            $post->is_deleted = 1;
+            $post->update();
+
+            Session::flash('message', 'Your project is deleted successfully. <script>swal.fire("success","Posted","Your project is deleted successfully");</script>'); 
+            return redirect()->back();
+        }
     }
 
     public function markAsClosed(Request $request){

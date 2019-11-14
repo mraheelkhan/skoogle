@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 10, 2019 at 10:08 PM
+-- Generation Time: Nov 14, 2019 at 06:13 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.1.32
 
@@ -242,6 +242,99 @@ INSERT INTO `chatroom` (`chatroomid`, `chat_name`, `date_created`, `chat_passwor
 (1, 'My First Chat Room', '2017-09-11 13:20:18', 'leeann', 2),
 (2, 'Free Entrance :)', '2017-09-11 13:20:51', '', 3),
 (3, 'Admin Chat Room', '2017-09-11 13:21:24', '', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `chatrooms`
+--
+
+CREATE TABLE `chatrooms` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` int(11) NOT NULL COMMENT 'created_by',
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `room_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'single',
+  `logo` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT 'none',
+  `status` int(11) NOT NULL DEFAULT 1,
+  `is_deleted` int(11) NOT NULL DEFAULT 0,
+  `isActive` int(11) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `chatrooms`
+--
+
+INSERT INTO `chatrooms` (`id`, `user_id`, `name`, `room_type`, `logo`, `status`, `is_deleted`, `isActive`, `created_at`, `updated_at`) VALUES
+(1, 1, 'abc', 'single', 'none', 1, 0, 0, '2019-11-12 19:00:00', '2019-11-12 19:00:00'),
+(2, 1, 'defg', 'single', 'none', 1, 0, 0, '2019-11-12 19:00:00', '2019-11-12 19:00:00'),
+(3, 1, 'defg', 'single', 'none', 1, 0, 0, '2019-11-12 19:00:00', '2019-11-12 19:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `chatroom_messages`
+--
+
+CREATE TABLE `chatroom_messages` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `room_id` int(11) NOT NULL,
+  `message` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `filename` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 1,
+  `is_deleted` int(11) NOT NULL DEFAULT 0,
+  `isActive` int(11) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `chatroom_messages`
+--
+
+INSERT INTO `chatroom_messages` (`id`, `user_id`, `room_id`, `message`, `filename`, `status`, `is_deleted`, `isActive`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 'hre is the message body from user 1', NULL, 1, 0, 0, '2019-11-12 19:00:00', '2019-11-12 19:00:00'),
+(2, 8, 1, 'user 8 hre is the message body from user 1', NULL, 1, 0, 0, '2019-11-12 19:00:00', '2019-11-12 19:00:00'),
+(3, 1, 1, 'asdfasdf', NULL, 1, 0, 0, '2019-11-13 07:43:58', '2019-11-13 07:43:58'),
+(4, 1, 1, 'olamba janana', NULL, 1, 0, 0, '2019-11-13 07:44:09', '2019-11-13 07:44:09'),
+(5, 1, 1, 'okay this is very good', NULL, 1, 0, 0, '2019-11-13 07:44:59', '2019-11-13 07:44:59'),
+(6, 1, 1, 'kha tk da', NULL, 1, 0, 0, '2019-11-13 07:45:22', '2019-11-13 07:45:22'),
+(7, 8, 1, 'I will let you know once it is done', NULL, 1, 0, 0, '2019-11-13 07:46:07', '2019-11-13 07:46:07'),
+(8, 1, 1, 'okay thank you so much', NULL, 1, 0, 0, '2019-11-13 07:46:16', '2019-11-13 07:46:16'),
+(9, 8, 1, 'welcome', NULL, 1, 0, 0, '2019-11-13 07:46:45', '2019-11-13 07:46:45'),
+(10, 1, 1, 'this is not my message', NULL, 1, 0, 0, '2019-11-13 07:54:49', '2019-11-13 07:54:49'),
+(11, 8, 1, 'so what?', NULL, 1, 0, 0, '2019-11-13 07:55:14', '2019-11-13 07:55:14'),
+(12, 1, 1, 'you have to do something', NULL, 1, 0, 0, '2019-11-13 07:55:26', '2019-11-13 07:55:26'),
+(13, 1, 2, 'hi', NULL, 1, 0, 0, '2019-11-14 00:09:39', '2019-11-14 00:09:39');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `chatroom_participants`
+--
+
+CREATE TABLE `chatroom_participants` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `room_id` int(11) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT 1,
+  `is_deleted` int(11) NOT NULL DEFAULT 0,
+  `isActive` int(11) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `chatroom_participants`
+--
+
+INSERT INTO `chatroom_participants` (`id`, `user_id`, `room_id`, `status`, `is_deleted`, `isActive`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 1, 0, 0, '2019-11-12 19:00:00', '2019-11-12 19:00:00'),
+(2, 8, 1, 1, 0, 0, '2019-11-12 19:00:00', '2019-11-12 19:00:00'),
+(3, 1, 2, 1, 0, 0, '2019-11-12 19:00:00', '2019-11-12 19:00:00'),
+(4, 9, 2, 1, 0, 0, '2019-11-12 19:00:00', '2019-11-12 19:00:00');
 
 -- --------------------------------------------------------
 
@@ -584,7 +677,11 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (17, '2019_06_27_142328_create_project_messages_table', 9),
 (18, '2019_06_27_141806_create_projects_table', 10),
 (19, '2019_11_10_202241_create_course_applieds_table', 11),
-(20, '2019_11_10_204720_create_service_applieds_table', 12);
+(20, '2019_11_10_204720_create_service_applieds_table', 12),
+(21, '2019_11_12_060803_create_chatrooms_table', 13),
+(22, '2019_11_12_060843_create_chatroom_messages_table', 13),
+(23, '2019_11_12_060921_create_chatroom_participants_table', 13),
+(24, '2019_06_27_150837_create_reports_table', 14);
 
 -- --------------------------------------------------------
 
@@ -769,12 +866,12 @@ CREATE TABLE `post_comments` (
 --
 
 INSERT INTO `post_comments` (`id`, `user_id`, `post_id`, `comment_body`, `comment_type`, `up_votes`, `isActive`, `status`, `is_deleted`, `created_at`, `updated_at`) VALUES
-(1, 1, 9, 'my name is khan', NULL, 0, 1, 1, 0, '2019-10-28 13:07:44', '2019-10-28 13:07:44'),
+(1, 1, 9, 'my name is khan', NULL, 0, 1, 1, 1, '2019-10-28 13:07:44', '2019-11-12 15:36:41'),
 (2, 2, 9, 'my name is khan', NULL, 0, 1, 1, 0, '2019-10-28 13:07:53', '2019-10-28 13:07:53'),
-(4, 1, 9, 'this is very good pakistan', NULL, 0, 1, 1, 0, '2019-10-28 13:08:33', '2019-10-28 13:08:33'),
-(5, 1, 8, 'this is the dummy comment on the post of raheel khan from raheel kahn', NULL, 0, 1, 1, 1, '2019-10-28 13:21:54', '2019-10-31 03:56:41'),
-(6, 1, 8, 'this is very good ocmment on the post of raheel khan', NULL, 0, 1, 1, 1, '2019-10-31 04:04:14', '2019-10-31 04:04:23'),
-(7, 1, 8, 'this is another comment and check if it appear on the backoffice of admin', NULL, 0, 1, 1, 0, '2019-10-31 04:04:46', '2019-10-31 04:04:46'),
+(4, 2, 9, 'this is very good pakistan', NULL, 0, 1, 1, 0, '2019-10-28 13:08:33', '2019-10-28 13:08:33'),
+(5, 8, 8, 'this is the dummy comment on the post of raheel khan from raheel kahn', NULL, 0, 1, 1, 1, '2019-10-28 13:21:54', '2019-10-31 03:56:41'),
+(6, 8, 8, 'this is very good ocmment on the post of raheel khan', NULL, 0, 1, 1, 1, '2019-10-31 04:04:14', '2019-10-31 04:04:23'),
+(7, 8, 8, 'this is another comment and check if it appear on the backoffice of admin', NULL, 0, 1, 1, 0, '2019-10-31 04:04:46', '2019-10-31 04:04:46'),
 (8, 1, 10, 'awkljfklasdjflas kfklas fjaskljfasd', NULL, 0, 1, 1, 1, '2019-11-10 13:14:21', '2019-11-10 13:15:54'),
 (9, 8, 10, 'askldjflas fjasfnm,asfnas fn,masdnfasdf', NULL, 0, 1, 1, 0, '2019-11-10 13:14:38', '2019-11-10 13:14:38'),
 (10, 1, 12, 'commentscom  mentscomments', NULL, 0, 1, 1, 0, '2019-11-10 13:28:11', '2019-11-10 13:28:11'),
@@ -810,8 +907,8 @@ CREATE TABLE `projects` (
 INSERT INTO `projects` (`id`, `user_id`, `title`, `description`, `project_type`, `category_id`, `start_date`, `end_date`, `url`, `isActive`, `status`, `is_deleted`, `created_at`, `updated_at`) VALUES
 (1, 1, 'Semester Schedulling System in Android', 'This is the prject which is required by a university to automate their semester schedule which will show the times and dates of the activities including the exams and assignments etc. ', NULL, 1, NULL, '2019-11-20', 'Semester-Schedulling-System-in-Android12353', 1, 1, 0, '2019-11-09 19:00:00', '2019-11-10 13:35:33'),
 (2, 1, 'Sishake Product Page', 'Select2 will register itself as a jQuery function if you use any of the distribution builds, so you can call .select2() on any jQuery selector where you would like to initialize Select2.\r\n 2019-11-15\r\nSelect2 will register itself as a jQuery function if you use any of the distribution builds, so you can call .select2() on any jQuery selector where you would like to initialize Select2.\r\n 2019-11-15\r\nSelect2 will register itself as a jQuery function if you use any of the distribution builds, so you can call .select2() on any jQuery selector where you would like to initialize Select2.\r\n 2019-11-15\r\nSelect2 will register itself as a jQuery function if you use any of the distribution builds, so you can call .select2() on any jQuery selector where you would like to initialize Select2.', NULL, 13, NULL, '2019-11-15', 'Sishake-Product-Page1163948', 1, 1, 0, '2019-11-10 07:18:22', '2019-11-10 08:51:16'),
-(3, 1, 'Ayaz is very PTM person', 'markAsClosed markAsClosed markAsClosed markAsClosed markAsClosed markAsClosed markAsClosed markAsClosed markAsClosed markAsClosed markAsClosed markAsClosed markAsClosed markAsClosed markAsClosed markAsClosed markAsClosed markAsClosed', NULL, 11, NULL, '2019-11-28', 'Ayaz-is-very-PTM-person1624986', 1, 1, 0, '2019-11-10 07:30:27', '2019-11-10 13:35:20'),
-(4, 1, 'Payment gateway as paypal alternative', 'ayment-gateway-as-paypal-alt\r\nernative1606629ayment-gat\r\neway-as-paypal-alternative1\r\n606629ayment-gateway-as-\r\npaypal-alternative1606629\r\nayment-gateway-as-paypal-a\r\nlternative1606629ayment-gateway-as-paypal-alternative1606629', NULL, 12, NULL, '2019-11-30', 'Payment-gateway-as-paypal-alternative1606629', 1, 1, 0, '2019-11-10 13:41:49', '2019-11-10 13:41:58');
+(3, 1, 'Ayaz is very PTM person', 'markAsClosed markAsClosed markAsClosed markAsClosed markAsClosed markAsClosed markAsClosed markAsClosed markAsClosed markAsClosed markAsClosed markAsClosed markAsClosed markAsClosed markAsClosed markAsClosed markAsClosed markAsClosed', NULL, 11, NULL, '2019-11-28', 'Ayaz-is-very-PTM-person1624986', 1, 1, 1, '2019-11-10 07:30:27', '2019-11-12 15:42:28'),
+(4, 1, 'Payment gateway as paypal alternative', 'ayment-gateway-as-paypal-alt\r\nernative1606629ayment-gat\r\neway-as-paypal-alternative1\r\n606629ayment-gateway-as-\r\npaypal-alternative1606629\r\nayment-gateway-as-paypal-a\r\nlternative1606629ayment-gateway-as-paypal-alternative1606629', NULL, 12, NULL, '2019-11-30', 'Payment-gateway-as-paypal-alternative1606629', 1, 1, 1, '2019-11-10 13:41:49', '2019-11-12 15:42:22');
 
 -- --------------------------------------------------------
 
@@ -857,6 +954,35 @@ CREATE TABLE `project_messages` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reports`
+--
+
+CREATE TABLE `reports` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` int(11) NOT NULL COMMENT 'initiator of report',
+  `reporter_id` int(11) NOT NULL COMMENT 'comment, post, course or review etc ID',
+  `reported_user_id` int(11) NOT NULL COMMENT 'against id - fk of usertable',
+  `report_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `message_body` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `isActive` int(11) NOT NULL DEFAULT 1 COMMENT '0 = inactive , 1 = active',
+  `status` int(11) NOT NULL DEFAULT 1 COMMENT '0 = pending , 1 = display, 2 = moderate, 3 = marked as spam',
+  `is_deleted` int(11) NOT NULL DEFAULT 0 COMMENT '0 = not deleted , 1 = deleted',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `reports`
+--
+
+INSERT INTO `reports` (`id`, `user_id`, `reporter_id`, `reported_user_id`, `report_type`, `message_body`, `isActive`, `status`, `is_deleted`, `created_at`, `updated_at`) VALUES
+(1, 1, 2, 8, 'False Info', NULL, 1, 1, 0, '2019-11-12 15:10:39', '2019-11-12 15:10:39'),
+(2, 1, 2, 8, 'Hate Speach', NULL, 1, 1, 0, '2019-11-12 15:11:27', '2019-11-12 15:11:27'),
+(3, 1, 2, 2, 'Harrassment', NULL, 1, 1, 0, '2019-11-12 15:36:57', '2019-11-12 15:36:57');
 
 -- --------------------------------------------------------
 
@@ -1030,7 +1156,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `fname`, `lname`, `email`, `password`, `phonenumber`, `avatar`, `status`, `remember_token`, `created_at`, `updated_at`, `iscustomer`, `isPro`, `role_id`, `createdby`, `updatedby`, `username`, `organization_id`, `designation_id`) VALUES
-(1, 'Raheel', 'Khan', 'admin@admin.com', '$2y$10$MntbYTaK/9avYH/zOD4U5uAjtn4aFUtk4q36MNinnQ6bPdFDK0PwO', '03333639395', 'raheel.jpg', 1, 'zcMd6UvBTPMUSDC0AtwVVt4cFmwn76OI01H8NrSS0VsBWraLqohbbMRRFveV', '2018-06-25 10:22:52', '2019-07-01 07:44:10', 0, 1, 1, NULL, NULL, '', 14, 0),
+(1, 'Raheel', 'Khan', 'admin@admin.com', '$2y$10$MntbYTaK/9avYH/zOD4U5uAjtn4aFUtk4q36MNinnQ6bPdFDK0PwO', '03333639395', 'raheel.jpg', 1, 'k7nAVJei5fIEhvvIFZTZlTpiCzxZ9Xf30n9ii70GYIpAjNQdlANw4y7Dihwp', '2018-06-25 10:22:52', '2019-07-01 07:44:10', 0, 1, 1, NULL, NULL, '', 14, 0),
 (7, 'Raheel', 'Khan', 'adminaaa@admin.com', '$2y$10$.ltGPfRid5qNIYrRz6Q/bOZ4dXNX./869VJm7Kfp1fxfTNAwKLQMi', '3333639395', 'default_avatar_male.jpg', 1, NULL, '2019-07-01 19:00:00', '2019-07-02 02:45:45', 1, NULL, 2, NULL, NULL, NULL, 15, 0),
 (8, 'Syed Abbas', 'Khan', 'abbas@gmail.com', '$2y$10$MntbYTaK/9avYH/zOD4U5uAjtn4aFUtk4q36MNinnQ6bPdFDK0PwO', '3333222211', 'default_avatar_male.jpg', 1, NULL, '2019-07-01 19:00:00', '2019-07-01 19:00:00', 1, NULL, 2, NULL, NULL, NULL, 8, 0),
 (9, 'raheel', 'khan', 'test@gmail.com', '$2y$10$ARpKBXaP6NicpVb4RxQiS.v2/yUV3wCsu5rX9uWBFrFN8og09Y5ye', NULL, '1573408019-central_database-512.png', 1, NULL, '2019-11-10 12:47:00', '2019-11-10 12:47:00', 0, NULL, 2, NULL, NULL, NULL, 0, 0),
@@ -1079,6 +1205,24 @@ ALTER TABLE `chat`
 --
 ALTER TABLE `chatroom`
   ADD PRIMARY KEY (`chatroomid`);
+
+--
+-- Indexes for table `chatrooms`
+--
+ALTER TABLE `chatrooms`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `chatroom_messages`
+--
+ALTER TABLE `chatroom_messages`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `chatroom_participants`
+--
+ALTER TABLE `chatroom_participants`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `chat_member`
@@ -1230,6 +1374,12 @@ ALTER TABLE `project_messages`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `reports`
+--
+ALTER TABLE `reports`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `roles`
 --
 ALTER TABLE `roles`
@@ -1316,6 +1466,24 @@ ALTER TABLE `chatroom`
   MODIFY `chatroomid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `chatrooms`
+--
+ALTER TABLE `chatrooms`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `chatroom_messages`
+--
+ALTER TABLE `chatroom_messages`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `chatroom_participants`
+--
+ALTER TABLE `chatroom_participants`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `chat_member`
 --
 ALTER TABLE `chat_member`
@@ -1379,7 +1547,7 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `oauth_clients`
@@ -1422,6 +1590,12 @@ ALTER TABLE `project_contributors`
 --
 ALTER TABLE `project_messages`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `reports`
+--
+ALTER TABLE `reports`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `roles`

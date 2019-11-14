@@ -67,105 +67,115 @@
                     </div>  
                     @endif
                     <div class="col-md-8">
-                        @foreach($comments as $comment)
-                        <div class="card card-white post">
-                                <div class="post-heading">
-                                    <div class="float-left meta">
-                                        <div class="title h5">
-                                            <a href="#"><b>{{$comment->user->fname . " " . $comment->user->lname }}</b></a>
-                                            made a comment. <span class="text-muted time">{{$comment->created_at->diffForHumans()}}</span>
-                                            @if(auth()->check() && $comment->user_id == auth()->user()->id)
-                                            <span class="text-right">
-                                                    <a href="{{route('CommentDelete', $comment->id)}}" class="btn btn-danger">
-                                                        <i class="fa fa-trash"></i>
-                                                    </a>
-                                                    
-                                                </span>
-                                                @endif
+                        
+                            <div class="row blog_tow_row">
+                                    {{-- <h3> Already Enrolled </h3> --}}
+                                    <p>
+                                         <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                           Show Reported Comments 
+                                         </a>
+                                       </p>
+                                       <div class="collapse" id="collapseExample">
+                                         <div class="card card-body">
+                                           
+                                                <table class="table text-center">
+                                                        <thead>
+                                                            <th>No</th>
+                                                            <th class="text-center">Name</th>
+                                                            <th  class="text-center">Email</th>
+                                                            <th  class="text-center">Body</th>
+                                                            <th class="text-center">Action</th>
+                                                        </thead>
+                    <tbody>
+                        @php $index = 1; @endphp
+                        @foreach($reports as $report)
+                        <tr>
+                            <td>{{ $index++ }}</td>
+                            <td>{{ $report->user->fname . " " . $report->user->lname }}</td>
+                            <td>{{ $report->user->email }}</td>
+                            <td>{{ $report->comment->comment_body }}</td>
+                            <td> 
+                                <a  href="{{route('CommentDelete', $report->id)}}" class="btn btn-danger">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                                                        <tfoot>
+                                                               <th>No</th>
+                                                               <th class="text-center">Name</th>
+                                                               <th class="text-center">Email</th>
+                                                               <th class="text-center">Action</th>
+                                                        </tfoot>
+                                                    </table>
                                         </div>
-                                        
-                                    </div>
-                                </div> 
-                                <div class="post-description"> 
-                                    <p>{{$comment->comment_body}}</p>
-                
-                                </div>
-                                <hr>
+                                       </div>
                             </div>
-                            @endforeach
+    @foreach($comments as $comment)
+    <div class="card card-white post" id="comment_wraper{{$comment->id}}">
+            <div class="post-heading">
+                <div class="float-left meta">
+                    <div class="title h5">
+                        <a href="#"><b>{{$comment->user->fname . " " . $comment->user->lname }}</b></a>
+                        made a comment. <span class="text-muted time">{{$comment->created_at->diffForHumans()}}</span>
+            @if(auth()->check() && $comment->user_id == auth()->user()->id)
+            <span class="text-right">
+                    <a href="{{route('CommentDelete', $comment->id)}}" class="btn btn-danger">
+                        <i class="fa fa-trash"></i>
+                    </a>
+                </span>
+                @else 
+                {{-- <a class="hide" id="reportedLabel{{$comment->id}}">Reported</a> --}}
+                <a class="badge badge-danger" data-toggle="collapse" href="#report{{$comment->id}}" role="button" aria-expanded="false" aria-controls="report" id="reportBtn{{$comment->id}}">
+                        Report 
+                    </a>
+                    <div class="collapse" id="report{{$comment->id}}">
+                        <div class="card card-body">
+                            <form method="POST" action="{{ route('CommentReportStore')}}">
+                                @csrf
+                                <input type="hidden" name="comment_id" value="{{$comment->id}}"/>
+                                <div class="form-group">
+                                    <label>Select Report Reason</label><br/>
+                                    <input type="radio" value="Hate Speach" name="report_reason">
+                                    <label>Hate Speach</label>
+                                    <input type="radio" value="False Info"name="report_reason">
+                                    <label>False Info</label>
+                                    <input type="radio" value="Harrassment"name="report_reason">
+                                    <label>Harrassment</label>
+                                    <input type="submit" class="btn btn-info btn-sm" value="Report"/>
+                                </div>
+                               
+
+                            </form>
+                        </div>
+                    </div>
+                    @endif
+                    </div>
+                    
+                </div>
+            </div> 
+            <div class="post-description"> 
+                <p>{{$comment->comment_body}}</p>
+
+            </div>
+            <hr>
+        </div>
+        @endforeach
                         </div>
                 </div>
-                {{-- <div class="col-sm-4 widget_area">
-                    <div class="resent">
-                        <h3>RECENT POSTS</h3>
-                        <div class="media">
-                            <div class="media-left">
-                                <a href="#">
-                                    <img class="media-object" src="images/blog/rs-1.jpg" alt="">
-                                </a>
-                            </div>
-                            <div class="media-body">
-                                <a href="coding.html">Teach yourself new techniques, and make this learning process fun and exciting.</a>
-                                <h6>Sep 29th, 2019</h6>
-                            </div>
-                        </div>
-                        <div class="media">
-                            <div class="media-left">
-                                <a href="#">
-                                    <img class="media-object" src="images/blog/rs-2.jpg" alt="">
-                                </a>
-                            </div>
-                            <div class="media-body">
-                                <a href="piano.html">Keyboard professionals are eagerly seeking passionate like you. Learn their best technique.</a>
-                                <h6>Sep 29th, 2019</h6>
-                            </div>
-                        </div>
-                        <div class="media">
-                            <div class="media-left">
-                                <a href="#">
-                                    <img class="media-object" src="images/blog/rs-3.jpg" alt="">
-                                </a>
-                            </div>
-                            <div class="media-body">
-                                <a href="">Complete the fundamentals and learn Sketch’s intermediate features by designing wireframes and a lot more.</a>
-                                <h6>Sep 29th, 2019</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="resent">
-                        <h3>CATEGORIES</h3>
-                        <ul class="architecture">
-                            <li><a href="#"><i class="fa fa-arrow-right" aria-hidden="true"></i>Art</a></li>
-                            <li><a href="#"><i class="fa fa-arrow-right" aria-hidden="true"></i>Photography</a></li>
-                            <li><a href="#"><i class="fa fa-arrow-right" aria-hidden="true"></i>Programming</a></li>
-                            <li><a href="#"><i class="fa fa-arrow-right" aria-hidden="true"></i>Cooking</a></li>
-                        </ul>
-                    </div>
-                    <div class="resent">
-                        <h3>ARCHIVES</h3>
-                        <ul class="architecture">
-                            <li><a href="#"><i class="fa fa-arrow-right" aria-hidden="true"></i>June 2019</a></li>
-                            <li><a href="#"><i class="fa fa-arrow-right" aria-hidden="true"></i>July 2019</a></li>
-                            <li><a href="#"><i class="fa fa-arrow-right" aria-hidden="true"></i>August 2019</a></li>
-                        </ul>
-                    </div>
-                    <div class="search">
-                        <input type="search" name="search" class="form-control" placeholder="Search">
-                    </div>
-                    <div class="resent">
-                        <h3>Tag</h3>
-                        <ul class="tag">
-                            <li><a href="#">Creative</a></li>
-                            <li><a href="#">Programming</a></li>
-                            <li><a href="#">Architecture</a></li>
-                            <li><a href="#">Software</a></li>
-                            <li><a href="#">Design</a></li>
-                            
-                        </ul>
-                    </div>
-                </div> --}}
-            </div>
-        </div>
+       </div>
     </section>
 
+    
+<script>
+    function reportComment(reason_id, comment_id){
+
+        // alert(reason_id + " and " + comment_id);
+        $('#report'+comment_id).hide();
+        $('#reportBtn'+comment_id).hide();
+        $('#reportedLabel'+comment_id).show();
+        $('#comment_wraper'+comment_id).addClass('bg-danger');
+    }
+</script>
 @endsection
