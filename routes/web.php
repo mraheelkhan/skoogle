@@ -245,3 +245,4 @@ Route::post('/project/open/', 'ProjectController@markAsOpened')->middleware('aut
 Route::get('/chat', 'ChatroomController@index')->name('Chatroom');
 Route::get('/chat/user/{id}', 'ChatroomController@show')->name('ChatUserShow');
 Route::post('/chat/message', 'ChatroomController@store')->name('ChatUserStore');
+Route::post('/chat/user', 'ChatroomController@createChatroom')->name('ChatUserCreateStore');

@@ -168,7 +168,12 @@
 
                           </div>
                           <div class="col-md-4">
-                            <a class="btn btn-primary btn-sm">New Chat</a>
+                            @if(auth()->user()->isPro == 1)
+                              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                  New Chat
+                                </button>
+                                @endif
+                            {{-- <a class="btn btn-primary btn-sm"></a> --}}
 
                           </div>
                         </div>
@@ -189,8 +194,8 @@
                             <div class="chat_ib">
                               <a href="{{route('ChatUserShow', $room->id)}}"><h5>{{$room->name}} </a>
                                 {{-- <span class="chat_date">Dec 25</span></h5> --}}
-                              <p>Test, which is a new approach to have all solutions 
-                                astrology under one roof.</p>
+                              {{-- <p>Test, which is a new approach to have all solutions 
+                                astrology under one roof.</p> --}}
                             </div>
                           </div>
                         </div>
@@ -232,6 +237,39 @@
                 </div></div>
     </div>
 </section>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Start New Chat</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <table class="table">
+            <tr>
+              <td>Name</td>
+              <td>Email</td>
+              <td>Action</td>
+            </tr>
+            @foreach($allusers as $user)
+            <tr>
+              <td>{{$user->fname . " " . $user->lname }}</td>
+              <td>{{$user->email}}</td>
+              <td><form method="POST" action="{{route('ChatUserCreateStore')}}">
+                @csrf
+                <input type="hidden" name="with_chat_id" value="{{$user->id}}"/>
+                <input type="submit" value="Start Chat" class="btn btn-primary btn-sm">
+              </form></td>
+            </tr>
+            @endforeach
+          </table>
+        </div>
+        
+      </div>
+    </div>
+  </div>
 <script>
     $(document).ready(function(){
         $("#message").focus();
@@ -253,6 +291,8 @@
             }
         });
 });
+
+@php $mytime = Carbon\Carbon::now(); @endphp
     function sendMessage(){
         var message = $('#message').val();
         var convo = $('.msg_history').val();
@@ -261,7 +301,7 @@
         var html = `<div class="outgoing_msg">
                           <div class="sent_msg">
                             <p>` + message + `</p>
-                            <span class="time_date"> 11:01 AM    |    June 9</span> </div>
+                            <span class="time_date"> {{ $mytime->diffForHumans() }}</span> </div>
                         </div>`;
         $('.msg_history').append(html);
         $('#message').val("");

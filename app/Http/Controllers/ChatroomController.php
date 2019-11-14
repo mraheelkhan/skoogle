@@ -83,7 +83,8 @@ class ChatroomController extends Controller
         $chatrooms = Chatroom::whereIn('id',$rooms)->where('room_type','single')->get();;
         
         $messages = ChatroomMessage::where('room_id', $id)->get();
-        return view('chat.conversation', compact('messages', 'chatrooms', 'room_id'));
+        $allusers = User::where('status', 1)->get();
+        return view('chat.conversation', compact('messages', 'chatrooms', 'room_id', 'allusers'));
     }
 
     /**
@@ -120,11 +121,21 @@ class ChatroomController extends Controller
         //
     }
 
-    public function createChatroom(){
-        $message = new Chatroom;
-        $message->room_id = $request->roomId;
-        $message->message = $request->Message;
-        $message->user_id = auth()->user()->id;
-        $message->save();
+    public function createChatroom(Request $request){
+        $chatroom = new Chatroom;
+        $chatroom->user_id = auth()->user()->id;
+        $user_id = User::findOrFail($request->with_chat_id);
+        $chatroom->name = auth()->user()->fname . " - " . $user_id->fname;
+        $chatroom->save();
+
+        $participant1 = new ChatroomParticipant;
+        $participant1->room_id = $chatroom->id;
+        $participant1->user_id = auth()->user()->id;
+        $participant1->save();
+        $participant2 = new ChatroomParticipant;
+        $participant2->room_id = $chatroom->id;
+        $participant2->user_id = $user_id->id;
+        $participant2->save();
+        return redirect()->back();
     }
 }
