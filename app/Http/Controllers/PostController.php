@@ -162,7 +162,7 @@ class PostController extends Controller
             $post->is_deleted = 1;
             $post->update();
 
-            Session::flash('message', 'Your article is deleted successfully. <script>swal.fire("success","Posted","Your article is deleted successfully");</script>'); 
+            Session::flash('message', 'Your article is deleted successfully. <script>swal.fire("success","Deleted","Your article is deleted successfully");</script>'); 
             return redirect()->back();
         }
     }

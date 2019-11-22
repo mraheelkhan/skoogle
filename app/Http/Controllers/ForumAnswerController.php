@@ -37,7 +37,7 @@ class ForumAnswerController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([   
-            "answer_body" => 'required|min:20|max:3000',
+            "answer_body" => 'required|min:20|max:1000',
             "question_id" => 'required',
         ]);
         $insert = ForumAnswer::create([

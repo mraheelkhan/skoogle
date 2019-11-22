@@ -55,6 +55,14 @@
                         </div>
                         <span class="question-category"><a href="#"><i class="icon-folder-close"></i>{{ $question->category->category_name}}</a></span>
                         <span class="question-date"><i class="icon-time"></i>{{ $question->created_at->diffForHumans()}}</span>
+                        
+                        <span>
+                                <a type="button" href="{{ route('ForumDeleteUserQuestion', $question->id)}}"  class="btn btn-danger report-question btn-sm" >
+                                        Delete
+                                </a>
+                                    
+                        </span>
+                        
                         {{-- <span class="question-comment"><a href="#"><i class="icon-comment"></i>5 Answer</a></span> --}}
                         {{-- <span class="question-view"><i class="icon-user"></i>70 views</span> --}}
                         <div class="clearfix"></div>

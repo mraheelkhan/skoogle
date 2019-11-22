@@ -149,6 +149,9 @@
 				
 			<li class="ask_question"><a href="{{ route('Home')}}">News Feed</a></li>
 			<li class="ask_question"><a href="{{ route('ForumAll')}}">Forum</a></li>
+			@if(auth()->check())
+			<li class="ask_question"><a href="{{ route('ForumMy')}}">My Questions</a></li>
+			@endif
 			<li class="ask_question"><a href="{{ route('ForumCreate')}}">Ask Question</a></li>
 			@if(Auth::user())
 			<li><a href="{{ route('ProfileAccount')}}">Profile</a></li>

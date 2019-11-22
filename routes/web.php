@@ -163,10 +163,13 @@ Route::group(['prefix'=> 'settings'],function(){
 Route::get('/forum', 'ForumQuestionController@index')->name('forum.index');
 Route::get('/forum', 'ForumQuestionController@index')->name('ForumAll');
 Route::get('/forum/ask', 'ForumQuestionController@create')->middleware('auth')->name('ForumCreate');
+Route::get('/forum/my', 'ForumQuestionController@my_questions')->middleware('auth')->name('ForumMy');
 Route::post('/forum/store', 'ForumQuestionController@store')->middleware('auth')->name('ForumStore');
 Route::get('/forum/question/{id}', 'ForumQuestionController@show')->name('ForumShow');
 Route::post('/forum/answer/store', 'ForumAnswerController@store')->middleware('auth')->name('QuestionAnswerStore');
 Route::post('/forum/answer/solution', 'ForumAnswerController@markAsSolution')->middleware('auth')->name('AnswerMarkAsSolution');
+Route::post('/forum/question/report', 'ForumQuestionController@report')->middleware('auth')->name('QuestionReportStore');
+Route::get('/forum/question/delete/{id}', 'ForumQuestionController@destroy')->middleware('auth')->name('ForumDeleteUserQuestion');
 
 
 // job posting and applying routes for user, admin and employer
@@ -204,6 +207,10 @@ Route::post('coursecreate/store', 'CourseController@store')->middleware('auth')-
 Route::get('courseuser/enroll/{id}', 'CourseController@courseEnroll')->middleware('auth')->name('CourseEnroll');
 Route::get('courseuser/enroll/{id}/{course_id}', 'CourseController@courseEnrollStore')->middleware('auth')->name('CourseUserEnroll');
 Route::get('courseuser/delete/{id}', 'CourseController@courseEnrollDelete')->middleware('auth')->name('CourseUserEnrollDelete');
+Route::post('/courseuser/apply/', 'CourseController@apply')->name('CourseApply');
+Route::post('/courseuser/close/', 'CourseController@markAsClosed')->middleware('auth')->name('CourseMarkAsClosed');
+Route::post('/courseuser/open/', 'CourseController@markAsOpened')->middleware('auth')->name('CourseMarkAsOpen');
+Route::get('/courseuser/cancel/{id}', 'CourseController@cancel')->name('CourseApplyCancel');
 
 
 Route::get('video/course/{name}/{id}', 'CourseVideoController@show')->name('CourseVideoShow');
@@ -216,6 +223,10 @@ Route::get('video/courses/delete/{id}', 'CourseVideoController@destroy')->name('
 
 Route::get('/profile/user', 'ProfileController@index')->name('ProfileAccount');
 Route::get('/profile/user/{id}', 'ProfileController@profile')->name('ProfileUserAccount');
+Route::get('/profile/edit/{id}', 'ProfileController@edit')->name('ProfileUserEditAccount');
+Route::post('/profile/edit/', 'ProfileController@update')->name('ProfileUserEditAccountStore');
+Route::get('profile/apply/pro/{id}', 'ProfileController@applyPro')->name('ProfileApplyPro');
+Route::post('profile/certificate', 'CertificateController@store')->name('ProfileUploadCertificate');
 
 // Services Routes
 Route::get('/services/', 'ServiceController@index')->name('ServicesAll');
@@ -228,6 +239,11 @@ Route::get('service/delete/{id}', 'ServiceController@delete')->name('ServiceDele
 Route::get('/services/offer', 'ServiceController@serviceOffer')->name('ServiceOffer');
 Route::get('/services/offer/category', 'ServiceController@serviceOfferCategory')->name('ServiceOfferCategory');
 Route::post('/service/apply', 'ServiceController@apply')->name('ServiceApply');
+Route::get('/service/cancel/{id}', 'ServiceController@cancel')->name('ServiceApplyCancel');
+Route::post('/service/close/', 'ServiceController@markAsClosed')->middleware('auth')->name('ServiceMarkAsClosed');
+Route::post('/service/open/', 'ServiceController@markAsOpened')->middleware('auth')->name('ServiceMarkAsOpen');
+
+
 // Projects Routes
 Route::get('/projects/', 'ProjectController@index')->name('ProjectsAll');
 Route::get('/projects/my', 'ProjectController@myprojects')->name('ProjectMy');
@@ -245,4 +261,7 @@ Route::post('/project/open/', 'ProjectController@markAsOpened')->middleware('aut
 Route::get('/chat', 'ChatroomController@index')->name('Chatroom');
 Route::get('/chat/user/{id}', 'ChatroomController@show')->name('ChatUserShow');
 Route::post('/chat/message', 'ChatroomController@store')->name('ChatUserStore');
-Route::post('/chat/user', 'ChatroomController@createChatroom')->name('ChatUserCreateStore');
+Route::post('/chat/user', 'ChatroomController@createChatroomSingle')->name('ChatUserCreateStore');
+Route::post('/chat/room', 'ChatroomController@createChatroom')->name('ChatUserRoomStore');
+Route::post('/chat/joinroom', 'ChatroomController@joinChatroom')->name('ChatJoinChatroom');
+Route::get('/chat/delete/{id}', 'ChatroomController@destroy')->name('ChatroomDelete');

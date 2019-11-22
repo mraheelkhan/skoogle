@@ -42,6 +42,7 @@
                   <th>Department</th>
                   <th>Role</th>
                   <th>Status</th>
+                  <th>isPro</th>
                   <th>Action</th>
                 </tr>
                 </thead>
@@ -60,6 +61,15 @@
                       <span class="label label-success">Active</span>
                       @else
                       <span class="label label-danger">Deactive</span>
+                      @endif
+                    </td>
+                    <td>
+                      @if ($user['isPro'] == 1)
+                      <span class="label label-success">Pro</span>
+                      @elseif($user->isPro == 2)
+                      <a href=""><span class="label label-info ">Applied</span></a>
+                      @else
+                      <a href=""><span class="label label-danger">Not Applied</span></a>
                       @endif
                     </td>
                     @can('delete-staff')
@@ -97,6 +107,7 @@
                   <th>Department</th>
                   <th>Role</th>
                   <th>Status</th>
+                  <th>isPro</th>
                   <th>Action</th>
                 </tr>
                 </tfoot>

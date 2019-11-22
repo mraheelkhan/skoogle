@@ -23,7 +23,7 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        $services = Service::where('is_deleted', 0)->get();
+        $services = Service::where('is_deleted', 0)->where('status', 1)->get();
         return view('services.index', compact('services'));
     }
 
@@ -65,7 +65,7 @@ class ServiceController extends Controller
         $service->user_id = auth()->user()->id;
         $service->category_id = $request->category_id;
         $service->description = $request->description;
-        $service->price = $request->price;
+        // $service->price = $request->price;
         $service->title = $request->title;
         $service->url = $request->url;
 
@@ -85,7 +85,7 @@ class ServiceController extends Controller
         $service = Service::where('url', $url)->first();
         $appliers = ServiceApplied::where('service_id', $service->id)->where('status', 1)->where('isActive', 1)->where('is_deleted', 0)->get();
         $ifApplied = ServiceApplied::where('service_id', $service->id)->where('user_id', auth()->user()->id)->get();
-        
+        // dd($ifApplied);
         return view('services.show', compact('service', 'appliers', 'ifApplied'));
     }
 
@@ -163,5 +163,40 @@ class ServiceController extends Controller
         Session::flash('message', 'You have applied successfully. <script>swal.fire("Applied","You have applied successfully", "success");</script>'); 
         return redirect()->back();
        
+    }
+    public function cancel($id){
+        $applied = ServiceApplied::where('service_id', $id)->where('user_id', auth()->user()->id)->first();
+        $applied->delete();
+
+        return redirect()->back();
+    }
+
+    public function markAsClosed(Request $request){
+        $id = $request->service_id;
+        $service = Service::findOrFail($id);
+        $service->status = 2; // status closed
+        $service->update();
+        // return redirect()->back();
+        $success = 1;
+        $message = "Service marked as closed";
+        $array = array( 
+                'msg' => $message,
+                'success' => $success
+            );
+        return response($array);
+    }
+    public function markAsOpened(Request $request){
+        $id = $request->service_id;
+        $service = Service::findOrFail($id);
+        $service->status = 1; // status closed
+        $service->update();
+        // return redirect()->back();
+        $success = 1;
+        $message = "Service marked as closed";
+        $array = array( 
+                'msg' => $message,
+                'success' => $success
+            );
+        return response($array);
     }
 }

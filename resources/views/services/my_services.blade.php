@@ -26,12 +26,21 @@
             <div class="col-md-4 col-sm-6">
                 <div class="renovation">
                     {{-- <img src="images/blog/renovation/r-1.jpg" alt=""> --}}
-                    <div class="renovation_content">
+                    <div class="renovation_content @if($service->status == 2) bg-info @endif">
                             @if(auth()->check() && auth()->user()->isPro == 1 && auth()->user()->id == $service->user_id)
                             <div class="text-right">
                                     <a href="{{route('ServiceDelete', $service->id)}}" class="btn btn-danger">
                                         <i class="fa fa-trash"></i>
                                     </a>
+                                    @if($service->status == 2)
+                                    <a onclick="serviceMarkAsOpen({{$service->id}})" class="btn btn-green" title="Mark as Open">
+                                            <i class="fa fa-check"></i>
+                                        </a>
+                                    @else
+                                    <a onclick="serviceMarkAsClosed({{$service->id}})" class="btn btn-green" title="Mark as Closed">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                    @endif
                                 </div>
                             @endif
                         {{-- <a class="clipboard" href="#"><i class="fa fa-clipboard" aria-hidden="true"></i></a> --}}
@@ -49,4 +58,59 @@
        </div>
     </div>
 </section>
+
+<script>
+                    function serviceMarkAsClosed(id){
+                      event.preventDefault();
+                      routeURL = "{{ route('ServiceMarkAsClosed') }}";
+                      $.ajax({
+                          url: routeURL,
+                          method: 'POST',
+                          data: {
+                              "service_id" : id,
+                              "_token" : "{{csrf_token()}}"
+                          },
+                          success: function(data){
+                              console.log(data);
+                              if(data.success == 1){
+                                  console.log("successfully marked as closed")
+                                  swal.fire('Closed', 'Marked as Closed', "success");
+                                  location.reload();
+                              } else {
+                                  swal.fire('Already Solved', 'You cannot mark 2 answer as solution', "error");
+                              }
+                              
+                          },
+                          error: function(error){
+                              console.log(error);
+                          }
+                      });
+                    }
+                    function serviceMarkAsOpen(id){
+                      event.preventDefault();
+                      routeURL = "{{ route('ServiceMarkAsOpen') }}";
+                      $.ajax({
+                          url: routeURL,
+                          method: 'POST',
+                          data: {
+                              "service_id" : id,
+                              "_token" : "{{csrf_token()}}"
+                          },
+                          success: function(data){
+                              console.log(data);
+                              if(data.success == 1){
+                                  console.log("successfully marked as open")
+                                  swal.fire('Opened', 'Marked as open', "success");
+                                  location.reload();
+                              } else {
+                                  swal.fire('Already Solved', 'You cannot mark 2 answer as solution', "error");
+                              }
+                              
+                          },
+                          error: function(error){
+                              console.log(error);
+                          }
+                      });
+                    }
+</script>
 @endsection

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 14, 2019 at 06:13 AM
+-- Generation Time: Nov 14, 2019 at 09:50 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.1.32
 
@@ -209,6 +209,33 @@ INSERT INTO `categories` (`id`, `category_name`, `parent_category_id`, `type`, `
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `certificates`
+--
+
+CREATE TABLE `certificates` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `filename` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 1,
+  `is_deleted` int(11) NOT NULL DEFAULT 0,
+  `isActive` int(11) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `certificates`
+--
+
+INSERT INTO `certificates` (`id`, `user_id`, `filename`, `title`, `status`, `is_deleted`, `isActive`, `created_at`, `updated_at`) VALUES
+(1, 8, '1573762711-Capture.PNG', 'Ayaz is very PTM person', 1, 0, 0, '2019-11-14 15:18:31', '2019-11-14 15:18:31'),
+(2, 8, '1573762720-Capture.PNG', 'Ayaz is very PTM person', 1, 0, 0, '2019-11-14 15:18:40', '2019-11-14 15:18:40'),
+(3, 8, '1573762747-Capture.PNG', 'Ayaz is very PTM person', 1, 0, 0, '2019-11-14 15:19:07', '2019-11-14 15:19:07');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `chat`
 --
 
@@ -254,6 +281,7 @@ CREATE TABLE `chatrooms` (
   `user_id` int(11) NOT NULL COMMENT 'created_by',
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `room_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'single',
+  `code` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `logo` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT 'none',
   `status` int(11) NOT NULL DEFAULT 1,
   `is_deleted` int(11) NOT NULL DEFAULT 0,
@@ -266,10 +294,11 @@ CREATE TABLE `chatrooms` (
 -- Dumping data for table `chatrooms`
 --
 
-INSERT INTO `chatrooms` (`id`, `user_id`, `name`, `room_type`, `logo`, `status`, `is_deleted`, `isActive`, `created_at`, `updated_at`) VALUES
-(1, 1, 'abc', 'single', 'none', 1, 0, 0, '2019-11-12 19:00:00', '2019-11-12 19:00:00'),
-(2, 1, 'defg', 'single', 'none', 1, 0, 0, '2019-11-12 19:00:00', '2019-11-12 19:00:00'),
-(3, 1, 'defg', 'single', 'none', 1, 0, 0, '2019-11-12 19:00:00', '2019-11-12 19:00:00');
+INSERT INTO `chatrooms` (`id`, `user_id`, `name`, `room_type`, `code`, `logo`, `status`, `is_deleted`, `isActive`, `created_at`, `updated_at`) VALUES
+(17, 8, 'Syed Abbas - Raheel', 'single', NULL, 'none', 1, 0, 0, '2019-11-14 12:03:18', '2019-11-14 12:03:18'),
+(18, 1, 'React Native', 'group', '1234', 'none', 1, 0, 0, '2019-11-14 12:09:22', '2019-11-14 12:09:22'),
+(19, 1, 'Android Development', 'group', '1234', 'none', 1, 1, 0, '2019-11-14 12:09:37', '2019-11-14 12:21:55'),
+(20, 1, 'TestDelete chatroom', 'group', '1234', 'none', 1, 1, 0, '2019-11-14 12:24:33', '2019-11-14 12:24:46');
 
 -- --------------------------------------------------------
 
@@ -295,19 +324,12 @@ CREATE TABLE `chatroom_messages` (
 --
 
 INSERT INTO `chatroom_messages` (`id`, `user_id`, `room_id`, `message`, `filename`, `status`, `is_deleted`, `isActive`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 'hre is the message body from user 1', NULL, 1, 0, 0, '2019-11-12 19:00:00', '2019-11-12 19:00:00'),
-(2, 8, 1, 'user 8 hre is the message body from user 1', NULL, 1, 0, 0, '2019-11-12 19:00:00', '2019-11-12 19:00:00'),
-(3, 1, 1, 'asdfasdf', NULL, 1, 0, 0, '2019-11-13 07:43:58', '2019-11-13 07:43:58'),
-(4, 1, 1, 'olamba janana', NULL, 1, 0, 0, '2019-11-13 07:44:09', '2019-11-13 07:44:09'),
-(5, 1, 1, 'okay this is very good', NULL, 1, 0, 0, '2019-11-13 07:44:59', '2019-11-13 07:44:59'),
-(6, 1, 1, 'kha tk da', NULL, 1, 0, 0, '2019-11-13 07:45:22', '2019-11-13 07:45:22'),
-(7, 8, 1, 'I will let you know once it is done', NULL, 1, 0, 0, '2019-11-13 07:46:07', '2019-11-13 07:46:07'),
-(8, 1, 1, 'okay thank you so much', NULL, 1, 0, 0, '2019-11-13 07:46:16', '2019-11-13 07:46:16'),
-(9, 8, 1, 'welcome', NULL, 1, 0, 0, '2019-11-13 07:46:45', '2019-11-13 07:46:45'),
-(10, 1, 1, 'this is not my message', NULL, 1, 0, 0, '2019-11-13 07:54:49', '2019-11-13 07:54:49'),
-(11, 8, 1, 'so what?', NULL, 1, 0, 0, '2019-11-13 07:55:14', '2019-11-13 07:55:14'),
-(12, 1, 1, 'you have to do something', NULL, 1, 0, 0, '2019-11-13 07:55:26', '2019-11-13 07:55:26'),
-(13, 1, 2, 'hi', NULL, 1, 0, 0, '2019-11-14 00:09:39', '2019-11-14 00:09:39');
+(31, 8, 17, 'hello', NULL, 1, 0, 0, '2019-11-14 12:03:24', '2019-11-14 12:03:24'),
+(32, 1, 17, 'han g', NULL, 1, 0, 0, '2019-11-14 12:03:35', '2019-11-14 12:03:35'),
+(33, 8, 17, 'kia ho raha ha?', NULL, 1, 0, 0, '2019-11-14 12:03:40', '2019-11-14 12:03:40'),
+(34, 1, 17, 'kuch nahi bs edher udher ap sunae?', NULL, 1, 0, 0, '2019-11-14 12:03:46', '2019-11-14 12:03:46'),
+(35, 8, 17, 'yra kia btaon, ? ap mar jae', NULL, 1, 0, 0, '2019-11-14 12:03:53', '2019-11-14 12:03:53'),
+(36, 1, 17, 'thek ha', NULL, 1, 0, 0, '2019-11-14 12:03:54', '2019-11-14 12:03:54');
 
 -- --------------------------------------------------------
 
@@ -331,10 +353,9 @@ CREATE TABLE `chatroom_participants` (
 --
 
 INSERT INTO `chatroom_participants` (`id`, `user_id`, `room_id`, `status`, `is_deleted`, `isActive`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 1, 0, 0, '2019-11-12 19:00:00', '2019-11-12 19:00:00'),
-(2, 8, 1, 1, 0, 0, '2019-11-12 19:00:00', '2019-11-12 19:00:00'),
-(3, 1, 2, 1, 0, 0, '2019-11-12 19:00:00', '2019-11-12 19:00:00'),
-(4, 9, 2, 1, 0, 0, '2019-11-12 19:00:00', '2019-11-12 19:00:00');
+(28, 8, 17, 1, 0, 0, '2019-11-14 12:03:18', '2019-11-14 12:03:18'),
+(29, 1, 17, 1, 0, 0, '2019-11-14 12:03:18', '2019-11-14 12:03:18'),
+(30, 1, 20, 1, 0, 0, '2019-11-14 12:24:40', '2019-11-14 12:24:40');
 
 -- --------------------------------------------------------
 
@@ -384,7 +405,7 @@ CREATE TABLE `courses` (
 --
 
 INSERT INTO `courses` (`id`, `user_id`, `title`, `description`, `subtitle`, `price`, `sale_price`, `category_id`, `isActive`, `status`, `is_deleted`, `created_at`, `updated_at`) VALUES
-(1, 1, 'How to visualize data in python', '4. INTELLECTUAL PROPERTY RIGHTS AND LICENSE:\r\n4.1. PRODUCT: All materials, including, but not limited to, software, programs, source code and object\r\ncode, comments to the source or object code, specifications, documents, abstracts and summaries thereof\r\n(collectively, the “Products”) developed by Isotope 11 in connection with the provision of the Services to\r\nClient, or jointly by Client and Isotope 11, or by Isotope 11 pursuant to specifications or instructions\r\nprovided by Client, shall belong exclusively to Client. Isotope 11 acknowledges that the Products shall be\r\ndeemed “works made for hire” by Isotope 11 for Client, and, therefore, shall be the exclusive property of\r\nClient. To the extent the Products are not deemed “works made for hire” under applicable law, Isotope 11\r\nhereby irrevocably assigns and transfers to Client all right, title and interest in and to the Products,\r\nincluding, without limitation, all patent and copyright interests, and agrees to execute all documents\r\nreasonably requested by Client for the purpose of applying for and obtaining domestic and foreign patent\r\nand copyright registrations.\r\n4.2. PRE-EXISTING INTELLECTUAL PROPERTY:. Notwithstanding any provision of this Agreement\r\nto the contrary, any routines, methodologies, processes, libraries, tools or technologies created, adapted or\r\nused by Isotope 11 in its business generally, including all associated intellectual property rights\r\n(collectively, the Development Tools), shall be and remain the sole property of Isotope 11, and\r\nCustomer shall have no interest in or claim to the Development Tools, except as necessary to exercise its\r\nrights in the Products. In addition, notwithstanding any provision of this Agreement to the contrary,\r\nIsotope 11 shall be free to use any ideas, concepts, or know-how developed or acquired by Isotope 11\r\nduring the performance of this Agreement to the extent obtained and retained by Isotope 11’s personnel as\r\nimpression and general learning. Subject to and limited by Client’s intellectual property rights described in\r\nSection 4.1 above, nothing in this Agreement shall be construed to preclude Isotope 11 from using the\r\nDevelopment Tools for use with third parties for the benefit of Isotope 11. ', NULL, 15000, 12000, 9, 1, 1, 0, '2019-11-01 19:00:00', '2019-11-06 03:20:04'),
+(1, 1, 'How to visualize data in python', '4. INTELLECTUAL PROPERTY RIGHTS AND LICENSE:\r\n4.1. PRODUCT: All materials, including, but not limited to, software, programs, source code and object\r\ncode, comments to the source or object code, specifications, documents, abstracts and summaries thereof\r\n(collectively, the “Products”) developed by Isotope 11 in connection with the provision of the Services to\r\nClient, or jointly by Client and Isotope 11, or by Isotope 11 pursuant to specifications or instructions\r\nprovided by Client, shall belong exclusively to Client. Isotope 11 acknowledges that the Products shall be\r\ndeemed “works made for hire” by Isotope 11 for Client, and, therefore, shall be the exclusive property of\r\nClient. To the extent the Products are not deemed “works made for hire” under applicable law, Isotope 11\r\nhereby irrevocably assigns and transfers to Client all right, title and interest in and to the Products,\r\nincluding, without limitation, all patent and copyright interests, and agrees to execute all documents\r\nreasonably requested by Client for the purpose of applying for and obtaining domestic and foreign patent\r\nand copyright registrations.\r\n4.2. PRE-EXISTING INTELLECTUAL PROPERTY:. Notwithstanding any provision of this Agreement\r\nto the contrary, any routines, methodologies, processes, libraries, tools or technologies created, adapted or\r\nused by Isotope 11 in its business generally, including all associated intellectual property rights\r\n(collectively, the Development Tools), shall be and remain the sole property of Isotope 11, and\r\nCustomer shall have no interest in or claim to the Development Tools, except as necessary to exercise its\r\nrights in the Products. In addition, notwithstanding any provision of this Agreement to the contrary,\r\nIsotope 11 shall be free to use any ideas, concepts, or know-how developed or acquired by Isotope 11\r\nduring the performance of this Agreement to the extent obtained and retained by Isotope 11’s personnel as\r\nimpression and general learning. Subject to and limited by Client’s intellectual property rights described in\r\nSection 4.1 above, nothing in this Agreement shall be construed to preclude Isotope 11 from using the\r\nDevelopment Tools for use with third parties for the benefit of Isotope 11. ', NULL, 15000, 12000, 9, 1, 2, 0, '2019-11-01 19:00:00', '2019-11-14 13:10:54'),
 (2, 2, 'How to visualize data in python', '4. INTELLECTUAL PROPERTY RIGHTS AND LICENSE:\r\n4.1. PRODUCT: All materials, including, but not limited to, software, programs, source code and object\r\ncode, comments to the source or object code, specifications, documents, abstracts and summaries thereof\r\n(collectively, the “Products”) developed by Isotope 11 in connection with the provision of the Services to\r\nClient, or jointly by Client and Isotope 11, or by Isotope 11 pursuant to specifications or instructions\r\nprovided by Client, shall belong exclusively to Client. Isotope 11 acknowledges that the Products shall be\r\ndeemed “works made for hire” by Isotope 11 for Client, and, therefore, shall be the exclusive property of\r\nClient. To the extent the Products are not deemed “works made for hire” under applicable law, Isotope 11\r\nhereby irrevocably assigns and transfers to Client all right, title and interest in and to the Products,\r\nincluding, without limitation, all patent and copyright interests, and agrees to execute all documents\r\nreasonably requested by Client for the purpose of applying for and obtaining domestic and foreign patent\r\nand copyright registrations.\r\n4.2. PRE-EXISTING INTELLECTUAL PROPERTY:. Notwithstanding any provision of this Agreement\r\nto the contrary, any routines, methodologies, processes, libraries, tools or technologies created, adapted or\r\nused by Isotope 11 in its business generally, including all associated intellectual property rights\r\n(collectively, the Development Tools), shall be and remain the sole property of Isotope 11, and\r\nCustomer shall have no interest in or claim to the Development Tools, except as necessary to exercise its\r\nrights in the Products. In addition, notwithstanding any provision of this Agreement to the contrary,\r\nIsotope 11 shall be free to use any ideas, concepts, or know-how developed or acquired by Isotope 11\r\nduring the performance of this Agreement to the extent obtained and retained by Isotope 11’s personnel as\r\nimpression and general learning. Subject to and limited by Client’s intellectual property rights described in\r\nSection 4.1 above, nothing in this Agreement shall be construed to preclude Isotope 11 from using the\r\nDevelopment Tools for use with third parties for the benefit of Isotope 11. ', NULL, 15000, 12000, 9, 1, 1, 0, '2019-11-01 19:00:00', '2019-11-01 19:00:00'),
 (3, 2, 'Ayaz is very PTM person', '<p>asdfasdfasdkl;fj asd;lfjkasd ;lfjasd;kl fjasd;klfj</p>\r\n\r\n<p>asdfjasdklfj;lasd fjasd;klfj lasdkfj;lasd</p>', NULL, 0, NULL, 8, 1, 1, 1, '2019-11-04 03:04:42', '2019-11-04 03:10:37'),
 (4, 1, 'Sishake Product Page', '<p>asdf asfasf asdfasd fasd fasdf</p>', NULL, 0, NULL, 8, 1, 1, 1, '2019-11-04 03:06:16', '2019-11-04 03:08:55'),
@@ -416,7 +437,8 @@ CREATE TABLE `course_applieds` (
 
 INSERT INTO `course_applieds` (`id`, `user_id`, `course_id`, `isActive`, `status`, `is_deleted`, `created_at`, `updated_at`) VALUES
 (1, 8, 8, 1, 1, 0, '2019-11-10 15:44:49', '2019-11-10 15:44:49'),
-(2, 8, 8, 1, 1, 0, '2019-11-10 15:46:24', '2019-11-10 15:46:24');
+(2, 8, 8, 1, 1, 0, '2019-11-10 15:46:24', '2019-11-10 15:46:24'),
+(5, 1, 6, 1, 1, 0, '2019-11-14 13:23:20', '2019-11-14 13:23:20');
 
 -- --------------------------------------------------------
 
@@ -535,7 +557,9 @@ CREATE TABLE `enrolled_courses` (
 INSERT INTO `enrolled_courses` (`id`, `user_id`, `course_id`, `isActive`, `status`, `is_deleted`, `created_at`, `updated_at`) VALUES
 (1, 1, 1, 1, 1, 0, '2019-11-03 19:00:00', '2019-11-03 19:00:00'),
 (2, 1, 6, 1, 1, 0, '2019-11-03 19:00:00', '2019-11-03 19:00:00'),
-(3, 8, 6, 1, 1, 0, '2019-11-06 04:54:27', '2019-11-06 04:54:27');
+(3, 8, 6, 1, 1, 0, '2019-11-06 04:54:27', '2019-11-06 04:54:27'),
+(9, 1, 8, 1, 1, 0, '2019-11-14 12:47:51', '2019-11-14 12:47:51'),
+(10, 8, 8, 1, 1, 0, '2019-11-14 12:48:00', '2019-11-14 12:48:00');
 
 -- --------------------------------------------------------
 
@@ -573,7 +597,8 @@ INSERT INTO `forum_answers` (`id`, `user_id`, `answer_body`, `question_id`, `isS
 (10, 1, 'kjhklhkhklhkl hjk klh kl', 5, 0, 1, 1, 0, '2019-10-17 11:57:34', '2019-10-17 11:57:34'),
 (11, 1, 'ayment-gateway -as-paypal-alter native1606629aym  ent-gateway-a s-paypal-alternative160 6629ayment-gatew ay-as-paypal-alternative1606629', 3, 0, 1, 1, 0, '2019-11-10 13:57:10', '2019-11-10 13:57:10'),
 (12, 1, 'ayment-gateway -as-paypal-alter native1606629aym  ent-gateway-a s-paypal-alternative160 6629ayment-gatew ay-as-paypal-alternative1606629', 3, 0, 1, 1, 0, '2019-11-10 13:57:10', '2019-11-10 13:57:10'),
-(13, 8, 'sdfasdfasd asdfasd ayment-gateway-a s-paypal-alternative1606629', 3, 0, 1, 1, 0, '2019-11-10 13:57:33', '2019-11-10 13:57:33');
+(13, 8, 'sdfasdfasd asdfasd ayment-gateway-a s-paypal-alternative1606629', 3, 0, 1, 1, 0, '2019-11-10 13:57:33', '2019-11-10 13:57:33'),
+(14, 1, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi adipiscing gravida odio, sit amet suscipit risus ultrices eu.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi adipiscing gravida odio, sit amet suscipit risus ultrices eu.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi adipiscing gravida odio, sit amet suscipit risus ultrices eu.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi adipiscing gravida odio, sit amet suscipit risus ultrices eu.\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi adipiscing gravida odio, sit amet suscipit risus ultrices eu.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi adipiscing gravida odio, sit amet suscipit risus ultrices eu.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi adipiscing gravida odio, sit amet suscipit risus ultrices eu.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi adipiscing gravida odio, sit amet suscipit risus ultrices eu.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi adipiscing gravida odio, sit amet suscipit risus ultrices eu.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi adipiscing gravida odio, sit amet suscipit risus ultrices eu.\r\n\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi adipiscing gravida odio, sit amet suscipit risus ultrices eu.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi adipiscing gravida odio, sit amet suscipit risus ultrices eu.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi adipiscing gravida odio, sit amet suscipit risus ultrices eu.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi adipiscing gravida odio, sit amet suscipit risus ultrices eu.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi adipiscing gravida odio, sit amet suscipit risus ultrices eu.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi adipiscing gravida odio, sit amet suscipit risus ultrices eu.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi adipiscing gravida odio, sit amet suscipit risus ultrices eu.\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi adipiscing gravida odio, sit amet suscipit risus ultrices eu.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi adipiscing gravida odio, sit amet suscipit risus ultrices eu.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi adipiscing gravida odio, sit amet suscipit risus ultrices eu.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi adipiscing gravida odio, sit amet suscipit risus ultrices eu.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi adipiscing gravida odio, sit amet suscipit risus ultrices eu.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi adipiscing gravida odio, sit amet suscipit risus ultrices eu.', 3, 0, 1, 1, 1, '2019-11-14 13:31:03', '2019-11-14 13:32:03');
 
 -- --------------------------------------------------------
 
@@ -599,9 +624,9 @@ CREATE TABLE `forum_questions` (
 --
 
 INSERT INTO `forum_questions` (`id`, `user_id`, `question_title`, `question_body`, `category_id`, `isActive`, `status`, `is_deleted`, `created_at`, `updated_at`) VALUES
-(3, 1, 'here is the title of my questionasasasasa1111', 'i need to check on the iOS dvevelopmnt and salary of it in USA per year', 1, 1, 2, 0, '2019-07-04 04:51:40', '2019-07-05 05:48:41'),
 (4, 8, 'Authentication - Laravel - The PHP Framework For Web Artisans https', 'Authentication - Laravel - The PHP Framework For Web Artisans\r\nhttps Authentication - Laravel - The PHP Framework For Web Artisans\r\nhttps Authentication - Laravel - The PHP Framework For Web Artisans\r\nhttps Authentication - Laravel - The PHP Framework For Web Artisans\r\nhttps VV Authentication - Laravel - The PHP Framework For Web Artisans\r\nhttpsAuthentication - Laravel - The PHP Framework For Web Artisans\r\nhttpsAuthentication - Laravel - The PHP Framework For Web Artisans\r\nhttpsAuthentication - Laravel - The PHP Framework For Web Artisans\r\nhttpsAuthentication - Laravel - The PHP Framework For Web Artisans\r\nhttpsAuthentication - Laravel - The PHP Framework For Web Artisans\r\nhttpsAuthentication - Laravel - The PHP Framework For Web Artisans\r\nhttpsAuthentication - Laravel - The PHP Framework For Web Artisans\r\nhttpsAuthentication - Laravel - The PHP Framework For Web Artisans\r\nhttpsAuthentication - Laravel - The PHP Framework For Web Artisans\r\nhttpsAuthentication - Laravel - The PHP Framework For Web Artisans\r\nhttps', 3, 1, 1, 0, '2019-07-04 06:22:45', '2019-07-05 05:48:55'),
-(5, 8, 'Laravel auth is wonderful but how to implement it in Model', 'Then again please note that logout requires POST as HTTP request method. There are many valid reason behind this, but just to mention one very important is that in this way you can prevent cross-site request forgery.\r\n\r\nSo according to what I have just pointed out a correct way to implement this could be just this:\r\nThen again please note that logout requires POST as HTTP request method. There are many valid reason behind this, but just to mention one very important is that in this way you can prevent cross-site request forgery.\r\n\r\nSo according to what I have just pointed out a correct way to implement this could be just this:\r\nThen again please note that logout requires POST as HTTP request method. There are many valid reason behind this, but just to mention one very important is that in this way you can prevent cross-site request forgery.\r\n\r\nSo according to what I have just pointed out a correct way to implement this could be just this:\r\nThen again please note that logout requires POST as HTTP request method. There are many valid reason behind this, but just to mention one very important is that in this way you can prevent cross-site request forgery.\r\n\r\nSo according to what I have just pointed out a correct way to implement this could be just this:\r\nThen again please note that logout requires POST as HTTP request method. There are many valid reason behind this, but just to mention one very important is that in this way you can prevent cross-site request forgery.\r\n\r\nSo according to what I have just pointed out a correct way to implement this could be just this:\r\nThen again please note that logout requires POST as HTTP request method. There are many valid reason behind this, but just to mention one very important is that in this way you can prevent cross-site request forgery.\r\n\r\nSo according to what I have just pointed out a correct way to implement this could be just this:\r\nThen again please note that logout requires POST as HTTP request method. There are many valid reason behind this, but just to mention one very important is that in this way you can prevent cross-site request forgery.\r\n\r\nSo according to what I have just pointed out a correct way to implement this could be just this:\r\nThen again please note that logout requires POST as HTTP request method. There are many valid reason behind this, but just to mention one very important is that in this way you can prevent cross-site request forgery.\r\n\r\nSo according to what I have just pointed out a correct way to implement this could be just this:', 3, 1, 1, 0, '2019-07-04 06:30:37', '2019-07-04 06:30:37');
+(5, 8, 'Laravel auth is wonderful but how to implement it in Model', 'Then again please note that logout requires POST as HTTP request method. There are many valid reason behind this, but just to mention one very important is that in this way you can prevent cross-site request forgery.\r\n\r\nSo according to what I have just pointed out a correct way to implement this could be just this:\r\nThen again please note that logout requires POST as HTTP request method. There are many valid reason behind this, but just to mention one very important is that in this way you can prevent cross-site request forgery.\r\n\r\nSo according to what I have just pointed out a correct way to implement this could be just this:\r\nThen again please note that logout requires POST as HTTP request method. There are many valid reason behind this, but just to mention one very important is that in this way you can prevent cross-site request forgery.\r\n\r\nSo according to what I have just pointed out a correct way to implement this could be just this:\r\nThen again please note that logout requires POST as HTTP request method. There are many valid reason behind this, but just to mention one very important is that in this way you can prevent cross-site request forgery.\r\n\r\nSo according to what I have just pointed out a correct way to implement this could be just this:\r\nThen again please note that logout requires POST as HTTP request method. There are many valid reason behind this, but just to mention one very important is that in this way you can prevent cross-site request forgery.\r\n\r\nSo according to what I have just pointed out a correct way to implement this could be just this:\r\nThen again please note that logout requires POST as HTTP request method. There are many valid reason behind this, but just to mention one very important is that in this way you can prevent cross-site request forgery.\r\n\r\nSo according to what I have just pointed out a correct way to implement this could be just this:\r\nThen again please note that logout requires POST as HTTP request method. There are many valid reason behind this, but just to mention one very important is that in this way you can prevent cross-site request forgery.\r\n\r\nSo according to what I have just pointed out a correct way to implement this could be just this:\r\nThen again please note that logout requires POST as HTTP request method. There are many valid reason behind this, but just to mention one very important is that in this way you can prevent cross-site request forgery.\r\n\r\nSo according to what I have just pointed out a correct way to implement this could be just this:', 3, 1, 1, 0, '2019-07-04 06:30:37', '2019-07-04 06:30:37'),
+(6, 1, 'Authentication - Laravel - The PHP Framework For Web Artisans https', 'destroy Duis dapibus aliquam mi, eget euismod sem scelerisque ut. Vivamus at elit quis urna adipiscing iaculis. Curabitur vitae velit in neque dictum blandit. Proin in iaculis nequeDuis dapibus aliquam mi, eget euismod sem scelerisque ut. Vivamus at elit quis urna adipiscing iaculis. Curabitur vitae velit in neque dictum blandit. Proin in iaculis nequeDuis dapibus aliquam mi, eget euismod sem scelerisque ut. Vivamus at elit quis urna adipiscing iaculis. Curabitur vitae velit in neque dictum blandit. Proin in iaculis neque\r\n\r\nDuis dapibus aliquam mi, eget euismod sem scelerisque ut. Vivamus at elit quis urna adipiscing iaculis. Curabitur vitae velit in neque dictum blandit. Proin in iaculis nequeDuis dapibus aliquam mi, eget euismod sem scelerisque ut. Vivamus at elit quis urna adipiscing iaculis. Curabitur vitae velit in neque dictum blandit. Proin in iaculis neque\r\nDuis dapibus aliquam mi, eget euismod sem scelerisque ut. Vivamus at elit quis urna adipiscing iaculis. Curabitur vitae velit in neque dictum blandit. Proin in iaculis nequeDuis dapibus aliquam mi, eget euismod sem scelerisque ut. Vivamus at elit quis urna adipiscing iaculis. Curabitur vitae velit in neque dictum blandit. Proin in iaculis neque', 11, 1, 1, 0, '2019-11-14 14:12:56', '2019-11-14 14:12:56');
 
 -- --------------------------------------------------------
 
@@ -681,7 +706,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (21, '2019_11_12_060803_create_chatrooms_table', 13),
 (22, '2019_11_12_060843_create_chatroom_messages_table', 13),
 (23, '2019_11_12_060921_create_chatroom_participants_table', 13),
-(24, '2019_06_27_150837_create_reports_table', 14);
+(24, '2019_06_27_150837_create_reports_table', 14),
+(25, '2019_11_14_200446_create_certificates_table', 15);
 
 -- --------------------------------------------------------
 
@@ -906,9 +932,10 @@ CREATE TABLE `projects` (
 
 INSERT INTO `projects` (`id`, `user_id`, `title`, `description`, `project_type`, `category_id`, `start_date`, `end_date`, `url`, `isActive`, `status`, `is_deleted`, `created_at`, `updated_at`) VALUES
 (1, 1, 'Semester Schedulling System in Android', 'This is the prject which is required by a university to automate their semester schedule which will show the times and dates of the activities including the exams and assignments etc. ', NULL, 1, NULL, '2019-11-20', 'Semester-Schedulling-System-in-Android12353', 1, 1, 0, '2019-11-09 19:00:00', '2019-11-10 13:35:33'),
-(2, 1, 'Sishake Product Page', 'Select2 will register itself as a jQuery function if you use any of the distribution builds, so you can call .select2() on any jQuery selector where you would like to initialize Select2.\r\n 2019-11-15\r\nSelect2 will register itself as a jQuery function if you use any of the distribution builds, so you can call .select2() on any jQuery selector where you would like to initialize Select2.\r\n 2019-11-15\r\nSelect2 will register itself as a jQuery function if you use any of the distribution builds, so you can call .select2() on any jQuery selector where you would like to initialize Select2.\r\n 2019-11-15\r\nSelect2 will register itself as a jQuery function if you use any of the distribution builds, so you can call .select2() on any jQuery selector where you would like to initialize Select2.', NULL, 13, NULL, '2019-11-15', 'Sishake-Product-Page1163948', 1, 1, 0, '2019-11-10 07:18:22', '2019-11-10 08:51:16'),
+(2, 1, 'Sishake Product Page', 'Select2 will register itself as a jQuery function if you use any of the distribution builds, so you can call .select2() on any jQuery selector where you would like to initialize Select2.\r\n 2019-11-15\r\nSelect2 will register itself as a jQuery function if you use any of the distribution builds, so you can call .select2() on any jQuery selector where you would like to initialize Select2.\r\n 2019-11-15\r\nSelect2 will register itself as a jQuery function if you use any of the distribution builds, so you can call .select2() on any jQuery selector where you would like to initialize Select2.\r\n 2019-11-15\r\nSelect2 will register itself as a jQuery function if you use any of the distribution builds, so you can call .select2() on any jQuery selector where you would like to initialize Select2.', NULL, 13, NULL, '2019-11-15', 'Sishake-Product-Page1163948', 1, 1, 1, '2019-11-10 07:18:22', '2019-11-14 12:46:17'),
 (3, 1, 'Ayaz is very PTM person', 'markAsClosed markAsClosed markAsClosed markAsClosed markAsClosed markAsClosed markAsClosed markAsClosed markAsClosed markAsClosed markAsClosed markAsClosed markAsClosed markAsClosed markAsClosed markAsClosed markAsClosed markAsClosed', NULL, 11, NULL, '2019-11-28', 'Ayaz-is-very-PTM-person1624986', 1, 1, 1, '2019-11-10 07:30:27', '2019-11-12 15:42:28'),
-(4, 1, 'Payment gateway as paypal alternative', 'ayment-gateway-as-paypal-alt\r\nernative1606629ayment-gat\r\neway-as-paypal-alternative1\r\n606629ayment-gateway-as-\r\npaypal-alternative1606629\r\nayment-gateway-as-paypal-a\r\nlternative1606629ayment-gateway-as-paypal-alternative1606629', NULL, 12, NULL, '2019-11-30', 'Payment-gateway-as-paypal-alternative1606629', 1, 1, 1, '2019-11-10 13:41:49', '2019-11-12 15:42:22');
+(4, 1, 'Payment gateway as paypal alternative', 'ayment-gateway-as-paypal-alt\r\nernative1606629ayment-gat\r\neway-as-paypal-alternative1\r\n606629ayment-gateway-as-\r\npaypal-alternative1606629\r\nayment-gateway-as-paypal-a\r\nlternative1606629ayment-gateway-as-paypal-alternative1606629', NULL, 12, NULL, '2019-11-30', 'Payment-gateway-as-paypal-alternative1606629', 1, 1, 1, '2019-11-10 13:41:49', '2019-11-12 15:42:22'),
+(5, 1, 'WordPress plugin development using Vue JS', 'Try:\r\n\r\nChecking the network cables, modem, and router\r\nReconnecting to Wi-Fi\r\nRunning Windows Network Diagnostics\r\nERR_INTERNET_DISCONNECTED\r\nTry:\r\n\r\nChecking the network cables, modem, and router\r\nReconnecting to Wi-Fi\r\nRunning Windows Network Diagnostics\r\nERR_INTERNET_DISCONNECTED\r\nTry:\r\n\r\nChecking the network cables, modem, and router\r\nReconnecting to Wi-Fi\r\nRunning Windows Network Diagnostics\r\nERR_INTERNET_DISCONNECTED', NULL, 12, NULL, '2019-11-29', 'WordPress-plugin-development-using-Vue-JS1229407', 1, 1, 0, '2019-11-14 14:30:49', '2019-11-14 14:30:49');
 
 -- --------------------------------------------------------
 
@@ -982,7 +1009,13 @@ CREATE TABLE `reports` (
 INSERT INTO `reports` (`id`, `user_id`, `reporter_id`, `reported_user_id`, `report_type`, `message_body`, `isActive`, `status`, `is_deleted`, `created_at`, `updated_at`) VALUES
 (1, 1, 2, 8, 'False Info', NULL, 1, 1, 0, '2019-11-12 15:10:39', '2019-11-12 15:10:39'),
 (2, 1, 2, 8, 'Hate Speach', NULL, 1, 1, 0, '2019-11-12 15:11:27', '2019-11-12 15:11:27'),
-(3, 1, 2, 2, 'Harrassment', NULL, 1, 1, 0, '2019-11-12 15:36:57', '2019-11-12 15:36:57');
+(3, 1, 2, 2, 'Harrassment', NULL, 1, 1, 0, '2019-11-12 15:36:57', '2019-11-12 15:36:57'),
+(4, 8, 11, 11, 'False Info', NULL, 1, 1, 0, '2019-11-14 13:33:51', '2019-11-14 13:33:51'),
+(5, 8, 5, 5, 'Harrassment', NULL, 1, 1, 0, '2019-11-14 13:37:00', '2019-11-14 13:37:00'),
+(6, 8, 5, 5, 'Harrassment', NULL, 1, 1, 0, '2019-11-14 13:51:42', '2019-11-14 13:51:42'),
+(7, 8, 5, 8, 'Harrassment', NULL, 1, 1, 0, '2019-11-14 13:57:31', '2019-11-14 13:57:31'),
+(8, 1, 5, 8, 'False Info', NULL, 1, 1, 0, '2019-11-14 14:03:46', '2019-11-14 14:03:46'),
+(9, 1, 5, 8, 'Hate Speach', NULL, 1, 1, 0, '2019-11-14 14:04:02', '2019-11-14 14:04:02');
 
 -- --------------------------------------------------------
 
@@ -1044,7 +1077,7 @@ INSERT INTO `services` (`id`, `user_id`, `url`, `category_id`, `title`, `descrip
 (1, 1, 'I-will-create-a-web-site-for-you1043192', 11, 'I will create a web site for you', 'This is the dummy text for services page which can edited a deleted from both user and admin side. all you have to just push the button of delete. \r\nThis is the dummy text for services page which can edited a deleted from both user and admin side. all you have to just push the button of delete. \r\n\r\nThis is the dummy text for services page which can edited a deleted from both user and admin side. all you have to just push the button of delete. \r\n\r\nThis is the dummy text for services page which can edited a deleted from both user and admin side. all you have to just push the button of delete.', NULL, '50000', 1, 1, 0, '2019-11-10 05:06:14', '2019-11-10 05:06:14'),
 (2, 1, 'I-will-create-a-website-for-you1384800', 12, 'I will create a website for you', 'This is the dummy text for services page which can edited a deleted from both user and admin side. all you have to just push the button of delete. \r\nThis is the dummy text for services page which can edited a deleted from both user and admin side. all you have to just push the button of delete. \r\nThis is the dummy text for services page which can edited a deleted from both user and admin side. all you have to just push the button of delete. \r\nThis is the dummy text for services page which can edited a deleted from both user and admin side. all you have to just push the button of delete.', NULL, '50000', 1, 1, 0, '2019-11-10 05:06:51', '2019-11-10 05:40:13'),
 (3, 1, 'Web-App-Development-service1204014', 11, 'Web App Development service', 'Here is the dummy text for the creation of Pakistan web app develppment which might help everyone in the country to be more fruitfull to each other. a Here is the dummy text for the creation of Pakistan web app develppment which might help everyone in the country to be more fruitfull to each other. aHere is the dummy text for the creation of Pakistan web app develppment which might help everyone in the country to be more fruitfull to each other. aHere is the dummy text for the creation of Pakistan web app develppment which might help everyone in the country to be more fruitfull to each other. aHere is the dummy text for the creation of Pakistan web app develppment which might help everyone in the country to be more fruitfull to each other. a', NULL, '150000', 1, 1, 0, '2019-11-10 05:35:37', '2019-11-10 05:52:45'),
-(6, 1, 'Create-Android-App-with-API-Call1251489', 14, 'Create Android App with API Call', '<p>H&nbsp;ave questions, comments or just want to say hello:ave questions, comments or just want to say hello:ave questions, comments or just want to say hello:ave questions, comments or just want to say hello:</p>\r\n\r\n<ul>\r\n	<li><a href=\"#\">info@s</a></li>\r\n	<li>gwgfasdfas</li>\r\n	<li>fasdf</li>\r\n	<li>asdf</li>\r\n	<li>asdf</li>\r\n	<li>asdf</li>\r\n	<li>asdfasd</li>\r\n	<li>fasd</li>\r\n	<li>f</li>\r\n</ul>', NULL, '60000', 1, 1, 0, '2019-11-10 13:30:19', '2019-11-10 13:30:19');
+(6, 1, 'Create-Android-App-with-API-Call1251489', 14, 'Create Android App with API Call', '<p>H&nbsp;ave questions, comments or just want to say hello:ave questions, comments or just want to say hello:ave questions, comments or just want to say hello:ave questions, comments or just want to say hello:</p>\r\n\r\n<ul>\r\n	<li><a href=\"#\">info@s</a></li>\r\n	<li>gwgfasdfas</li>\r\n	<li>fasdf</li>\r\n	<li>asdf</li>\r\n	<li>asdf</li>\r\n	<li>asdf</li>\r\n	<li>asdfasd</li>\r\n	<li>fasd</li>\r\n	<li>f</li>\r\n</ul>', NULL, '60000', 1, 2, 0, '2019-11-10 13:30:19', '2019-11-14 12:44:08');
 
 -- --------------------------------------------------------
 
@@ -1068,8 +1101,9 @@ CREATE TABLE `service_applieds` (
 --
 
 INSERT INTO `service_applieds` (`id`, `user_id`, `service_id`, `isActive`, `status`, `is_deleted`, `created_at`, `updated_at`) VALUES
-(1, 8, 2, 1, 1, 0, '2019-11-10 15:56:05', '2019-11-10 15:56:05'),
-(2, 8, 6, 1, 1, 0, '2019-11-10 15:56:49', '2019-11-10 15:56:49');
+(2, 8, 6, 1, 1, 0, '2019-11-10 15:56:49', '2019-11-10 15:56:49'),
+(4, 8, 2, 1, 1, 0, '2019-11-14 12:37:19', '2019-11-14 12:37:19'),
+(5, 1, 2, 1, 1, 0, '2019-11-14 13:14:44', '2019-11-14 13:14:44');
 
 -- --------------------------------------------------------
 
@@ -1156,12 +1190,12 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `fname`, `lname`, `email`, `password`, `phonenumber`, `avatar`, `status`, `remember_token`, `created_at`, `updated_at`, `iscustomer`, `isPro`, `role_id`, `createdby`, `updatedby`, `username`, `organization_id`, `designation_id`) VALUES
-(1, 'Raheel', 'Khan', 'admin@admin.com', '$2y$10$MntbYTaK/9avYH/zOD4U5uAjtn4aFUtk4q36MNinnQ6bPdFDK0PwO', '03333639395', 'raheel.jpg', 1, 'k7nAVJei5fIEhvvIFZTZlTpiCzxZ9Xf30n9ii70GYIpAjNQdlANw4y7Dihwp', '2018-06-25 10:22:52', '2019-07-01 07:44:10', 0, 1, 1, NULL, NULL, '', 14, 0),
+(1, 'Raheelaa', 'Khanasfasd', 'admin@admin.com', '$2y$10$MntbYTaK/9avYH/zOD4U5uAjtn4aFUtk4q36MNinnQ6bPdFDK0PwO', '03333639395', '1573761020-central_database-512.png', 1, 'c748rSkmLl7ZU2VjEJw2G8qSwZmHaKJQnXR0k8r9xdB7ccL8wIzx7ZrAlcfM', '2018-06-25 10:22:52', '2019-11-14 14:58:28', 0, 1, 1, NULL, NULL, '', 0, 0),
 (7, 'Raheel', 'Khan', 'adminaaa@admin.com', '$2y$10$.ltGPfRid5qNIYrRz6Q/bOZ4dXNX./869VJm7Kfp1fxfTNAwKLQMi', '3333639395', 'default_avatar_male.jpg', 1, NULL, '2019-07-01 19:00:00', '2019-07-02 02:45:45', 1, NULL, 2, NULL, NULL, NULL, 15, 0),
-(8, 'Syed Abbas', 'Khan', 'abbas@gmail.com', '$2y$10$MntbYTaK/9avYH/zOD4U5uAjtn4aFUtk4q36MNinnQ6bPdFDK0PwO', '3333222211', 'default_avatar_male.jpg', 1, NULL, '2019-07-01 19:00:00', '2019-07-01 19:00:00', 1, NULL, 2, NULL, NULL, NULL, 8, 0),
-(9, 'raheel', 'khan', 'test@gmail.com', '$2y$10$ARpKBXaP6NicpVb4RxQiS.v2/yUV3wCsu5rX9uWBFrFN8og09Y5ye', NULL, '1573408019-central_database-512.png', 1, NULL, '2019-11-10 12:47:00', '2019-11-10 12:47:00', 0, NULL, 2, NULL, NULL, NULL, 0, 0),
-(10, 'raheel', 'khan', 'test2@gmail.com', '$2y$10$.BVpHqvnea4eLPh9ytCDFOIFjsK6S4p44pHm9sEULic/MGyD2MFRO', NULL, '1573408148-inventory-icon.png', 1, NULL, '2019-11-10 12:49:08', '2019-11-10 12:49:08', 0, NULL, 2, NULL, NULL, NULL, 0, 0),
-(11, 'raheel', 'khan', 'test24@gmail.com', '$2y$10$Iu/onC.p3YU.dNN6wQjHyOymtrna9ETXdnXb9pm1vqwLWl5/K4SB.', '923333639395', '1573408236-360-customer-im2.jpg', 1, NULL, '2019-11-10 12:50:36', '2019-11-10 12:50:36', 0, NULL, 2, NULL, NULL, NULL, 0, 0);
+(8, 'Syed Abbas', 'Khan', 'abbas@gmail.com', '$2y$10$MntbYTaK/9avYH/zOD4U5uAjtn4aFUtk4q36MNinnQ6bPdFDK0PwO', '3333222211', 'default_avatar_male.jpg', 1, NULL, '2019-07-01 19:00:00', '2019-11-14 15:46:41', 0, 2, 2, NULL, NULL, NULL, 8, 0),
+(9, 'janan', 'khan', 'test@gmail.com', '$2y$10$ARpKBXaP6NicpVb4RxQiS.v2/yUV3wCsu5rX9uWBFrFN8og09Y5ye', NULL, '1573408019-central_database-512.png', 1, NULL, '2019-11-10 12:47:00', '2019-11-10 12:47:00', 0, NULL, 2, NULL, NULL, NULL, 0, 0),
+(10, 'hilal', 'khan', 'test2@gmail.com', '$2y$10$.BVpHqvnea4eLPh9ytCDFOIFjsK6S4p44pHm9sEULic/MGyD2MFRO', NULL, '1573408148-inventory-icon.png', 1, NULL, '2019-11-10 12:49:08', '2019-11-10 12:49:08', 0, NULL, 2, NULL, NULL, NULL, 0, 0),
+(11, 'maryam', 'khan', 'test24@gmail.com', '$2y$10$Iu/onC.p3YU.dNN6wQjHyOymtrna9ETXdnXb9pm1vqwLWl5/K4SB.', '923333639395', '1573408236-360-customer-im2.jpg', 1, NULL, '2019-11-10 12:50:36', '2019-11-10 12:50:36', 0, NULL, 2, NULL, NULL, NULL, 0, 0);
 
 --
 -- Indexes for dumped tables
@@ -1192,6 +1226,12 @@ ALTER TABLE `authentication_log`
 -- Indexes for table `categories`
 --
 ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `certificates`
+--
+ALTER TABLE `certificates`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1454,6 +1494,12 @@ ALTER TABLE `categories`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
+-- AUTO_INCREMENT for table `certificates`
+--
+ALTER TABLE `certificates`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `chat`
 --
 ALTER TABLE `chat`
@@ -1469,19 +1515,19 @@ ALTER TABLE `chatroom`
 -- AUTO_INCREMENT for table `chatrooms`
 --
 ALTER TABLE `chatrooms`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `chatroom_messages`
 --
 ALTER TABLE `chatroom_messages`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `chatroom_participants`
 --
 ALTER TABLE `chatroom_participants`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `chat_member`
@@ -1499,7 +1545,7 @@ ALTER TABLE `courses`
 -- AUTO_INCREMENT for table `course_applieds`
 --
 ALTER TABLE `course_applieds`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `course_videos`
@@ -1523,19 +1569,19 @@ ALTER TABLE `designations`
 -- AUTO_INCREMENT for table `enrolled_courses`
 --
 ALTER TABLE `enrolled_courses`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `forum_answers`
 --
 ALTER TABLE `forum_answers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `forum_questions`
 --
 ALTER TABLE `forum_questions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `jobs`
@@ -1547,7 +1593,7 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `oauth_clients`
@@ -1577,7 +1623,7 @@ ALTER TABLE `post_comments`
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `project_contributors`
@@ -1595,7 +1641,7 @@ ALTER TABLE `project_messages`
 -- AUTO_INCREMENT for table `reports`
 --
 ALTER TABLE `reports`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -1613,7 +1659,7 @@ ALTER TABLE `services`
 -- AUTO_INCREMENT for table `service_applieds`
 --
 ALTER TABLE `service_applieds`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `staffdetails`

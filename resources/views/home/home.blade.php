@@ -56,39 +56,17 @@
                                 @endforeach
                            
                         </div>
-                        {{-- <div class="resent">
-                            <h3>CATEGORIES</h3>
-                            <ul class="architecture">
-                                
-                                <li><a href="#"><i class="fa fa-arrow-right" aria-hidden="true"></i>Cyber Security</a></li>
-                                <li><a href="#"><i class="fa fa-arrow-right" aria-hidden="true"></i>Forensics</a></li>
-                                <li><a href="#"><i class="fa fa-arrow-right" aria-hidden="true"></i>Penetration Testing</a></li>
-                                <li><a href="#"><i class="fa fa-arrow-right" aria-hidden="true"></i>Database Management</a></li>
-                            </ul>
-                        </div> 
                         <div class="resent">
-                            <h3>ARCHIVES</h3>
-                            <ul class="architecture">
-                                <li><a href="#"><i class="fa fa-arrow-right" aria-hidden="true"></i>June 2019</a></li>
-                                <li><a href="#"><i class="fa fa-arrow-right" aria-hidden="true"></i>July 2019</a></li>
-                                <li><a href="#"><i class="fa fa-arrow-right" aria-hidden="true"></i>August 2019</a></li>
-                            </ul>
-                        </div>
-                        <div class="search">
-                            <input type="search" name="search" class="form-control" placeholder="Search">
-                        </div>
-                        <div class="resent">
-                            <h3>Tag</h3>
+                            <h3>Projects</h3>
                             <ul class="tag">
-                                <li><a href="#">App Development</a></li>
-                                <li><a href="#">Programming</a></li>
-                                <li><a href="#">Web Scraping</a></li>
-                                <li><a href="#">Software</a></li>
-                                <li><a href="#">Web Design</a></li>
+                                
+                                @foreach($projects as $project)
+                                <li><a href="{{ route('ProjectShow', $project->url) }}">{{$project->title}}</a></li>
+                                @endforeach
                                 
                             </ul>
                         </div>
-                        --}}
+                        
                     </div>
                 </div>
             </div>
@@ -96,7 +74,7 @@
     <section class="blog_tow_area">
         <div class="container">
            <div class="row blog_tow_row">
-              
+              <h2 class="text-center m-5" style="margin: 20px 1px;">Latest Articles</h2>
                @foreach($posts as $post)
                    
                 <div class="col-md-4 col-sm-6">
@@ -107,9 +85,93 @@
                         <a class="tittle" href="{{route('PostShow', $post->post_url)}}">{{$post->post_title}}</a>
                             <div class="date_comment">
                                 <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i>{{ date("d-M", strtotime($post->created_at)) }}</a>
-                                <a href="#"><i class="fa fa-commenting-o" aria-hidden="true"></i>3</a>
+                                {{-- <a href="#"><i class="fa fa-commenting-o" aria-hidden="true"></i>3</a> --}}
                             </div>
                             <p>{!! substr($post->post_content,0,100)!!}</p>
+                        </div>
+                    </div>
+                </div>
+                
+                @endforeach
+                
+               
+           </div>
+        </div>
+    </section>
+
+    <section class="blog_tow_area">
+            <div class="container">
+               <div class="row blog_tow_row">
+                  <h2 class="text-center m-5" style="margin: 20px 1px;">Latest Jobs</h2>
+                   @foreach($jobs as $job)
+                       
+                    <div class="col-md-4 col-sm-6">
+                        <div class="renovation">
+                            <img src="{{ asset('public/uploads/postImages/' . $job->image) }}"  style="border: 1px solid black;"  alt="">
+                            <div class="renovation_content"  style="height: 200px;">
+                                <a class="clipboard" style="background: #000;" href="#"><i class="fa fa-file" aria-hidden="true"></i></a>
+                            <a class="tittle" href="{{route('JobShow', $job->id)}}">{{$job->job_title}}</a>
+                                <div class="date_comment">
+                                    <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i>{{ date("d-M", strtotime($job->created_at)) }}</a>
+                                    {{-- <a href="#"><i class="fa fa-commenting-o" aria-hidden="true"></i>3</a> --}}
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    
+                    @endforeach
+                    
+                   
+               </div>
+            </div>
+    </section>
+
+    <section class="blog_tow_area">
+        <div class="container">
+           <div class="row blog_tow_row">
+              <h2 class="text-center m-5" style="margin: 40px 1px;">Latest Service</h2>
+               @foreach($services as $service)
+                   
+                <div class="col-md-4 col-sm-6">
+                    <div class="renovation">
+                        {{-- <img src="{{ asset('public/uploads/postImages/' . $service->image) }}"  style="border: 1px solid black;"  alt=""> --}}
+                        <div class="renovation_content"  style="height: 200px;">
+                            <a class="clipboard" style="background: #023866;" href="#"><i class="fa fa-file" aria-hidden="true"></i></a>
+                        <a class="tittle" href="{{route('ServiceShow', $service->id)}}">{{$service->title}}</a>
+                            <div class="date_comment">
+                                <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i>{{ date("d-M", strtotime($job->created_at)) }}</a>
+                                {{-- <a href="#"><i class="fa fa-commenting-o" aria-hidden="true"></i>3</a> --}}
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                
+                @endforeach
+                
+               
+           </div>
+        </div>
+    </section>
+
+    <section class="blog_tow_area">
+        <div class="container">
+           <div class="row blog_tow_row">
+              <h2 class="text-center m-5" style="margin: 40px 1px;">Latest Projects</h2>
+               @foreach($projects as $project)
+                   
+                <div class="col-md-4 col-sm-6">
+                    <div class="renovation">
+                        {{-- <img src="{{ asset('public/uploads/postImages/' . $project->image) }}"  style="border: 1px solid black;"  alt=""> --}}
+                        <div class="renovation_content"  style="height: 200px;">
+                            <a class="clipboard" style="background: #023866;" href="#"><i class="fa fa-file" aria-hidden="true"></i></a>
+                        <a class="tittle" href="{{route('ProjectShow', $project->url)}}">{{$project->title}}</a>
+                            <div class="date_comment">
+                                <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i>{{ date("d-M", strtotime($job->created_at)) }}</a>
+                                {{-- <a href="#"><i class="fa fa-commenting-o" aria-hidden="true"></i>3</a> --}}
+                            </div>
+                            
                         </div>
                     </div>
                 </div>

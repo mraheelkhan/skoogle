@@ -40,7 +40,7 @@
                                 </span>
                                     
                                 @elseif($service->status == 2)
-                                <span class="alert alert-info"> service Closed!</span>
+                                <span class="alert alert-info"> Service Closed!</span>
                                 @else
                                     @if(count($ifApplied) < 1 )
                                         
@@ -50,7 +50,9 @@
                                             <input type="submit" class="btn btn-primary  py-2 px-4" value="Apply Service" />
                                         </form>
                                     @else
+                                    
                                         <span class="alert alert-success"> Already Applied!</span>
+                                        <a href="{{route('ServiceApplyCancel', $service->id)}}">Cancel Apply</a>
                                     @endif
                                 @endif
                         </p>

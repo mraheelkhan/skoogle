@@ -22,10 +22,10 @@
                     <label for="title"> Url (none-editable)</label>
                     <input type="text" class="form-control input_box" name="url" id="url" value="{{ old('url')}}" placeholder="URL of the Post" readonly/>
                 </div>
-                <div class="form-group">
+                {{-- <div class="form-group">
                     <label for="price"> Enter Price of the services</label>
                 <input type="text" class="form-control input_box" name="price" id="price" placeholder="Enter Title of the Post" value="{{ old('price')}}" onchange="urlGenerator()" focused/>
-                </div>
+                </div> --}}
                 <div class="form-group">
                     <label for="title"> Select Category</label>
                     <select  name="category_id" id="category_id" class="form-control">

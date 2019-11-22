@@ -27,12 +27,14 @@
                             <li><a href="{{ route('MyPostedJobs') }}">My Posted Jobs</a></li>
                             @endif
 
-                            @endif      
-                    <li><a href="{{route('JobCreate')}}">
-                        <span class="bg-primary text-white py-3 px-4 rounded">
-                            <span class="icon-plus mr-3"></span>Post New Job</span>
-                        </a>
-                    </li>
+                            @endif     
+                            @if(auth()->user()->isPro == 1 ) 
+                                <li><a href="{{route('JobCreate')}}">
+                                    <span class="bg-primary text-white py-3 px-4 rounded">
+                                        <span class="icon-plus mr-3"></span>Post New Job</span>
+                                    </a>
+                                </li>
+                            @endif
                     </ul>
                 </div>
                 </nav>

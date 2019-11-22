@@ -162,14 +162,27 @@
                   <div class="inbox_msg">
                     <div class="inbox_people">
                       <div class="headind_srch">
-                        <div class="recent_heading">
-                          <div class="col-md-8">
+                        <div class="recent_heading" style="    width: 100%;">
+                          <div class="col-md-5">
                             <h4>All Chats</h4>
 
                           </div>
-                          <div class="col-md-4">
-                            <a class="btn btn-primary btn-sm">New Chat</a>
-
+                          <div class="col-md-7">
+                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
+                              New Chat
+                            </button>
+                            @if(auth()->user()->isPro == 1)
+                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#chatroom">
+                                        Chatroom
+                                      </button>
+                                      <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#joinroom">
+                                        Join Room
+                                      </button>
+                                    @else 
+                                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#joinroom">
+                                        Join Room
+                                      </button>
+                                      @endif
                           </div>
                         </div>
                         {{-- <div class="srch_bar">
@@ -186,7 +199,8 @@
                         
                         <div class="chat_list">
                           <div class="chat_people">
-                            <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                            <div class="chat_img"> 
+                              <img src="https://ptetutorials.com/images/user-profile.png" alt="skoogle"> </div>
                             <div class="chat_ib">
                               <a href="{{route('ChatUserShow', $room->id)}}"><h5>{{$room->name}} </a>
                                 {{-- <span class="chat_date">Dec 25</span></h5> --}}
@@ -218,4 +232,120 @@
                 </div></div>
     </div>
 </section>
+{{-- start chat with someone --}}
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Start New Chat</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table">
+          <tr>
+            <td>Name</td>
+            <td>Email</td>
+            <td>Action</td>
+          </tr>
+          @foreach($allusers as $user)
+          <tr>
+            <td>{{$user->fname . " " . $user->lname }}</td>
+            <td>{{$user->email}}</td>
+            <td><form method="POST" action="{{route('ChatUserCreateStore')}}">
+              @csrf
+              <input type="hidden" name="with_chat_id" value="{{$user->id}}"/>
+              <input type="submit" value="Start Chat" class="btn btn-primary btn-sm">
+            </form></td>
+          </tr>
+          @endforeach
+        </table>
+      </div>
+      
+    </div>
+  </div>
+</div>
+{{-- create chatroom --}}
+<div class="modal fade" id="chatroom" tabindex="-1" role="dialog" aria-labelledby="chatroomLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="chatroomLabel">New Chatroom</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{{route('ChatUserRoomStore') }}" method="POST">
+            @csrf
+            <div class="form-group">
+              <input type="text" class="form-control" name="chatroom_name" placeholder="Enter Chatroom Name"/>
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" name="chatroom_code" placeholder="Enter Chatroom Passcode"/>
+            </div>
+            <div class="form-group">
+              <input type="submit" class="btn btn-primary" value="Create Chatroom"/>
+            </div>
+        </form>
+      </div>
+      
+    </div>
+  </div>
+</div>
+{{--join chatroom  --}}
+<div class="modal fade" id="joinroom" tabindex="-1" role="dialog" aria-labelledby="joinroomLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="joinroomLabel">Join Chatroom</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+              <table class="table">
+                  <tr>
+                    <td>Room Name</td>
+                    <td>Owner</td>
+                    <td>Action</td>
+                  </tr>
+            @foreach($groupchats as $group)
+            <tr>
+              <td>{{ $group->name }}</td>
+              <td>{{ $group->user->fname }}</td>
+              <td>
+                  <p>
+                      <a class="btn btn-primary btn-xs" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        Join
+                      </a>
+                      @if($group->user_id == auth()->user()->id)
+                      <a class="btn btn-danger btn-xs" href="{{route('ChatroomDelete', $group->id)}}">
+                        <i class="fa fa-trash"></i>
+                      </a>
+                      @endif
+                    </p>
+                    <div class="collapse" id="collapseExample">
+                    <div class="card card-body">
+                      <form action="{{ route('ChatJoinChatroom')}}" method="POST">
+                        @csrf
+                        <input type="text" name="code" class="form-control" placeholder="Enter chatroom joining code"/>
+                        <input type="hidden" name="room_id" value="{{$group->id}}" class="form-control" placeholder="Enter chatroom joining code"/>
+                        <input type="submit" class="form-control"/>
+                      </form>
+                    </div>
+                    </div>
+              </td>
+            </tr>
+            
+            @endforeach
+              </table>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
 @endsection

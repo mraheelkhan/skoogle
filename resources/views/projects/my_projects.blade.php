@@ -35,7 +35,7 @@
                                         <i class="fa fa-trash"></i>
                                     </a>
                                     @if($project->status == 2)
-                                    <a onclick="projectMarkAsOpen({{$project->id}})" class="btn btn-green" title="Mark as Closed">
+                                    <a onclick="projectMarkAsOpen({{$project->id}})" class="btn btn-green" title="Mark as Open">
                                             <i class="fa fa-check"></i>
                                         </a>
                                     @else

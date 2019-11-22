@@ -26,16 +26,26 @@
                 <div class="renovation">
                     {{-- <img src="images/blog/renovation/r-1.jpg" alt=""> --}}
                     <div class="renovation_content">
-                            @if(auth()->check() && auth()->user()->isPro == 1 && auth()->user()->id == $course->user_id)
-                            <div class="text-right">
+                        <div class="text-right">
+                                {{-- @if(auth()->check() && auth()->user()->isPro == 1 && auth()->user()->id == $course->user_id)
                                     <a href="{{route('CourseDelete', $course->id)}}" class="btn btn-danger">
                                         <i class="fa fa-trash"></i>
                                     </a>
                                     <a  href="{{route('CourseEdit', $course->id)}}" class="btn btn-primary">
                                         <i class="fa fa-edit"></i>
                                     </a>
+                                    @endif --}}
+                                    <a>
+                                    <form action="{{route('CourseApply')}}" method="POST"method="post" enctype="multipart/form-data" role="form">
+                                        @csrf
+                                        <input type="hidden" name="course_id" value="{{$course->id}}"/>
+                                        <input type="submit" class="btn btn-primary  py-2 px-4" value="Apply Course" />
+                                    </form>
+                                </a>
+                                    <a  href="{{route('CourseApplyCancel', $course->id)}}" class="btn btn-danger">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
                                 </div>
-                            @endif
                         {{-- <a class="clipboard" href="#"><i class="fa fa-clipboard" aria-hidden="true"></i></a> --}}
                     <a class="tittle" href="{{ route('CourseShow', [str_replace(" ", "-", $course->category->category_name), $course->id]) }}">{{ $course->title }}</a>
                         <div class="date_comment">
@@ -52,4 +62,7 @@
        </div>
     </div>
 </section>
+<script>
+                    
+</script>
 @endsection

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\ForumQuestion;
 use App\ForumAnswer;
 use App\Category;
+use App\Report;
 use Illuminate\Http\Request;
 use Session;
 use DataTables;
@@ -80,6 +81,7 @@ class ForumQuestionController extends Controller
     {
         
         $question = ForumQuestion::findOrFail($id);
+        // $reported = Report::where('reporter_id', $id)
         if($question->status == 0){
             $question->status = "Pending";
         }
@@ -141,9 +143,12 @@ class ForumQuestionController extends Controller
      * @param  \App\ForumQuestion  $forumQuestion
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ForumQuestion $forumQuestion)
+    public function destroy($id)
     {
-        //
+        $question = ForumQuestion::findOrFail($id);
+        $question->delete();
+
+        return redirect()->back();
     }
 
     // ============================================================
@@ -240,5 +245,40 @@ class ForumQuestionController extends Controller
                 'success' => $success
             );
         return response($array);
+    }
+
+
+    public function report(Request $request){
+
+        $report = new Report;
+        $report->user_id = auth()->user()->id;
+        $report->reporter_id = $request->question_id;
+        // dd($report);
+        $question = ForumQuestion::findOrFail($request->question_id);
+        $report->reported_user_id = $question->user_id;
+        $report->report_type = $request->report_reason;
+
+        $report->save();
+        
+        return redirect()->back();
+    }
+
+    public function my_questions(){
+        $questions = ForumQuestion::where('is_deleted', 0)->where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->get();
+        foreach ($questions as $question) {
+            if($question->status == 0){
+               $question->status = "Pending";
+            }
+            else if($question->status == 1){
+               $question->status = "Posted";
+            }
+            else if($question->status == 3){
+               $question->status = "Moderate";
+            }
+            else if($question->status == 4){
+               $question->status = "Soloved";
+            }
+        }
+        return view('forum.myquestions', compact('questions'));
     }
 }

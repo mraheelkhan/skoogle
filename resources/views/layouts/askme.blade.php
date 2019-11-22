@@ -34,7 +34,7 @@
             <section class="container main-content">
                     <div class="row">
                     @yield('content')
-                    @include('layouts.askmepartials.sidebar')
+                    {{-- @include('layouts.askmepartials.sidebar') --}}
                 </div>
             </section>
             @include('layouts.askmepartials.footer')

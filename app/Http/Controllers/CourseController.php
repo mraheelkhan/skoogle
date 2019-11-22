@@ -7,6 +7,7 @@ use App\Category;
 use App\User;
 use App\CourseVideo;
 use App\EnrolledCourse;
+use App\CourseApplied;
 use Illuminate\Http\Request;
 use Session;
 use Auth;
@@ -80,13 +81,15 @@ class CourseController extends Controller
         }
         $course_id = $id;
         $courses = Course::findOrFail($id);
+        $course = Course::findOrFail($id);
         $showcoursevideos = CourseVideo::where('course_id', $id)->where('is_deleted', 0)->get();
 
         //checking if user is enrolled in the course
         $auth = EnrolledCourse::where('user_id', auth()->user()->id)->where('course_id', $id)->first();
+        $appliers = CourseApplied::where('course_id', $courses->id)->where('status', 1)->where('isActive', 1)->where('is_deleted', 0)->get();
         
         if(! empty($auth) || $courses->user_id == auth()->user()->id){
-            return view('courses.show', compact('showcoursevideos'))->with('course_id', $course_id);
+            return view('courses.show', compact('showcoursevideos', 'appliers', 'course'))->with('course_id', $course_id);
         } else {
             Session::flash('message', 'You are not enrolled. <script>swal.fire("error","Not Enrolled","You are not enrolled.");</script>'); 
             return redirect()->back();
@@ -99,8 +102,7 @@ class CourseController extends Controller
     // show category courses
     public function show_category_courses($id)
     {   
-        $showcourses = Course::where('category_id', $id)->where('is_deleted', 0)->get();
-        // dd($showcourses);
+        $showcourses = Course::where('category_id', $id)->where('is_deleted', 0)->where('status', 1)->get();
         return view('courses.courses_category', compact('showcourses'));
     }
 
@@ -193,5 +195,67 @@ class CourseController extends Controller
 
         Session::flash('message', 'You have deleted successfully. <script>swal.fire("success","Deleted","You have deleted successfully");</script>'); 
         return redirect()->back();
+    }
+
+    public function apply(Request $request){
+
+        $validated = $request->validate([   
+            "course_id" => 'required',
+        ]);
+
+        $userid = auth()->user()->id;
+        $course_id = $request->course_id;
+        
+
+        $insert = CourseApplied::create([
+            'course_id' => request('course_id'),
+            'user_id' => auth()->user()->id,
+        ]);
+
+        Session::flash('message', 'You have applied successfully. <script>swal.fire("Applied","You have applied successfully", "success");</script>'); 
+        return redirect()->back();
+       
+    }
+    public function cancel($id){
+        $applied = CourseApplied::where('course_id', $id)->where('user_id', auth()->user()->id)->first();
+        
+        if($applied)
+        {
+            $applied->delete();
+            Session::flash('message', 'You have cancel apply successfully. <script>swal.fire("Cancel","You have cancel apply  successfully", "success");</script>'); 
+            return redirect()->back();
+        }
+        Session::flash('message', 'You have not applied yet. <script>swal.fire("Not Applied","You have  not applied yet", "error");</script>'); 
+       
+        return redirect()->back();
+    }
+
+    public function markAsClosed(Request $request){
+        $id = $request->course_id;
+        $course = Course::findOrFail($id);
+        $course->status = 2; // status closed
+        $course->update();
+        // return redirect()->back();
+        $success = 1;
+        $message = "Course marked as closed";
+        $array = array( 
+                'msg' => $message,
+                'success' => $success
+            );
+        return response($array);
+    }
+    public function markAsOpened(Request $request){
+        $id = $request->course_id;
+        $course = Course::findOrFail($id);
+        $course->status = 1; // status closed
+        $course->update();
+        // return redirect()->back();
+        $success = 1;
+        $message = "Course marked as closed";
+        $array = array( 
+                'msg' => $message,
+                'success' => $success
+            );
+        return response($array);
     }
 }

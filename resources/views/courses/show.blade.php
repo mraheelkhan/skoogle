@@ -40,6 +40,45 @@
             </div>
             @endforeach
        </div>
+       <div class="">
+                    
+            <div class="col-md-offset-1 col-md-8">
+                    <hr/>
+                    
+                    @if(auth()->check() && auth()->user()->id == $course->user_id )
+                    <div class="row">
+                      <div class="col-md-8">
+                        <div class="table table-responsive p-5 bg-white">
+                          <h2 class="mb-5"> List of User who Applied</h2>
+                          <table class="table table-striped responsive">
+                            <thead>
+                              <tr>
+                                <th>Id</th>
+                                <th>User Name</th>
+                                <th>Email</th>
+                                <th>Date</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              @php $index = 1; @endphp
+                              @foreach($appliers as $apply)
+                                <tr>
+                                <td>{{ $index++ }}</td>
+                                <td> <a href="{{route('ProfileUserAccount', $apply->user->id) }}">
+                                    {{ $apply->user->fname }} {{ $apply->user->lname}} </a></td>
+                                <td> {{ $apply->user->email }}</td>
+                                  <td>{{ date('d-M-Y', strtotime($apply->created_at)) }}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                    @endif
+            </div>
+        </div>
     </div>
 </section>
 @endsection

@@ -23,7 +23,11 @@ class ChatroomController extends Controller
         $auth_user_id = auth()->user()->id;
         $rooms = ChatroomParticipant::where('user_id', $auth_user_id)->pluck('room_id');
         
-        $chatrooms = Chatroom::whereIn('id',$rooms)->where('room_type','single')->get();;
+        $chatrooms = Chatroom::whereIn('id',$rooms)->where('is_deleted', 0)->get();
+        // $chatrooms = Chatroom::whereIn('id',$rooms)->where('room_type','single')->get();
+        $allusers = User::where('status', 1)->get();
+        $groupchats = Chatroom::where('room_type', 'group')->where('is_deleted', 0)->get();
+
         // dd($chatrooms);
         // //$rooms = Chatroom::where('user_id', auth()->user()->id)->get();
         // $added_users_id = ChatroomParticipant::whereIn('room_id', $chatrooms)->pluck('user_id');
@@ -32,7 +36,7 @@ class ChatroomController extends Controller
         
         // $allcontacts = User::where('id','!=',$auth_user_id)->get();
         //dd($allcontacts);
-        return view('chat.index', compact('chatrooms'));
+        return view('chat.index', compact('chatrooms', 'allusers', 'groupchats'));
     }
 
     /**
@@ -79,12 +83,13 @@ class ChatroomController extends Controller
         $room_id = $id;
         $auth_user_id = auth()->user()->id;
         $rooms = ChatroomParticipant::where('user_id', $auth_user_id)->pluck('room_id');
-        
-        $chatrooms = Chatroom::whereIn('id',$rooms)->where('room_type','single')->get();;
-        
+        $chatrooms = Chatroom::whereIn('id',$rooms)->get();
+        // $chatrooms = Chatroom::whereIn('id',$rooms)->where('room_type','single')->get();
+        $groupchats = Chatroom::where('room_type', 'group')->where('is_deleted', 0)->get();
         $messages = ChatroomMessage::where('room_id', $id)->get();
-        $allusers = User::where('status', 1)->get();
-        return view('chat.conversation', compact('messages', 'chatrooms', 'room_id', 'allusers'));
+        // dd($messages);
+        $allusers = User::where('status', 1)->whereNotIn('id', $rooms)->get();
+        return view('chat.conversation', compact('messages', 'chatrooms', 'room_id', 'allusers', 'groupchats'));
     }
 
     /**
@@ -116,12 +121,20 @@ class ChatroomController extends Controller
      * @param  \App\Chatroom  $chatroom
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Chatroom $chatroom)
+    public function destroy($id)
     {
-        //
+        $chatroom = Chatroom::findOrFail($id);
+        if($chatroom->user_id == auth()->user()->id){
+            $chatroom->is_deleted = 1;
+            $chatroom->save();
+            return redirect(route('Chatroom'));
+        }
+        return redirect()->back();
+
+
     }
 
-    public function createChatroom(Request $request){
+    public function createChatroomSingle(Request $request){
         $chatroom = new Chatroom;
         $chatroom->user_id = auth()->user()->id;
         $user_id = User::findOrFail($request->with_chat_id);
@@ -137,5 +150,36 @@ class ChatroomController extends Controller
         $participant2->user_id = $user_id->id;
         $participant2->save();
         return redirect()->back();
+    }
+
+    public function createChatroom(Request $request){
+        $validated = $request->validate([   
+            "chatroom_name" => 'required',
+            "chatroom_code" => 'required|min:4|max:25',
+        ]);
+
+        $chatroom = new Chatroom;
+        $chatroom->user_id = auth()->user()->id;
+        $chatroom->name = $request->chatroom_name;
+        $chatroom->code = $request->chatroom_code;
+        $chatroom->room_type = 'group';
+        $chatroom->save();
+        return redirect()->back();
+    }
+
+    public function joinChatroom(Request $request){
+
+        $roomAuth = Chatroom::findOrFail($request->room_id);
+
+        if($request->code == $roomAuth->code){
+            $participant = new ChatroomParticipant;
+            $participant->room_id = $request->room_id;
+            $participant->user_id = auth()->user()->id;
+            $participant->save();
+            return redirect(route('ChatUserShow', $request->room_id));
+        } else {
+            Session::flash('message', 'Wrong joining Code. <script>swal.fire(Wrong Code","Wrong joining Code", "error");</script>'); 
+            return redirect()->back();
+        }
     }
 }

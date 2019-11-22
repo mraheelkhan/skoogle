@@ -37,25 +37,37 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body" >
-            <div class="row">
-              <div class="col-md-4 text-center">
+                <div class="row">
+                    <div class="col-md-4 text-center">
                   <div class="kv-avatar">
-                          <img src="{{ asset('public/img/staff/'.$user->avatar) }}" width="90%">
-                  </div>
-              </div> 
-              <div class="col-md-8">
+                      <img src="{{ asset('public/img/staff/'.$user->avatar) }}" width="90%">
+                    </div>
+                </div> 
+                <div class="col-md-8">
               <table class="table table-striped">
-                <tr>
-                    <td><b>First Name</b></td>
-                    <td>{{$user->fname}}</td>
-                </tr>
-                <tr>
-                    <td><b>Last Name</b></td>
-                    <td>{{$user->lname}}</td>
+                  <tr>
+                      <td><b>First Name</b></td>
+                      <td>{{$user->fname}}</td>
+                    </tr>
+                    <tr>
+                        <td><b>Last Name</b></td>
+                        <td>{{$user->lname}}</td>
                 </tr>
                 <tr>
                     <td><b>Email</b></td>
                     <td>{{$user->email}}</td>
+                </tr>
+                <tr>
+                    <td><b>Is Pro</b></td>
+                    <td>
+                            @if ($user['isPro'] == 1)
+                            <span class="label label-success">Pro</span>
+                            @elseif($user->isPro == 2)
+                            <a href=""><span class="label label-info ">Applied</span></a>
+                            @else    
+                            <a href=""><span class="label label-danger ">Not Applied</span></a>
+                            @endif
+                        </td>
                 </tr>
                 <tr>
                     <td><b>Phone Number</b></td>
@@ -85,6 +97,18 @@
                         @else
                             <span class="text-red"><b>Deactive</b></span>
                         @endif
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @foreach($certificates as $certify)
+                        <div class="col-md-6" style="border: 1px solid #000;">
+
+                            <img width="100%" src="{{asset('public/uploads/certificates/' . $certify->filename)}}"/>
+                                <a href="#"> {{ $certify->title }}</a>
+                        </div>
+                        @endforeach
+                        
                     </td>
                 </tr>
                 

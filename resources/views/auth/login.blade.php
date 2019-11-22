@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.home')
 @section('content')
 @if(session('error'))
     <script>
@@ -8,12 +8,23 @@
       
     </script>
 @endif
-<div class="login-box">
-  <div class="login-logo">
-  <img src="{{ asset('img/logo.png') }}">
-  </div>
+@if(Session::has('message'))
+            <p class="alert alert-success">{!! Session::get('message') !!}</p>    
+        @elseif(Session::has('error'))
+            <p class="alert alert-danger">{!! Session::get('error') !!}</p>
+        @endif
+        @if(session('failed'))
+            <script>
+              $( document ).ready(function() {
+                swal.fire("Failed", "{!! Session::get('error') !!}", "error");
+              });
+              
+            </script>
+        @endif
+<div class="container login-box">
+ 
   <!-- /.login-logo -->
-  <div class="login-box-body">
+  <div class="login-box-body col-md-6 col-md-offset-3" style="margin-top:200px">
     <p class="login-box-msg">Login in to start your session</p>
 
     <form method="POST" action="{{ route('login') }}">

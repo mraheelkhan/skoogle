@@ -5,9 +5,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Validator;
 use DB;
+use Session;
 use DataTables;
 use Illuminate\Support\Facades\Hash;
 use \App\Department;
+use \App\Certificate;
 use \App\Designation;
 use \App\Staffdetail;
 
@@ -61,6 +63,14 @@ class UserController extends Controller
           }
          
         })
+        ->addColumn('isPro',function($data){
+          if($data->isPro==1) {
+            return '<span class="label label-success">Pro</span>';
+          }else{
+            return '<span class="label label-danger">Pro Applied</span>';
+          }
+         
+        })
         ->addColumn('options',function($data){
             $action = '<span class="action_btn">';
             if(Auth::user()->can('show-staff')){
@@ -89,7 +99,7 @@ class UserController extends Controller
             return $action; 
                                 
         })
-        ->rawColumns(['options','name','designation','department','status'])
+        ->rawColumns(['options','name','designation','department','status', 'isPro'])
         ->make(true);
     }
 
@@ -209,7 +219,9 @@ class UserController extends Controller
     public function show(Request $request, $id)
     {
         $user=\App\User::with('role')->with('organization')->where('id',$id)->first();
-        return view('adminsshow',compact('user'));
+        $certificates = Certificate::where('user_id', $id)->get();
+    
+        return view('adminsshow',compact('user', 'certificates'));
     }
 
     public function profile(Request $request)
@@ -551,8 +563,10 @@ class UserController extends Controller
         // $profile->phone = $request->phone;
         $profile->gender = $request->gender;
         $profile->save();
+
+        Session::flash('message', 'Verification message sent to your email. <script>swal.fire("Verification","Verification message sent to your email.", "success");</script>'); 
         if ($user && $profile){
-            return url('/login');
+            return redirect(url('/login'));
         }
         //return "Failed";
 

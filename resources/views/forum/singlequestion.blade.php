@@ -47,8 +47,9 @@
                         {{ $question->question_title }}
                
             </h2>
-            <a class="question-report" href="#">Report</a>  
+            
             <div class="question-inner">
+                        
                 <div class="clearfix"></div>
                 <div class="question-desc">
                 <p>{{ $question->question_body }}}</p>
@@ -61,8 +62,19 @@
                 <span class="question-category"><a href="#"><i class="icon-folder-close"></i>
                     {{ $question->category->category_name}}</a></span>
                 <span class="question-date"><i class="icon-time"></i>{{ $question->created_at->diffForHumans()}}</span>
+                <span>
+                        <button type="button" onclick="reportshow()" class="btn btn-info report-question btn-sm" >
+                                Report
+                              </button>
+                            
+                </span>
+                <script>
+                    function reportshow(){
+                        $('#reportsection').show();
+                    }
+                </script>
                 {{-- <span class="question-comment"><a href="#"><i class="icon-comment"></i>5 Answer</a></span> --}}
-                <span class="single-question-vote-result">+22</span>
+                {{-- <span class="single-question-vote-result">+22</span> --}}
                 <ul class="single-question-vote">
                     {{-- <li><a href="#" class="single-question-vote-down" title="Dislike"><i class="icon-thumbs-down"></i></a></li> --}}
                     {{-- <li><a href="#" class="single-question-vote-up" title="Like"><i class="icon-thumbs-up"></i></a></li> --}}
@@ -71,14 +83,39 @@
             </div>
         </article>
         
-        
+        <div class="about-author clearfix" id="reportsection" style="display: none;">
+                <div class="">
+                    <h2>Select Report Reason</h2><br/>
+                        <form method="POST" action="{{ route('QuestionReportStore')}}">
+                                @csrf
+                                <input type="hidden" name="question_id" value="{{$question->id}}"/>
+                                <div class="form-group col-md-3">
+                                    <label>Hate Speach</label>
+                                    <input type="radio" value="Hate Speach" name="report_reason">
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label>False Info</label>
+                                    <input type="radio" value="False Info"name="report_reason">
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label>Harrassment</label>
+                                    <input type="radio" value="Harrassment"name="report_reason">
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <input type="submit" class="btn btn-info btn-sm" value="Report"/>
+                                </div>
+                               
+    
+                            </form>
+                  </div>
+        </div>
         <div class="about-author clearfix">
             <div class="author-image">
                 <a href="#" original-title="admin" class="tooltip-n"><img alt="" src="{{ asset('public/img/staff/'.$question->user->avatar) }}"></a>
             </div>
             <div class="author-bio">
             <h4>About the Author -  {{ $question->user->fname }} {{ $question->user->lname }}</h4>
-                [[UPDATE IT]]Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed viverra auctor neque. Nullam lobortis, sapien vitae lobortis tristique.
+                {{-- [[UPDATE IT]]Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed viverra auctor neque. Nullam lobortis, sapien vitae lobortis tristique. --}}
             </div>
         </div><!-- End about-author -->
         {{-- @if( auth()->check() && $question->user_id == auth()->user()->id )
@@ -207,4 +244,23 @@
     }
 
 </script>   
+
+{{--  question report --}}
+
+<div class="modal fade" id="reportquestion" tabindex="-1" role="dialog" aria-labelledby="reportquestion" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="reportquestion">Report Question</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              
+            </div>
+            
+          </div>
+        </div>
+      </div>
 @endsection

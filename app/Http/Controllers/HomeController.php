@@ -10,6 +10,9 @@ use DatePeriod;
 use DateInterval;
 use Calendar;
 use App\Post;
+use App\Job;
+use App\Project;
+use App\Service;
 use Carbon\Carbon;
 
 
@@ -46,7 +49,11 @@ class HomeController extends Controller
     public function newsfeed(){
         $posts = Post::where('is_deleted', 0)->get();
         $post = Post::latest('created_at')->first();
-        return view('home.home', compact('posts', 'post'));
+
+        $jobs = Job::where('is_deleted', 0)->where('status', 1)->get();
+        $projects = Project::where('is_deleted', 0)->where('status', 1)->get();
+        $services = Service::where('is_deleted', 0)->where('status', 1)->get();
+        return view('home.home', compact('posts', 'post', 'jobs', 'projects', 'services' ));
     }
 
     

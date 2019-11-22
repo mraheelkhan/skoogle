@@ -20,9 +20,14 @@
                             </a></li>
                             
                         </ul>
-                        <p>
-                            {!!$post->post_content!!}
-                        </p>
+                        
+                            @if(auth()->check())
+                            <p> {!!$post->post_content!!}</p>
+                            @else 
+                            <p>{!! substr($post->post_content,0,500)!!}</p>
+                            <a href="{{url('/login')}}"><h1> Please login to continue reading</h1></a>
+                            @endif
+                        
                     </div>
                     <!-----------------------------------COMMENT AREA START---------------------------------->
                     @if($post->is_comment == 1)
@@ -70,48 +75,7 @@
                         
                             <div class="row blog_tow_row">
                                     {{-- <h3> Already Enrolled </h3> --}}
-                                    <p>
-                                         <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                           Show Reported Comments 
-                                         </a>
-                                       </p>
-                                       <div class="collapse" id="collapseExample">
-                                         <div class="card card-body">
-                                           
-                                                <table class="table text-center">
-                                                        <thead>
-                                                            <th>No</th>
-                                                            <th class="text-center">Name</th>
-                                                            <th  class="text-center">Email</th>
-                                                            <th  class="text-center">Body</th>
-                                                            <th class="text-center">Action</th>
-                                                        </thead>
-                    <tbody>
-                        @php $index = 1; @endphp
-                        @foreach($reports as $report)
-                        <tr>
-                            <td>{{ $index++ }}</td>
-                            <td>{{ $report->user->fname . " " . $report->user->lname }}</td>
-                            <td>{{ $report->user->email }}</td>
-                            <td>{{ $report->comment->comment_body }}</td>
-                            <td> 
-                                <a  href="{{route('CommentDelete', $report->id)}}" class="btn btn-danger">
-                                        <i class="fa fa-trash"></i>
-                                    </a>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                                                        <tfoot>
-                                                               <th>No</th>
-                                                               <th class="text-center">Name</th>
-                                                               <th class="text-center">Email</th>
-                                                               <th class="text-center">Action</th>
-                                                        </tfoot>
-                                                    </table>
-                                        </div>
-                                       </div>
-                            </div>
+                                    
     @foreach($comments as $comment)
     <div class="card card-white post" id="comment_wraper{{$comment->id}}">
             <div class="post-heading">

@@ -162,21 +162,29 @@
                   <div class="inbox_msg">
                     <div class="inbox_people">
                       <div class="headind_srch">
-                        <div class="recent_heading">
-                          <div class="col-md-8">
-                            <h4>All Chats</h4>
-
-                          </div>
-                          <div class="col-md-4">
-                            @if(auth()->user()->isPro == 1)
-                              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                          <div class="recent_heading" style="    width: 100%;">
+                              <div class="col-md-5">
+                                <h4>All Chats</h4>
+    
+                              </div>
+                              <div class="col-md-7">
+                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
                                   New Chat
                                 </button>
-                                @endif
-                            {{-- <a class="btn btn-primary btn-sm"></a> --}}
-
-                          </div>
-                        </div>
+                                @if(auth()->user()->isPro == 1)
+                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#chatroom">
+                                        Chatroom
+                                      </button>
+                                      <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#joinroom">
+                                        Join Room
+                                      </button>
+                                    @else 
+                                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#joinroom">
+                                        Join Room
+                                      </button>
+                                      @endif
+                              </div>
+                            </div>
                         {{-- <div class="srch_bar">
                           <div class="stylish-input-group">
                             <input type="text" class="search-bar"  placeholder="Search" >
@@ -190,7 +198,9 @@
                         
                         <div class="@if($room->id == $room_id) active_chat @endif chat_list ">
                           <div class="chat_people">
-                            <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                            <div class="chat_img"> 
+                              <img src="https://ptetutorials.com/images/user-profile.png" alt="skoogle"> 
+                            </div>
                             <div class="chat_ib">
                               <a href="{{route('ChatUserShow', $room->id)}}"><h5>{{$room->name}} </a>
                                 {{-- <span class="chat_date">Dec 25</span></h5> --}}
@@ -208,7 +218,8 @@
                         @foreach($messages as $message)
                         <div class="@if($message->user_id == auth()->user()->id) outgoing_msg @else incoming_msg @endif ">
                           <div class="@if($message->user_id == auth()->user()->id) sent_msg @else received_msg @endif">
-                            <div class="received_withd_msg">
+                            
+                            <div class="@if($message->user_id != auth()->user()->id)received_withd_msg @endif">
                               <p>{{$message->message}}</p>
                               <span class="time_date"> {{ $message->created_at->diffForHumans()}}</span></div>
                           </div>
@@ -270,16 +281,101 @@
       </div>
     </div>
   </div>
+
+  <div class="modal fade" id="chatroom" tabindex="-1" role="dialog" aria-labelledby="chatroomLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="chatroomLabel">New Chatroom</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="{{route('ChatUserRoomStore') }}" method="POST">
+                @csrf
+                <div class="form-group">
+                  <input type="text" class="form-control" name="chatroom_name" placeholder="Enter Chatroom Name"/>
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" name="chatroom_code" placeholder="Enter Chatroom Passcode"/>
+                </div>
+                <div class="form-group">
+                  <input type="submit" class="btn btn-primary" value="Create Chatroom"/>
+                </div>
+            </form>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+
+    {{-- join chatroom --}}
+
+    <div class="modal fade" id="joinroom" tabindex="-1" role="dialog" aria-labelledby="joinroomLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="joinroomLabel">Join Chatroom</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+                <table class="table">
+                    <tr>
+                      <td>Room Name</td>
+                      <td>Owner</td>
+                      <td>Action</td>
+                    </tr>
+              @foreach($groupchats as $group)
+              <tr>
+                <td>{{ $group->name }}</td>
+                <td>{{ $group->user->fname }}</td>
+                <td>
+                    <p>
+                        <a class="btn btn-primary btn-xs" data-toggle="collapse" href="#collapseExample{{$group->id}}" role="button" aria-expanded="false" aria-controls="collapseExample{{$group->id}}">
+                          Join
+                        </a>
+                        @if($group->user_id == auth()->user()->id)
+                      <a class="btn btn-danger btn-xs" href="{{route('ChatroomDelete', $group->id)}}">
+                        <i class="fa fa-trash"></i>
+                      </a>
+                      @endif
+                      </p>
+                      <div class="collapse" id="collapseExample{{$group->id}}">
+                      <div class="card card-body">
+                        <form action="{{ route('ChatJoinChatroom')}}" method="POST">
+                          @csrf
+                          <input type="text" name="code" class="form-control" placeholder="Enter chatroom joining code"/>
+                          <input type="hidden" name="room_id" value="{{$group->id}}" class="form-control" placeholder="Enter chatroom joining code"/>
+                          <input type="submit" class="form-control"/>
+                        </form>
+                      </div>
+                      </div>
+                </td>
+              </tr>
+              
+              @endforeach
+                </table>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  
+
 <script>
     $(document).ready(function(){
-        $("#message").focus();
-       //$('#msg_history').scrollTop();
-       // $('#msg_history').scrollTop( $('#msg_history').height() )
-        //$('#mesgs').scrollTop($('#mesgs')[0].scrollHeight);
-        setTimeout(function(){
-            window.location.reload(1);
-            }, 10000);
+        focus();
+       
     });
+    function focus(){
+      // $("#message").focus();
+    }
     $(function () {
         $("#message").keypress(function (e) {
             var code = (e.keyCode ? e.keyCode : e.which);
@@ -290,9 +386,9 @@
                 return true;
             }
         });
-});
+  });
 
-@php $mytime = Carbon\Carbon::now(); @endphp
+    @php $mytime = Carbon\Carbon::now(); @endphp
     function sendMessage(){
         var message = $('#message').val();
         var convo = $('.msg_history').val();
