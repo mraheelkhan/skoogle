@@ -62,13 +62,22 @@ class ProjectController extends Controller
             "title" => 'required|max:200',
             "url" => 'required|unique:projects',
             "end_date" => 'required',
+            "image" => 'required'
         ]);
+        if($request->hasFile('image')){
+
+            $file = $request->file('image');
+            $filename = time() . "-" . $file->getClientOriginalName();
+            $path = public_path().'/uploads/projectImages/';
+            $file->move($path, $filename);
+        }
         $project = new Project;
         $project->user_id = auth()->user()->id;
         $project->category_id = $request->category_id;
         $project->description = $request->description;
         $project->end_date = $request->end_date;
         $project->title = $request->title;
+        $project->image = $filename;
         $project->url = $request->url;
 
         $project->save();

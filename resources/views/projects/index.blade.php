@@ -31,7 +31,7 @@
                @foreach($projects as $project)
                 <div class="col-md-4 col-sm-6">
                     <div class="renovation ">
-                        {{-- <img src="{{ asset('public/uploads/postImages/' . $project->image) }}"  style="border: 1px solid black;"  alt=""> --}}
+                        <img src="{{ asset('public/uploads/projectImages/' . $project->image) }}"  style="border: 1px solid black;"  alt="">
                         <div class="renovation_content  @if($project->status == 2) bg-info @endif">
                             <a class="clipboard" href="#"><i class="fa fa-clipboard" aria-hidden="true"></i></a>
                         <a class="tittle" href="{{route('ProjectShow', $project->url)}}">{{$project->title}} 
@@ -46,8 +46,6 @@
                     </div>
                 </div>
                 @endforeach
-                
-               
            </div>
         </div>
     </section>

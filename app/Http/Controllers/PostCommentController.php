@@ -39,7 +39,7 @@ class PostCommentController extends Controller
     {
         $validated = $request->validate([   
             "post_id" => 'required|numeric',
-            "comment_body" => 'required|min:10|max:250',
+            "comment_body" => 'required|min:5|max:1000',
         ]);
         $comment = new PostComment;
         $comment->user_id = auth()->user()->id;

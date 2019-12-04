@@ -12,7 +12,7 @@
                         @endforeach
                     </ul>
                     @endif
-            <form action="{{route('ProjectStore')}}" method="post">
+            <form action="{{route('ProjectStore')}}" method="post"  enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
                     <label for="title"> Enter title of the project</label>
@@ -31,6 +31,11 @@
                             @endforeach
                     </select>
                 </div>
+
+                <div class="form-group">
+                    <label for="image"> Upload Image</label>
+                    <input type="file" class="form-control input_box" name="image" id="image" onchange="readURL(this);" />
+                    <img id="imagePreview" src="http://placehold.it/180" alt="your image" style="display:none; width:100%; height: 100%" />
 
                 <div class="form-group">
                     <label for="title"> Your Project Content</label>

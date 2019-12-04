@@ -1,4 +1,9 @@
 <!-- Top Header_Area -->
+<style>
+.modal {
+    z-index: 10700;
+}
+</style>
 <section class="top_header_area">
     <div class="container">
         <ul class="nav navbar-nav top_nav">
@@ -53,7 +58,8 @@
 @php 
 if(Route::currentRouteName() == 'Chatroom' || Route::currentRouteName() == 'ChatUserShow')
 {
-    $show = 0;
+    // because client needs menu on everypage. 
+    $show = 1;
 } else {
     $show = 1;
 }

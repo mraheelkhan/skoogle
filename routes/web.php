@@ -181,6 +181,7 @@ Route::get('/job/edit/{id}', 'JobController@edit')->middleware('auth')->name('Jo
 Route::get('/job/{id}', 'JobController@show')->name('JobShow');
 Route::post('/job/apply/store', 'JobController@apply')->middleware('auth')->name('JobApply');
 Route::post('/job/close/', 'JobController@markAsClosed')->middleware('auth')->name('JobMarkAsClosed');
+Route::post('/job/search/', 'JobController@search')->middleware('auth')->name('JobSearch');
 
 
 // Posts, Articles and Comments 

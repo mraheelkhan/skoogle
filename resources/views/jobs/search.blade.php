@@ -6,6 +6,7 @@
   <p class="alert alert-danger">{!! Session::get('error') !!}</p>
 @endif
 @if(session('failed'))
+    
     <script>
       $( document ).ready(function() {
         swal.fire("Failed", "{!! Session::get('error') !!}", "error");

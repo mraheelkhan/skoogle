@@ -21,7 +21,11 @@
                 <a href="{{ route('CourseVideoCreate', $course_id) }}" class="btn btn-primary">Add New Video</a>
             </div>
             @endif
-
+            <div class="container" style="padding: 10px;">
+              <p>
+                {!!$course->description!!}
+            </p>
+            </div>
             @foreach($showcoursevideos as $video)
             <div class="col-md-4 col-sm-6">
                 <div class="card">
@@ -57,6 +61,7 @@
                                 <th>User Name</th>
                                 <th>Email</th>
                                 <th>Date</th>
+                                <th>Action</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -68,6 +73,9 @@
                                     {{ $apply->user->fname }} {{ $apply->user->lname}} </a></td>
                                 <td> {{ $apply->user->email }}</td>
                                   <td>{{ date('d-M-Y', strtotime($apply->created_at)) }}</td>
+                                  <td><a  href="{{route('CourseUserEnroll', [$apply->user->id, $course->id])}}" class="btn btn-success">
+                                    <i class="fa fa-plus"></i>
+                                </a></td>
                                 </tr>
                                 @endforeach
                             </tbody>

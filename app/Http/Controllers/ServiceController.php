@@ -60,10 +60,19 @@ class ServiceController extends Controller
             "description" => 'required|min:100',
             "title" => 'required|max:200',
             "url" => 'required|unique:services',
+            "image" => 'required',
         ]);
+        if($request->hasFile('image')){
+
+            $file = $request->file('image');
+            $filename = time() . "-" . $file->getClientOriginalName();
+            $path = public_path().'/uploads/serviceImages/';
+            $file->move($path, $filename);
+        }
         $service = new Service;
         $service->user_id = auth()->user()->id;
         $service->category_id = $request->category_id;
+        $service->image = $filename;
         $service->description = $request->description;
         // $service->price = $request->price;
         $service->title = $request->title;

@@ -24,7 +24,7 @@
                     </ul>
                     @endif
                 <div class="col-sm-8 main_blog">
-                    {{-- <img src="{{ asset('public/uploads/postImages/' . $project->image) }}" alt=""> --}}
+                    <img src="{{ asset('public/uploads/projectImages/' . $project->image) }}"  style="border: 1px solid black;"  alt="">
                     <div class="col-xs-1 p0">
                        <div class="blog_date">
                           {{-- <a> {{ date("d-M", strtotime($project->created_at)) }}</a> --}}

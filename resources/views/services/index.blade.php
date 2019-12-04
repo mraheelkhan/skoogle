@@ -49,7 +49,7 @@
                @foreach($services as $service)
                 <div class="col-md-4 col-sm-6">
                     <div class="renovation">
-                        {{-- <img src="{{ asset('public/uploads/postImages/' . $service->image) }}"  style="border: 1px solid black;"  alt=""> --}}
+                        <img src="{{ asset('public/uploads/serviceImages/' . $service->image) }}"  style="border: 1px solid black;"  alt="">
                         <div class="renovation_content">
                             <a class="clipboard" href="#"><i class="fa fa-clipboard" aria-hidden="true"></i></a>
                         <a class="tittle" href="{{route('ServiceShow', $service->url)}}">{{$service->title}}</a>

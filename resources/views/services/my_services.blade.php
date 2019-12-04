@@ -25,8 +25,8 @@
             @foreach($services as $service)
             <div class="col-md-4 col-sm-6">
                 <div class="renovation">
-                    {{-- <img src="images/blog/renovation/r-1.jpg" alt=""> --}}
-                    <div class="renovation_content @if($service->status == 2) bg-info @endif">
+                    <img src="{{ asset('public/uploads/serviceImages/' . $service->image) }}"  style="border: 1px solid black;"  alt="">
+                        <div class="renovation_content @if($service->status == 2) bg-info @endif">
                             @if(auth()->check() && auth()->user()->isPro == 1 && auth()->user()->id == $service->user_id)
                             <div class="text-right">
                                     <a href="{{route('ServiceDelete', $service->id)}}" class="btn btn-danger">

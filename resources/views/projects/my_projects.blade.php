@@ -26,7 +26,7 @@
             @foreach($projects as $project)
             <div class="col-md-4 col-sm-6">
                 <div class="renovation">
-                    {{-- <img src="images/blog/renovation/r-1.jpg" alt=""> --}}
+                    <img src="{{ asset('public/uploads/projectImages/' . $project->image) }}"  style="border: 1px solid black;"  alt="">
                     <div class="renovation_content @if($project->status == 2) bg-info @endif">
                             {{-- @if(auth()->check() && auth()->user()->isPro == 1 && auth()->user()->id == $project->user_id) --}}
                             @if(auth()->check() && auth()->user()->id == $project->user_id)

@@ -534,7 +534,7 @@ class UserController extends Controller
             "password" => 'required|max:50',
             "email" => 'required|unique:users|email',
             "phone" => 'required|numeric',
-            "image" => 'required',
+            // "image" => 'required',
         ]);
 
         if($request->hasFile('image')){
@@ -549,7 +549,7 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->password = Hash::make($request->get('password'));
        
-        $user->avatar = $filename;
+        // $user->avatar = $filename;
         $user->fname = $request->fname;
         $user->lname = $request->lname;
         $user->phonenumber = $request->phone;

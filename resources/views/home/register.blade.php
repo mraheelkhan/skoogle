@@ -26,9 +26,9 @@
             <div class="form-group">
                 <input type="phone" name="phone" value="{{old('phone')}}" class="form-control" placeholder="Your Phone" required>
             </div>
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <input type="file" name="image" value="{{old('image')}}" class="form-control" required>
-            </div>
+            </div> --}}
             <div class="form-group">
                 <select name="gender" id="gender" class="form-control">
                     <option value="male">Male</option>

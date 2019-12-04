@@ -31,7 +31,7 @@ class JobController extends Controller
      */
     public function create()
     {
-        if( auth()->user()->organization_id == 0){
+        if( auth()->user()->isPro != 1 || auth()->user()->organization_id == 0){
             Session::flash('error', 'You do not have any organization. <script>swal.fire("No Organization","You do not have a organization", "warning");</script>'); 
             return redirect()->back();
         }
@@ -141,6 +141,18 @@ class JobController extends Controller
                 'success' => $success
             );
         return response($array);
+    }
+
+    public function search(Request $request){
+        $q = request('query');
+        //$job = Job::where('job_title', 'LIKE', '%'.$q.'%')->get();
+        //dd($job);
+        $jobs = Job::where('job_title','LIKE','%'.$q.'%')->orWhere('job_location','LIKE','%'.$q.'%')->get();
+        if(count($jobs) > 0)
+            //dd($job);
+            return view('jobs.search')->withJobs($jobs)->withQuery( $q );
+        else return view ('welcome')->withMessage('No Details found. Try to search again !');
+
     }
 
     public function admin_all(){

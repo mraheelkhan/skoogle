@@ -4,7 +4,7 @@
         <div class="container">
             <div class="row m0 blog_row">
                 <div class="col-md-8 main_blog">
-                    {{-- <img src="{{ asset('public/uploads/postImages/' . $service->image) }}" alt=""> --}}
+                    <img src="{{ asset('public/uploads/serviceImages/' . $service->image) }}" alt="">
                     <div class="col-xs-1 p0">
                        <div class="blog_date">
                           {{-- <a> {{ date("d-M", strtotime($service->created_at)) }}</a> --}}
