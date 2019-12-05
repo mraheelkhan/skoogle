@@ -142,7 +142,7 @@ class PostController extends Controller
         $post->is_comment = $request->is_comment;
 
         $post->update();
-        Session::flash('message', 'Your article is updated successfully. <script>swal.fire("success","Posted","Your article is updated successfully");</script>'); 
+        Session::flash('message', 'Your article is updated successfully. <script>swal.fire("success","Updated","Your article is updated successfully");</script>'); 
         return redirect(route('PostMy'));
     }
 

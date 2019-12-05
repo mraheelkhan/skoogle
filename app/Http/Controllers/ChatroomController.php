@@ -22,7 +22,7 @@ class ChatroomController extends Controller
     {
         $auth_user_id = auth()->user()->id;
         $rooms = ChatroomParticipant::where('user_id', $auth_user_id)->pluck('room_id');
-        
+        //dd($rooms);
         $chatrooms = Chatroom::whereIn('id',$rooms)->where('is_deleted', 0)->get();
         // $chatrooms = Chatroom::whereIn('id',$rooms)->where('room_type','single')->get();
         $allusers = User::where('status', 1)->get();
