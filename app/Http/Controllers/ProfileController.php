@@ -99,22 +99,26 @@ class ProfileController extends Controller
             "description" => 'required|max:500',
             // "email" => 'required|unique:users|email',
             "phone" => 'required|numeric',
-            "image" => 'required',
+            // "image" => 'required',
         ]);
 
+        
+
+        $user = User::findOrFail(auth()->user()->id);
+        // $user->email = $request->email;
+        // $user->password = Hash::make($request->get('password'));
         if($request->hasFile('image')){
 
             $file = $request->file('image');
             $filename = time() . "-" . $file->getClientOriginalName();
             $path = public_path().'/uploads/profiles/';
             $file->move($path, $filename);
-        }
+            // $path = public_path().'/img/staff/';
+            // $file->move($path, $filename);
 
-        $user = User::findOrFail(auth()->user()->id);
-        // $user->email = $request->email;
-        // $user->password = Hash::make($request->get('password'));
-       
-        $user->avatar = $filename;
+            $user->avatar = $filename;
+        }
+        
         $user->fname = $request->fname;
         $user->lname = $request->lname;
         $user->phonenumber = $request->phone;
@@ -125,11 +129,12 @@ class ProfileController extends Controller
 
         $profile = StaffDetail::where('user_id', auth()->user()->id)->first();
         $profile->user_id = $user->id;
+        $profile->description = $request->description;
         // $profile->phone = $request->phone;
         // $profile->gender = $request->gender;
         $profile->update();
         if ($user && $profile){
-            return "success";
+            return redirect()->route('ProfileAccount');
         }
     }
 
@@ -150,6 +155,15 @@ class ProfileController extends Controller
         $user->update();
         Session::flash('message', 'You have applied successfully. <script>swal.fire("Applied","You have applied successfully", "success");</script>'); 
         return redirect()->back();
-        return redirect(route('PostMy'));
+        // return redirect(route('PostMy'));
+    }
+
+    public function makePro($id){
+        $user = User::findOrFail($id);
+        $user->isPro = 1;
+        $user->update();
+        Session::flash('message', 'Profile is Pro Now. <script>swal.fire("Pro","Profile is Pro Now", "success");</script>'); 
+        return redirect()->back();
+        // return redirect(route('PostMy'));
     }
 }

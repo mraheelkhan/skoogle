@@ -94,7 +94,7 @@ if(Route::currentRouteName() == 'Chatroom' || Route::currentRouteName() == 'Chat
         <div class="col-md-10 p0">
             <div class="collapse navbar-collapse" id="min_navbar">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="{{route('Home')}}">Newsfeed</a></li>
+                    <li><a href="{{route('NewsFeed')}}">Newsfeed</a></li>
                     {{-- @if(auth()->check() && auth()->user()->isPro == 1)
                     <li><a href="{{route('PostMy')}}">My Articles</a></li>
                     @endif --}}

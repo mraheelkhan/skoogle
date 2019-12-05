@@ -15,8 +15,8 @@ Using on-purpose Model and Classes
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/home', 'HomeController@newsfeed')->name('Home');
-Route::get('/', 'HomeController@newsfeed')->name('NewsFeed');
+Route::get('/home', 'HomeController@newsfeed')->middleware('auth')->name('NewsFeed');
+Route::get('/', 'HomeController@home')->name('Home');
 Route::get('/signup', 'UserController@register')->name('Register');
 Route::get('/register', function(){
   return redirect()->url('/signup');
@@ -178,7 +178,7 @@ Route::get('/jobs/myjobs', 'JobController@myPostedJobs')->name('MyPostedJobs');
 Route::get('/job/post', 'JobController@create')->middleware('auth')->name('JobCreate');
 Route::post('/job/store', 'JobController@store')->middleware('auth')->name('JobStore');
 Route::get('/job/edit/{id}', 'JobController@edit')->middleware('auth')->name('JobEdit');
-Route::get('/job/{id}', 'JobController@show')->name('JobShow');
+Route::get('/job/{id}', 'JobController@show')->middleware('auth')->name('JobShow');
 Route::post('/job/apply/store', 'JobController@apply')->middleware('auth')->name('JobApply');
 Route::post('/job/close/', 'JobController@markAsClosed')->middleware('auth')->name('JobMarkAsClosed');
 Route::post('/job/search/', 'JobController@search')->middleware('auth')->name('JobSearch');
@@ -227,6 +227,7 @@ Route::get('/profile/user/{id}', 'ProfileController@profile')->name('ProfileUser
 Route::get('/profile/edit/{id}', 'ProfileController@edit')->name('ProfileUserEditAccount');
 Route::post('/profile/edit/', 'ProfileController@update')->name('ProfileUserEditAccountStore');
 Route::get('profile/apply/pro/{id}', 'ProfileController@applyPro')->name('ProfileApplyPro');
+Route::get('profile/make/pro/{id}', 'ProfileController@makePro')->name('ProfileMakePro');
 Route::post('profile/certificate', 'CertificateController@store')->name('ProfileUploadCertificate');
 
 // Services Routes

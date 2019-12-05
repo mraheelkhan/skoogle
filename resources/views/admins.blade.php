@@ -67,7 +67,7 @@
                       @if ($user['isPro'] == 1)
                       <span class="label label-success">Pro</span>
                       @elseif($user->isPro == 2)
-                      <a href=""><span class="label label-info ">Applied</span></a>
+                      <a href="{{ route('ProfileMakePro', $user->id) }}"><span class="label label-info ">Applied</span></a>
                       @else
                       <a href=""><span class="label label-danger">Not Applied</span></a>
                       @endif

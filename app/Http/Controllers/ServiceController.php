@@ -41,7 +41,8 @@ class ServiceController extends Controller
     public function create()
     {
         if(auth()->user()->isPro != 1){
-            return "You are not authorize";
+            Session::flash('message', 'Apply for Pro Account. <script>swal.fire("Apply","Apply for Pro Account. ", "error");</script>'); 
+        return redirect()->back();
         }
         $categories = Category::where('type', 'service')->get();
         return view('services.create', compact('categories'));

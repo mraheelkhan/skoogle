@@ -21,12 +21,15 @@
               
             </script>
         @endif
-<div class="container login-box">
+        <section id="signup-new" style="background: url('{{asset("public/img/backgroundimg.jpg")}}');margin: -170px -60px;background-size: cover;background-position: center;">
+ 
+<div class="container login-box" style="margin:150px 1px;">
  
   <!-- /.login-logo -->
-  <div class="login-box-body col-md-6 col-md-offset-3" style="margin-top:200px">
-    <p class="login-box-msg">Login in to start your session</p>
-
+  <div class="login-box-body col-md-6 col-md-offset-5" style="margin-top:100px">
+    {{-- <p class="login-box-msg">Login in to start your session</p> --}}
+    <div class="sign-up-form1">
+    <img src="{{ asset('public/img/avat.png') }}" class="avatar">
     <form method="POST" action="{{ route('login') }}">
     @csrf
       <div class="form-group has-feedback">
@@ -67,11 +70,13 @@
         <!-- /.col -->
       </div>
     </form>
+    </div>
     {{-- <a class="btn btn-link" href="{{ route('password.request') }}">
         {{ __('Forgot Your Password?') }}
     </a> --}}
   </div>
   <!-- /.login-box-body -->
 </div>
+        </section>
 <!-- /.login-box -->
 @endsection

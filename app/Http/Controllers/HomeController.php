@@ -25,7 +25,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth')->except('newsfeed');
+        $this->middleware('auth')->except('home');
         //$this->middleware('customer');
     }
 
@@ -54,6 +54,10 @@ class HomeController extends Controller
         $projects = Project::where('is_deleted', 0)->where('status', 1)->get();
         $services = Service::where('is_deleted', 0)->where('status', 1)->get();
         return view('home.home', compact('posts', 'post', 'jobs', 'projects', 'services' ));
+    }
+
+    public function home(){
+        return view('home.index');
     }
 
     
